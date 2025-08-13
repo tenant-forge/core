@@ -1,53 +1,53 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "tenantforge/core",
+    "description": "This is my package core",
     "keywords": [
-        ":vendor_name",
+        "tenant-forge",
         "laravel",
-        ":package_slug"
+        "core"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/tenant-forge/core",
     "support": {
-        "issues": "https://github.com/:vendor_slug/:package_slug/issues",
-        "source": "https://github.com/:vendor_slug/:package_slug"
+        "issues": "https://github.com/tenant-forge/core/issues",
+        "source": "https://github.com/tenant-forge/core"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Francisco Barrento",
+            "email": "francisco.barrento@gmail.com",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.1",
-        "filament/filament": "^3.0",
-        "filament/forms": "^3.0",
-        "filament/tables": "^3.0",
-        "spatie/laravel-package-tools": "^1.15.0"
+        "filament/filament": "^4.0",
+        "spatie/laravel-package-tools": "^1.92.7"
     },
     "require-dev": {
-        "laravel/pint": "^1.0",
-        "nunomaduro/collision": "^7.9",
-        "nunomaduro/larastan": "^2.0.1",
-        "orchestra/testbench": "^8.0",
-        "pestphp/pest": "^2.1",
-        "pestphp/pest-plugin-arch": "^2.0",
-        "pestphp/pest-plugin-laravel": "^2.0",
-        "phpstan/extension-installer": "^1.1",
-        "phpstan/phpstan-deprecation-rules": "^1.0",
-        "phpstan/phpstan-phpunit": "^1.0",
-        "spatie/laravel-ray": "^1.26"
+        "laravel/pint": "^v1.24.0",
+        "nunomaduro/collision": "^v8.8.2",
+        "nunomaduro/larastan": "^v3.6.0",
+        "orchestra/testbench": "^v10.4.0",
+        "pestphp/pest": "^v3.8.2",
+        "pestphp/pest-plugin-arch": "^v3.1.1",
+        "pestphp/pest-plugin-laravel": "^v3.2.0",
+        "phpstan/extension-installer": "^1.4.3",
+        "phpstan/phpstan-deprecation-rules": "^2.0.3",
+        "phpstan/phpstan-phpunit": "^2.0.7"
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
-        }
+            "TenantForge\\Core\\": "src/",
+            "TenantForge\\Core\\Database\\Factories\\": "database/factories/"
+        },
+        "files": [
+            "src/Functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/"
+            "TenantForge\\Core\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -67,10 +67,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "TenantForge\\Core\\CoreServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "Core": "TenantForge\\Core\\Facades\\Core"
             }
         }
     },

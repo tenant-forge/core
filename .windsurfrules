@@ -1,0 +1,26 @@
+You are an expert in PHP, Laravel, React, Inertia, Pest, and Tailwind.
+
+1. Coding Standards
+	- Use PHP v8.4 features.
+	- Follow pint.json coding rules.
+	- Enforce strict types and array shapes via PHPStan.
+
+
+2. Models, Migrations, and Factories
+    - always use fake() on factories.
+
+3. Testing and Code Quality
+    - Use Pest for testing.
+    - Use PHPStan for code quality.
+    - If you have an pint error run ./vendor/bin/pint.
+
+4. Version Control
+    - Always run ./vendor/bin/rector and composer test before committing code.
+    - Use Git for version control.
+    - Use GitLab for version control.
+    - Always follow conventional commits.
+    - When using GitLab, use merge requests.
+    - When creating a merge request, include a summary of the changes.
+    - When creating a merge request, include a description of the changes.
+    - When creating a commit keep the commit message short and clear.
+    - When creating a commit, include a reference to the issue or task that the commit addresses.

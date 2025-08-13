@@ -7,8 +7,9 @@ parameters:
         - src
         - config
         - database
+    excludePaths:
+        - playground
     tmpDir: build/phpstan
     checkOctaneCompatibility: true
     checkModelProperties: true
-    checkMissingIterableValueType: false
 

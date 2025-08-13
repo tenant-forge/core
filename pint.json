@@ -1,5 +1,8 @@
 {
     "preset": "laravel",
+    "exclude": [
+        "playground"
+    ],
     "rules": {
         "blank_line_before_statement": true,
         "concat_space": {
