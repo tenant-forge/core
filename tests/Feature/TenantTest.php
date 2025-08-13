@@ -37,7 +37,7 @@ test('can create a tenant with all required fields', function () {
             'features' => ['analytics', 'reporting'],
         ]);
 
-    // Verify the tenant was saved to database
+    // Verify the tenant was saved to a database
     $this->assertDatabaseHas('tenants', [
         'name' => 'Test Company',
         'domain' => 'testcompany.com',
@@ -58,7 +58,7 @@ test('tenant id is automatically generated as uuid', function () {
 });
 
 test('can create tenant without optional fields', function () {
-    $tenant = Tenant::create([
+    $tenant = Tenant::query()->create([
         'name' => 'Minimal Company',
         'domain' => 'minimal.com',
         'email' => 'admin@minimal.com',

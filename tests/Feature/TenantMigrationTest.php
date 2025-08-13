@@ -20,7 +20,7 @@ test('can publish tenant migrations', function () {
         '--force' => true,
     ]);
 
-    // Check if migration file was published
+    // Check if a migration file was published
     $migrationFiles = File::glob(database_path('migrations/*create_tenants_table.php'));
     expect($migrationFiles)->not->toBeEmpty()
         ->and(count($migrationFiles))->toBe(1);
@@ -42,10 +42,8 @@ test('migration creates tenants table with correct schema', function () {
     $migration->up();
 
     // Verify table exists
-    expect(Schema::hasTable('tenants'))->toBeTrue();
-
-    // Verify columns exist
-    expect(Schema::hasColumn('tenants', 'id'))->toBeTrue()
+    expect(Schema::hasTable('tenants'))->toBeTrue()
+        ->and(Schema::hasColumn('tenants', 'id'))->toBeTrue()
         ->and(Schema::hasColumn('tenants', 'name'))->toBeTrue()
         ->and(Schema::hasColumn('tenants', 'domain'))->toBeTrue()
         ->and(Schema::hasColumn('tenants', 'email'))->toBeTrue()
@@ -53,6 +51,8 @@ test('migration creates tenants table with correct schema', function () {
         ->and(Schema::hasColumn('tenants', 'data'))->toBeTrue()
         ->and(Schema::hasColumn('tenants', 'created_at'))->toBeTrue()
         ->and(Schema::hasColumn('tenants', 'updated_at'))->toBeTrue();
+
+    // Verify columns exist
 
     // Test migration rollback
     $migration->down();
