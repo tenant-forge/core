@@ -1,6 +1,6 @@
 <?php
 
-namespace TenantForge\Core\Tests;
+namespace TenantForge\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
@@ -13,23 +13,33 @@ use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
-use TenantForge\Core\CoreServiceProvider;
+use TenantForge\TenantForgeServiceProvider;
 
 class TestCase extends Orchestra
 {
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
+
         parent::setUp();
 
+        $this->setUpDatabase($this->app);
+
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'TenantForge\\Core\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'TenantForge\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
+
     }
 
-    protected function getPackageProviders($app)
+    /**
+     * @return class-string[]
+     */
+    protected function getPackageProviders($app): array
     {
         return [
             ActionsServiceProvider::class,
@@ -44,17 +54,28 @@ class TestCase extends Orchestra
             SupportServiceProvider::class,
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
-            CoreServiceProvider::class,
+            TenantForgeServiceProvider::class,
         ];
     }
 
-    public function getEnvironmentSetUp($app)
+    public function getEnvironmentSetUp($app): void
     {
-        config()->set('database.default', 'testing');
+        config()->set('database.default', 'sqlite');
+        config()->set('database.connections.sqlite', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
 
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_core_table.php.stub';
-        $migration->up();
-        */
+    }
+
+    protected function setUpDatabase($app): void
+    {
+        $migrationFiles = glob(__DIR__ . '/../database/migrations/*.php.stub');
+
+        foreach ($migrationFiles as $migrationFile) {
+            $migration = require $migrationFile;
+            $migration->up();
+        }
     }
 }

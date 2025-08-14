@@ -20,7 +20,7 @@
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.4",
         "filament/filament": "^4.0",
         "spatie/laravel-package-tools": "^1.92.7"
     },
@@ -38,8 +38,8 @@
     },
     "autoload": {
         "psr-4": {
-            "TenantForge\\Core\\": "src/",
-            "TenantForge\\Core\\Database\\Factories\\": "database/factories/"
+            "TenantForge\\": "src/",
+            "TenantForge\\Database\\Factories\\": "database/factories/"
         },
         "files": [
             "src/Functions.php"
@@ -47,7 +47,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "TenantForge\\Core\\Tests\\": "tests/"
+            "TenantForge\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -67,10 +67,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "TenantForge\\Core\\CoreServiceProvider"
+                "TenantForge\\TenantForgeServiceProvider"
             ],
             "aliases": {
-                "Core": "TenantForge\\Core\\Facades\\Core"
+                "TenantForge": "TenantForge"
             }
         }
     },

@@ -1,6 +1,6 @@
 <?php
 
-use function TenantForge\Core\source_path;
+use function TenantForge\source_path;
 
 test('it return the source path', function () {
     $sourcePath = source_path();

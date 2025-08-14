@@ -1,5 +1,8 @@
 <?php
 
-use TenantForge\Core\Tests\TestCase;
+declare(strict_types=1);
 
-uses(TestCase::class)->in(__DIR__);
+namespace TenantForge\Tests;
+
+pest()->uses(TestCase::class)
+    ->in(__DIR__);

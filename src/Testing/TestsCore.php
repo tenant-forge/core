@@ -1,6 +1,6 @@
 <?php
 
-namespace TenantForge\Core\Testing;
+namespace TenantForge\Testing;
 
 use Livewire\Features\SupportTesting\Testable;
 

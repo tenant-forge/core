@@ -1,48 +1,45 @@
 <?php
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Schema;
-use TenantForge\Core\Models\Tenant;
-
-uses(RefreshDatabase::class);
-
-beforeEach(function () {
-    // Run the tenant migration
-    if (! Schema::hasTable('tenants')) {
-        $migration = include __DIR__ . '/../../database/migrations/create_tenants_table.php.stub';
-        $migration->up();
-    }
-});
+use TenantForge\Models\Tenant;
 
 test('can create a tenant with all required fields', function () {
-    $tenant = Tenant::create([
-        'name' => 'Test Company',
-        'domain' => 'testcompany.com',
-        'email' => 'admin@testcompany.com',
-        'stripe_id' => 'cus_test123456789',
-        'data' => [
-            'settings' => ['theme' => 'dark'],
-            'features' => ['analytics', 'reporting'],
-        ],
-    ]);
 
-    expect($tenant)->toBeInstanceOf(Tenant::class)
-        ->and($tenant->id)->toBeString()
-        ->and($tenant->name)->toBe('Test Company')
-        ->and($tenant->domain)->toBe('testcompany.com')
-        ->and($tenant->email)->toBe('admin@testcompany.com')
-        ->and($tenant->stripe_id)->toBe('cus_test123456789')
-        ->and($tenant->data)->toBe([
-            'settings' => ['theme' => 'dark'],
-            'features' => ['analytics', 'reporting'],
+    $tenant = Tenant::query()
+        ->create([
+            'name' => 'Test Company',
+            'domain' => 'testcompany.com',
+            'email' => 'admin@testcompany.com',
+            'stripe_id' => 'cus_test123456789',
+            'data' => [
+                'settings' => ['theme' => 'dark'],
+                'features' => ['analytics', 'reporting'],
+            ],
         ]);
 
-    // Verify the tenant was saved to a database
-    $this->assertDatabaseHas('tenants', [
-        'name' => 'Test Company',
-        'domain' => 'testcompany.com',
-        'email' => 'admin@testcompany.com',
-    ]);
+    expect($tenant)
+        ->toBeInstanceOf(Tenant::class)
+        ->and($tenant->id)
+        ->toBeString()
+        ->and($tenant->name)
+        ->toBe('Test Company')
+        ->and($tenant->domain)
+        ->toBe('testcompany.com')
+        ->and($tenant->email)
+        ->toBe('admin@testcompany.com')
+        ->and($tenant->stripe_id)
+        ->toBe('cus_test123456789')
+        ->and($tenant->data)
+        ->toBe([
+            'settings' => ['theme' => 'dark'],
+            'features' => ['analytics', 'reporting'],
+        ])
+        ->and(
+            Tenant::query()
+                ->where('id', $tenant->id)
+                ->exists()
+        )
+        ->toBeTrue();
+
 });
 
 test('tenant id is automatically generated as uuid', function () {

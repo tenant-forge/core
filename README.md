@@ -46,7 +46,7 @@ return [
 ## Usage
 
 ```php
-$core = new TenantForge\Core();
+$core = new TenantForge();
 echo $core->echoPhrase('Hello, TenantForge!');
 ```
 

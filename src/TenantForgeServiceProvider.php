@@ -1,6 +1,6 @@
 <?php
 
-namespace TenantForge\Core;
+namespace TenantForge;
 
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
@@ -13,14 +13,14 @@ use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use TenantForge\Core\Commands\CoreCommand;
-use TenantForge\Core\Testing\TestsCore;
+use TenantForge\Commands\CoreCommand;
+use TenantForge\Testing\TestsCore;
 
-class CoreServiceProvider extends PackageServiceProvider
+class TenantForgeServiceProvider extends PackageServiceProvider
 {
-    public static string $name = 'core';
+    public static string $name = 'tenantforge';
 
-    public static string $viewNamespace = 'core';
+    public static string $viewNamespace = 'tenantforge';
 
     public function configurePackage(Package $package): void
     {
@@ -36,12 +36,13 @@ class CoreServiceProvider extends PackageServiceProvider
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
-                    ->askToStarRepoOnGitHub('tenant-forge/core');
+                    ->askToStarRepoOnGitHub('tenantforge/core');
             });
 
         $configFileName = $package->shortName();
 
         if (file_exists($package->basePath("/../config/{$configFileName}.php"))) {
+
             $package->hasConfigFile();
         }
 
@@ -78,6 +79,9 @@ class CoreServiceProvider extends PackageServiceProvider
 
         // Handle Stubs
         if (app()->runningInConsole()) {
+
+            // $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+
             foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
                 $this->publishes([
                     $file->getRealPath() => base_path("stubs/core/{$file->getFilename()}"),
@@ -91,7 +95,7 @@ class CoreServiceProvider extends PackageServiceProvider
 
     protected function getAssetPackageName(): ?string
     {
-        return 'tenant-forge/core';
+        return 'tenantforge/core';
     }
 
     /**
@@ -101,8 +105,8 @@ class CoreServiceProvider extends PackageServiceProvider
     {
         return [
             // AlpineComponent::make('core', __DIR__ . '/../resources/dist/components/core.js'),
-            Css::make('core-styles', __DIR__ . '/../resources/dist/core.css'),
-            Js::make('core-scripts', __DIR__ . '/../resources/dist/core.js'),
+            Css::make('tenantforge-styles', __DIR__ . '/../resources/dist/core.css'),
+            Js::make('tenantforge-scripts', __DIR__ . '/../resources/dist/core.js'),
         ];
     }
 
@@ -145,8 +149,9 @@ class CoreServiceProvider extends PackageServiceProvider
      */
     protected function getMigrations(): array
     {
+
         return [
-            'create_tenants_table',
+            '2025_07_30_000010_create_tenants_table',
         ];
     }
 }

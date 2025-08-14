@@ -1,11 +1,11 @@
 <?php
 
-namespace TenantForge\Core;
+namespace TenantForge;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 
-class CorePlugin implements Plugin
+class TenantForgePlugin implements Plugin
 {
     public function getId(): string
     {

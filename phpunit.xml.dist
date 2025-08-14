@@ -17,7 +17,7 @@
 >
     <testsuites>
         <testsuite name="TenantForge Test Suite">
-            <directory>tests</directory>
+            <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
     <coverage>

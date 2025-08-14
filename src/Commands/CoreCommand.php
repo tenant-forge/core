@@ -1,6 +1,6 @@
 <?php
 
-namespace TenantForge\Core\Commands;
+namespace TenantForge\Commands;
 
 use Illuminate\Console\Command;
 

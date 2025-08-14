@@ -1,6 +1,6 @@
 <?php
 
-namespace TenantForge\Core\Providers\Filament;
+namespace TenantForge\Providers\Filament;
 
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -17,8 +17,9 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use TenantForge\Filament\Admin\Pages\Hello;
 
-use function TenantForge\Core\source_path;
+use function TenantForge\source_path;
 
 class CorePanelProvider extends PanelProvider
 {
@@ -37,6 +38,7 @@ class CorePanelProvider extends PanelProvider
             ->discoverPages(in: source_path('Filament/Admin/Pages'), for: 'TenantForge\\Core\\Filament\\Admin\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+                Hello::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([

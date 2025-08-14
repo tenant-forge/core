@@ -1,6 +1,6 @@
 <?php
 
-namespace TenantForge\Core\Models;
+namespace TenantForge\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;

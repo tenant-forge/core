@@ -1,9 +1,9 @@
 <?php
 
-namespace TenantForge\Core\Database\Factories;
+namespace TenantForge\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use TenantForge\Core\Models\Tenant;
+use TenantForge\Models\Tenant;
 
 class TenantFactory extends Factory
 {

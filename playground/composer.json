@@ -71,7 +71,7 @@
         "laravel": {
             "dont-discover": [],
             "providers": [
-                "TenantForge\\Core\\Providers\\Filament\\CorePanelProvider"
+                "TenantForge\\Providers\\Filament\\CorePanelProvider"
             ]
         }
     },

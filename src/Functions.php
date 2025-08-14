@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace TenantForge\Core;
+namespace TenantForge;
 
 use function function_exists;
 
-if (! function_exists('TenantForge\Core\source_path')) {
+if (! function_exists('TenantForge\source_path')) {
     /**
      * Get the path to the package "src" directory.
      */

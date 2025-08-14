@@ -1,10 +1,10 @@
 <?php
 
-use TenantForge\Core\CoreServiceProvider;
-use TenantForge\Core\Providers\Filament\CorePanelProvider;
+use TenantForge\Providers\Filament\CorePanelProvider;
+use TenantForge\TenantForgeServiceProvider;
 
 return [
     App\Providers\AppServiceProvider::class,
-    CoreServiceProvider::class,
+    TenantForgeServiceProvider::class,
     CorePanelProvider::class,
 ];
