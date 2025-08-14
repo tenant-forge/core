@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property-read string $id
- * @property string $name
- * @property string $domain
- * @property string $email
- * @property ?string $stripe_id
- * @property array $data
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property-read string $name
+ * @property-read string $domain
+ * @property-read string $email
+ * @property-read ?string $stripe_id
+ * @property-read array $data
+ * @property-read Carbon $created_at
+ * @property-read Carbon $updated_at
  */
 class Tenant extends Model
 {
