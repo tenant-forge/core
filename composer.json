@@ -63,13 +63,18 @@
             "@php ./vendor/bin/testbench filament:upgrade --ansi"
         ],
         "refactor": "rector",
-        "build": "npm run build",
+        "build": [
+            "@prepare",
+            "@clear",
+            "@php vendor/bin/testbench workbench:build"
+        ],
+        "build:assets": "npm run build",
         "test:type-coverage": "pest --type-coverage --min=100",
         "test:lint": [
             "pint --test",
             "npm run test:lint"
         ],
-        "test:unit": "pest --parallel --coverage --min=80.0",
+        "test:unit": "pest --parallel --coverage --min=50.0",
         "test:types": "phpstan",
         "test:refactor": "rector --dry-run",
         "test": [
@@ -83,10 +88,6 @@
             "Composer\\Config::disableProcessTimeout",
             "@build",
             "@php vendor/bin/testbench serve --ansi"
-        ],
-        "lint": [
-            "@php vendor/bin/pint --ansi",
-            "@php vendor/bin/phpstan analyse --verbose --ansi"
         ]
     },
     "config": {

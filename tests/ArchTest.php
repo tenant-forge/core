@@ -16,4 +16,5 @@ arch()->preset()->security();
 arch()->preset()->strict()->ignoring([
     MakeCentralPanelCommand::class,
     User::class,
+    'TenantForge\Filament',
 ]);

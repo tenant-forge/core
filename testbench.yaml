@@ -7,7 +7,7 @@ providers:
 
 env:
   - AUTH_MODEL=\Workbench\App\Models\User
-  - TENANT_FORGE_USER_MODEL = \Workbench\App\Models\User
+  - TENANT_FORGE_USER_MODEL=\Workbench\App\Models\User
   - MAIL_MAILER=smtp
   - MAIL_HOST=127.0.0.1
   - MAIL_PORT=2525
@@ -31,6 +31,9 @@ workbench:
   discovers:
     config: true
     web: true
+  sync:
+    - from: public
+      to: public/vendor/tenantforge/core
   build:
     - asset-publish
     - filament:assets
@@ -42,9 +45,7 @@ workbench:
         --seeder: TenantForge\Database\Seeders\DatabaseSeeder
   assets:
     - tenantforge-assets
-  sync:
-    - from: public
-      to: public/vendor/tenantforge/core
+
 
 purge:
   directories:

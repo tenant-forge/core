@@ -23,8 +23,8 @@ final class DatabaseSeeder extends Seeder
 
         $userModel::query()->create([
             'name' => 'Tenant Forge Demo',
-            'email' => 'test@test.com',
-            'password' => bcrypt('test123'),
+            'email' => 'test@example.com',
+            'password' => bcrypt('password'),
             'email_verified_at' => now(),
         ]);
 

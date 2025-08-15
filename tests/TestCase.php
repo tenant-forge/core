@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TenantForge\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
@@ -28,8 +30,20 @@ abstract class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'TenantForge\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'TenantForge\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
+
+    }
+
+    final public function getEnvironmentSetUp($app): void
+    {
+
+        $app['config']->set([
+            'auth.providers.users.model' => 'Workbench\\App\\Models\\User',
+            'database.default' => 'testing',
+            'cache.default' => 'array',
+            'session.driver' => 'array',
+        ]);
 
     }
 
@@ -48,22 +62,5 @@ abstract class TestCase extends Orchestra
             BladeHeroiconsServiceProvider::class,
             WidgetsServiceProvider::class,
         ]);
-    }
-
-    public function getEnvironmentSetUp($app): void
-    {
-
-        $app['config']->set([
-            'auth.providers.users.model' => 'Workbench\\App\\Models\\User',
-            'database.default' => 'testing',
-            'cache.default' => 'array',
-            'session.driver' => 'array',
-        ]);
-
-        $app['router']->pushMiddlewareToGroup('web', \Illuminate\View\Middleware\ShareErrorsFromSession::class);
-
-        $app['config']->set('session.driver', 'array');
-        $app['config']->set('session.domain', null);
-
     }
 }
