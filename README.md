@@ -26,6 +26,15 @@ TenantForge 1.x is currently in development and is not ready for production use.
 - [ ] User Roles and Permissions
  
 
+## Stack
+TenantForge is built on:
+
+- Laravel 12.x
+- Filament 4.x
+- Tailwind CSS
+- Alpine.js
+- Livewire
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
