@@ -31,12 +31,12 @@ class MakeCentralPanelCommand extends GeneratorCommand
         return $this->argument('name');
     }
 
-    protected function getDefaultNamespace($rootNamespace): string
+    protected function getDefaultNamespace($rootNamespace): string // @pest-ignore-type
     {
         return $rootNamespace . '\Providers\Filament';
     }
 
-    protected function getPath($name): string
+    protected function getPath($name): string // @pest-ignore-type
     {
 
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);

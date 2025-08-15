@@ -14,6 +14,6 @@ if (! function_exists('TenantForge\source_path')) {
     {
         $basePath = __DIR__;
 
-        return $path ? $basePath . DIRECTORY_SEPARATOR . ltrim($path, DIRECTORY_SEPARATOR) : $basePath;
+        return $path !== null && $path !== '' && $path !== '0' ? $basePath . DIRECTORY_SEPARATOR . ltrim($path, DIRECTORY_SEPARATOR) : $basePath;
     }
 }

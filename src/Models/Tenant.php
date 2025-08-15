@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use TenantForge\Database\Factories\TenantFactory;
 
 /**
  * @property-read string $id
@@ -13,13 +14,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read string $domain
  * @property-read string $email
  * @property-read ?string $stripe_id
- * @property-read array $data
+ * @property-read array<string, mixed> $data
  * @property-read Carbon $created_at
  * @property-read Carbon $updated_at
  */
 class Tenant extends Model
 {
+    /** @use HasFactory<TenantFactory> */
     use HasFactory;
+
     use HasUuids;
 
     /**

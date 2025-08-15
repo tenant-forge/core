@@ -31,13 +31,10 @@
         "laravel/pint": "^v1.24.0",
         "nunomaduro/collision": "^v8.8.2",
         "orchestra/testbench": "^v10.4.0",
-        "pestphp/pest": "^v3.8.2",
-        "pestphp/pest-plugin-arch": "^v3.1.1",
-        "pestphp/pest-plugin-laravel": "^3.2",
-        "pestphp/pest-plugin-livewire": "^3.0",
-        "phpstan/extension-installer": "^1.4.3",
-        "phpstan/phpstan-deprecation-rules": "^2.0.3",
-        "phpstan/phpstan-phpunit": "^2.0.7"
+        "pestphp/pest": "^v4.0.0",
+        "pestphp/pest-plugin-laravel": "^4.0.0",
+        "pestphp/pest-plugin-type-coverage": "^4.0.0",
+        "rector/rector": "^2.0.18"
     },
     "autoload": {
         "psr-4": {
@@ -63,13 +60,24 @@
             "@prepare",
             "@php ./vendor/bin/testbench package:discover --ansi"
         ],
-        "analyse": "vendor/bin/phpstan analyse",
-        "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint",
-        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
-        "prepare": "@php vendor/bin/testbench package:discover --ansi",
-        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "refactor": "rector",
+        "build": "npm run build",
+        "test:type-coverage": "pest --type-coverage --min=100",
+        "test:lint": [
+            "pint --test",
+            "npm run test:lint"
+        ],
+        "test:unit": "pest --parallel --coverage --min=80.0",
+        "test:types": "phpstan",
+        "test:refactor": "rector --dry-run",
+        "test": [
+            "@test:type-coverage",
+            "@test:typos",
+            "@test:unit",
+            "@test:lint",
+            "@test:types",
+            "@test:refactor"
+        ],
         "serve": [
             "Composer\\Config::disableProcessTimeout",
             "@build",

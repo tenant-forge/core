@@ -25,14 +25,13 @@ class TenantForgeServiceProvider extends ServiceProvider
         $this->configureCommands();
         $this->configureResources();
         $this->configureRoutes();
-        $this->configureLivewire();
 
     }
 
     protected function configureRoutes(): void
     {
 
-        Route::middleware(['web'])->group(function () {
+        Route::middleware(['web'])->group(function (): void {
             $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
         });
 
@@ -115,14 +114,5 @@ class TenantForgeServiceProvider extends ServiceProvider
         }
 
         $this->mergeConfigFrom(__DIR__ . '/../config/tenantforge.php', static::$name);
-    }
-
-    protected function configureLivewire(): void
-    {
-        // Register Livewire components for the package
-        if (class_exists(\Livewire\Livewire::class)) {
-            \Livewire\Livewire::component('tenant-forge.create-post', \TenantForge\Livewire\CreatePost::class);
-            // Add more components as needed
-        }
     }
 }

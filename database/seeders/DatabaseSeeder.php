@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         /** @var User $userModel */
         $userModel = config('tenantforge.user_model');
 
-        $user = $userModel::query()->create([
+        $userModel::query()->create([
             'name' => 'Tenant Forge Demo',
             'email' => 'test@test.com',
             'password' => bcrypt('test123'),

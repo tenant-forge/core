@@ -48,7 +48,9 @@ class TenantForgeCentralDashboardServiceProvider extends PanelProvider
                 ShareErrorsFromSession::class,
                 VerifyCsrfToken::class,
                 SubstituteBindings::class,
+                // @codeCoverageIgnoreStart
                 DisableBladeIconComponents::class,
+                // @codeCoverageIgnoreEnd
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([

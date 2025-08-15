@@ -3,8 +3,9 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
+        "build:custom": "node scripts/build.js",
         "dev": "vite build --watch",
-        "lint": "prettier --write resources/js/**/*.js",
+        "test:lint": "prettier --write resources/js/**/*.js",
         "fix:prettier": "prettier --write resources/js/**/*.js"
     },
     "devDependencies": {

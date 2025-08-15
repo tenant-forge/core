@@ -13,8 +13,8 @@ export default defineConfig({
                 'resources/css/tenantforge.css',
                 'resources/js/tenantforge.js',
             ],
-            publicDirectory: 'vendor/orchestra/testbench-core/laravel/public/vendor/tenantforge/core',
-            buildDirectory: 'build',
+            publicDirectory: process.env.PUBLIC_DIR || 'vendor/orchestra/testbench-core/laravel/public/vendor/tenantforge/core',
+            buildDirectory: process.env.BUILD_DIR || 'build',
         }),
         tailwindcss()
     ],
