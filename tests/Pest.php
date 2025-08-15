@@ -4,5 +4,8 @@ declare(strict_types=1);
 
 namespace TenantForge\Tests;
 
-pest()->uses(TestCase::class)
-    ->in(__DIR__);
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+pest()->extends(TestCase::class)
+    ->use(RefreshDatabase::class)
+    ->in('Feature');

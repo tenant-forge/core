@@ -2,156 +2,89 @@
 
 namespace TenantForge;
 
-use Filament\Support\Assets\AlpineComponent;
-use Filament\Support\Assets\Asset;
-use Filament\Support\Assets\Css;
-use Filament\Support\Assets\Js;
-use Filament\Support\Facades\FilamentAsset;
-use Filament\Support\Facades\FilamentIcon;
-use Illuminate\Filesystem\Filesystem;
-use Livewire\Features\SupportTesting\Testable;
-use Spatie\LaravelPackageTools\Commands\InstallCommand;
-use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
-use TenantForge\Commands\CoreCommand;
-use TenantForge\Testing\TestsCore;
+use Illuminate\Support\ServiceProvider;
 
-class TenantForgeServiceProvider extends PackageServiceProvider
+use function config_path;
+use function database_path;
+use function lang_path;
+
+class TenantForgeServiceProvider extends ServiceProvider
 {
     public static string $name = 'tenantforge';
 
     public static string $viewNamespace = 'tenantforge';
 
-    public function configurePackage(Package $package): void
+    public function boot(): void
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
-        $package->name(static::$name)
-            ->hasCommands($this->getCommands())
-            ->hasInstallCommand(function (InstallCommand $command) {
-                $command
-                    ->publishConfigFile()
-                    ->publishMigrations()
-                    ->askToRunMigrations()
-                    ->askToStarRepoOnGitHub('tenantforge/core');
-            });
-
-        $configFileName = $package->shortName();
-
-        if (file_exists($package->basePath("/../config/{$configFileName}.php"))) {
-
-            $package->hasConfigFile();
-        }
-
-        if (file_exists($package->basePath('/../database/migrations'))) {
-            $package->hasMigrations($this->getMigrations());
-        }
-
-        if (file_exists($package->basePath('/../resources/lang'))) {
-            $package->hasTranslations();
-        }
-
-        if (file_exists($package->basePath('/../resources/views'))) {
-            $package->hasViews(static::$viewNamespace);
-        }
+        $this->configureConfiguration();
+        $this->configureMigrations();
+        $this->configureTranslations();
+        $this->configureViews();
+        $this->configureCommands();
     }
 
-    public function packageRegistered(): void {}
-
-    public function packageBooted(): void
+    protected function configureCommands(): void
     {
-        // Asset Registration
-        FilamentAsset::register(
-            $this->getAssets(),
-            $this->getAssetPackageName()
+        $this->commands([
+            Commands\InstallCommand::class,
+            Commands\MakeCentralPanelCommand::class,
+        ]);
+    }
+
+    protected function configureViews(): void
+    {
+
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', static::$viewNamespace);
+        $this->publishes(
+            paths: [
+                __DIR__ . '/../resources/views' => resource_path('views/vendor/' . static::$viewNamespace),
+            ],
+            groups: static::$name . '-views'
         );
+    }
 
-        FilamentAsset::registerScriptData(
-            $this->getScriptData(),
-            $this->getAssetPackageName()
-        );
-
-        // Icon Registration
-        FilamentIcon::register($this->getIcons());
-
-        // Handle Stubs
-        if (app()->runningInConsole()) {
-
-            // $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-
-            foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
-                $this->publishes([
-                    $file->getRealPath() => base_path("stubs/core/{$file->getFilename()}"),
-                ], 'core-stubs');
-            }
+    protected function configureTranslations(): void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes(
+                paths: [
+                    __DIR__ . '/../lang' => lang_path('vendor/' . static::$name),
+                ],
+                groups: static::$name . '-translations'
+            );
         }
 
-        // Testing
-        Testable::mixin(new TestsCore);
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', static::$name);
+
     }
 
-    protected function getAssetPackageName(): ?string
+    protected function configureMigrations(): void
     {
-        return 'tenantforge/core';
+
+        if ($this->app->runningInConsole()) {
+            $this->publishesMigrations(
+                paths: [
+                    __DIR__ . '/../database/migrations' => database_path('migrations'),
+                ],
+                groups: 'tenantforge-migrations'
+            );
+
+        }
+
     }
 
-    /**
-     * @return array<Asset>
-     */
-    protected function getAssets(): array
-    {
-        return [
-            // AlpineComponent::make('core', __DIR__ . '/../resources/dist/components/core.js'),
-            Css::make('tenantforge-styles', __DIR__ . '/../resources/dist/core.css'),
-            Js::make('tenantforge-scripts', __DIR__ . '/../resources/dist/core.js'),
-        ];
-    }
-
-    /**
-     * @return array<class-string>
-     */
-    protected function getCommands(): array
-    {
-        return [
-            CoreCommand::class,
-        ];
-    }
-
-    /**
-     * @return array<string>
-     */
-    protected function getIcons(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return array<string>
-     */
-    protected function getRoutes(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    protected function getScriptData(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return array<string>
-     */
-    protected function getMigrations(): array
+    protected function configureConfiguration(): void
     {
 
-        return [
-            '2025_07_30_000010_create_tenants_table',
-        ];
+        if ($this->app->runningInConsole()) {
+            $this->publishes(
+                paths: [
+                    __DIR__ . '/../config/tenantforge.php' => config_path('tenantforge.php'),
+                ],
+                groups: static::$name . '-config'
+            );
+        }
+
+        $this->mergeConfigFrom(__DIR__ . '/../config/tenantforge.php', static::$name);
     }
 }

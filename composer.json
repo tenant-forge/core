@@ -22,7 +22,8 @@
     "require": {
         "php": "^8.4",
         "filament/filament": "^4.0",
-        "spatie/laravel-package-tools": "^1.92.7"
+        "spatie/laravel-package-tools": "^1.92.7",
+        "stancl/tenancy": "^3.9"
     },
     "require-dev": {
         "laravel/pint": "^v1.24.0",

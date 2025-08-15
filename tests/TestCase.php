@@ -13,7 +13,6 @@ use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
@@ -21,14 +20,12 @@ use TenantForge\TenantForgeServiceProvider;
 
 class TestCase extends Orchestra
 {
-    use RefreshDatabase;
-
     protected function setUp(): void
     {
 
         parent::setUp();
 
-        $this->setUpDatabase($this->app);
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'TenantForge\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
@@ -67,15 +64,5 @@ class TestCase extends Orchestra
             'prefix' => '',
         ]);
 
-    }
-
-    protected function setUpDatabase($app): void
-    {
-        $migrationFiles = glob(__DIR__ . '/../database/migrations/*.php.stub');
-
-        foreach ($migrationFiles as $migrationFile) {
-            $migration = require $migrationFile;
-            $migration->up();
-        }
     }
 }

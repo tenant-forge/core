@@ -33,17 +33,15 @@ class CorePanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-            ->discoverPages(in: source_path('Filament/Admin/Pages'), for: 'TenantForge\\Core\\Filament\\Admin\\Pages')
+            ->discoverResources(in: source_path('Filament/Central/Resources'), for: 'TenantForge\\Filament\\Central\\Resources')
+            ->discoverPages(in: source_path('Filament/Central/Pages'), for: 'TenantForge\\\Filament\\Central\\Pages')
             ->pages([
                 Pages\Dashboard::class,
                 Hello::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->discoverWidgets(in: source_path('Filament/Central/Widgets'), for: 'App\\Filament\\Central\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

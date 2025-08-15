@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers\Filament;
+namespace {{ namespace }};
 
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -17,21 +17,25 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use TenantForge\Filament\Admin\Pages\Hello;
 
-class AdminPanelProvider extends PanelProvider
+use function TenantForge\source_path;
+
+class {{ class }} extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
             ->default()
-            ->id('admin')
+            ->id('central')
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Emerald,
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->discoverResources(in: app_path('Filament/Central/Resources'), for: 'App\\Filament\\Central\\Resources')
+            ->discoverPages(in: app_path('Filament/Central/Pages'), for: 'App\\Filament\\Central\\Pages')
+            ->discoverPages(in: source_path('Filament/Central/Pages'), for: 'App\\Filament\\Central\\Pages')
             ->pages([
                 Pages\Dashboard::class,
             ])
