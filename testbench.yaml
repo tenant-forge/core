@@ -1,9 +1,9 @@
 providers:
   - Workbench\App\Providers\WorkbenchServiceProvider
+  - Filament\FilamentServiceProvider
   - TenantForge\TenantForgeServiceProvider
   - TenantForge\TenantForgeCentralDashboardServiceProvider
   - Laravel\Sanctum\SanctumServiceProvider
-  - Filament\FilamentServiceProvider
 
 env:
   - AUTH_MODEL=\Workbench\App\Models\User

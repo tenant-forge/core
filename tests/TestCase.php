@@ -6,6 +6,7 @@ use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
 use Filament\FilamentServiceProvider;
 use Filament\Forms\FormsServiceProvider;
+use Filament\Support\SupportServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -37,8 +38,9 @@ abstract class TestCase extends Orchestra
     protected function getPackageProviders($app): array
     {
         return array_merge(parent::getPackageProviders($app), [
-            LivewireServiceProvider::class,
+            SupportServiceProvider::class,
             FilamentServiceProvider::class,
+            LivewireServiceProvider::class,
             FormsServiceProvider::class,
             BladeIconsServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
