@@ -59,6 +59,7 @@
             "@clear",
             "@prepare",
             "@php ./vendor/bin/testbench package:discover --ansi",
+            "@php ./vendor/bin/testbench filament:install --no-interaction",
             "@php ./vendor/bin/testbench filament:upgrade --ansi"
         ],
         "refactor": "rector",
