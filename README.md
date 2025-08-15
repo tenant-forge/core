@@ -13,7 +13,8 @@ This package enables your application to be multi-tenant by default with a multi
 ## Project Status
 TenantForge 1.x is currently in development and is not ready for production use. We are actively working on the project and will provide updates as they become available.
 
-- [ ] Custom Authentication and Registration Pages
+- [ ] Central Authentication 
+- [ ] Tenant Registration Pages
 - [ ] Tenant Management
 - [ ] Product Management (Prices, Features, etc.)
 - [ ] Subscription Management (Plans, Billing, etc.)
@@ -24,6 +25,11 @@ TenantForge 1.x is currently in development and is not ready for production use.
 - [ ] Tenant User's Dashboard
 - [ ] User Invitations
 - [ ] User Roles and Permissions
+- [ ] Tenant Billing and Payment Processing
+- [ ] Tenant Analytics and Reporting
+- [ ] Tenant Branding and Customization
+- [ ] Tenant Localization and Internationalization
+- [ ] Tenant Switcher
  
 
 ## Stack
