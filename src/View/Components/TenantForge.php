@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TenantForge\View\Components;
 
 use Illuminate\View\Component;
@@ -7,7 +9,7 @@ use Illuminate\View\View;
 
 use function config;
 
-class TenantForge extends Component
+final class TenantForge extends Component
 {
     public function render(): View
     {

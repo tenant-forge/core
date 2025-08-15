@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TenantForge\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use TenantForge\Models\Tenant;
 
-class TenantFactory extends Factory
+final class TenantFactory extends Factory
 {
     protected $model = Tenant::class;
 

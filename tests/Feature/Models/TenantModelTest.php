@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use TenantForge\Models\Tenant;
 
 test('can create a tenant with all required fields', function () {

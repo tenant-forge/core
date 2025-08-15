@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TenantForge;
 
 use Illuminate\Support\Facades\Route;
@@ -10,7 +12,7 @@ use function database_path;
 use function lang_path;
 use function public_path;
 
-class TenantForgeServiceProvider extends ServiceProvider
+final class TenantForgeServiceProvider extends ServiceProvider
 {
     public static string $name = 'tenantforge';
 
@@ -28,71 +30,28 @@ class TenantForgeServiceProvider extends ServiceProvider
 
     }
 
-    protected function configureRoutes(): void
+    private function configureConfiguration(): void
     {
 
-        Route::middleware(['web'])->group(function (): void {
-            $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
-        });
-
-    }
-
-    protected function configureResources(): void
-    {
-
-        $this->publishes([
-            __DIR__ . '/../public/' => public_path('vendor/tenantforge/core'),
-        ], ['tenantforge', 'tenantforge-assets']);
-
-    }
-
-    protected function getAssetPackageName(): ?string
-    {
-        return 'tenantforge/core';
-    }
-
-    protected function configureCommands(): void
-    {
-        $this->commands([
-            Commands\InstallCommand::class,
-            Commands\MakeCentralPanelCommand::class,
-        ]);
-    }
-
-    protected function configureViews(): void
-    {
-
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', static::$viewNamespace);
-        $this->publishes(
-            paths: [
-                __DIR__ . '/../resources/views' => resource_path('views/vendor/' . static::$viewNamespace),
-            ],
-            groups: static::$name . '-views'
-        );
-    }
-
-    protected function configureTranslations(): void
-    {
         if ($this->app->runningInConsole()) {
             $this->publishes(
                 paths: [
-                    __DIR__ . '/../lang' => lang_path('vendor/' . static::$name),
+                    __DIR__.'/../config/tenantforge.php' => config_path('tenantforge.php'),
                 ],
-                groups: static::$name . '-translations'
+                groups: self::$name.'-config'
             );
         }
 
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', static::$name);
-
+        $this->mergeConfigFrom(__DIR__.'/../config/tenantforge.php', self::$name);
     }
 
-    protected function configureMigrations(): void
+    private function configureMigrations(): void
     {
 
         if ($this->app->runningInConsole()) {
             $this->publishesMigrations(
                 paths: [
-                    __DIR__ . '/../database/migrations' => database_path('migrations'),
+                    __DIR__.'/../database/migrations' => database_path('migrations'),
                 ],
                 groups: 'tenantforge-migrations'
             );
@@ -101,18 +60,61 @@ class TenantForgeServiceProvider extends ServiceProvider
 
     }
 
-    protected function configureConfiguration(): void
+    private function configureTranslations(): void
     {
-
         if ($this->app->runningInConsole()) {
             $this->publishes(
                 paths: [
-                    __DIR__ . '/../config/tenantforge.php' => config_path('tenantforge.php'),
+                    __DIR__.'/../lang' => lang_path('vendor/'.self::$name),
                 ],
-                groups: static::$name . '-config'
+                groups: self::$name.'-translations'
             );
         }
 
-        $this->mergeConfigFrom(__DIR__ . '/../config/tenantforge.php', static::$name);
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', self::$name);
+
+    }
+
+    private function configureViews(): void
+    {
+
+        $this->loadViewsFrom(__DIR__.'/../resources/views', self::$viewNamespace);
+        $this->publishes(
+            paths: [
+                __DIR__.'/../resources/views' => resource_path('views/vendor/'.self::$viewNamespace),
+            ],
+            groups: self::$name.'-views'
+        );
+    }
+
+    private function configureCommands(): void
+    {
+        $this->commands([
+            Commands\InstallCommand::class,
+            Commands\MakeCentralPanelCommand::class,
+        ]);
+    }
+
+    private function getAssetPackageName(): ?string
+    {
+        return 'tenantforge/core';
+    }
+
+    private function configureResources(): void
+    {
+
+        $this->publishes([
+            __DIR__.'/../public/' => public_path('vendor/tenantforge/core'),
+        ], ['tenantforge', 'tenantforge-assets']);
+
+    }
+
+    private function configureRoutes(): void
+    {
+
+        Route::middleware(['web'])->group(function (): void {
+            $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        });
+
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TenantForge\Filament\Pages\Auth;
 
 use Filament\Pages\Page;
@@ -9,11 +11,11 @@ use TenantForge\View\Components\TenantForge;
 
 #[Layout(TenantForge::class)]
 #[Title('Sign Up')]
-class Register extends Page
+final class Register extends Page
 {
-    protected string $view = 'tenantforge::filament.pages.auth.register';
-
     public static ?string $title = 'Sign Up';
 
     public string $description = 'Hello Mundo!';
+
+    protected string $view = 'tenantforge::filament.pages.auth.register';
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TenantForge;
 
 use Filament\Http\Middleware\Authenticate;
@@ -18,7 +20,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class TenantForgeCentralDashboardServiceProvider extends PanelProvider
+final class TenantForgeCentralDashboardServiceProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {

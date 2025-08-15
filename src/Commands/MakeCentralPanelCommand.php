@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TenantForge\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 
-class MakeCentralPanelCommand extends GeneratorCommand
+final class MakeCentralPanelCommand extends GeneratorCommand
 {
     protected $name = 'tenantforge:make-central-panel';
 
@@ -17,7 +19,7 @@ class MakeCentralPanelCommand extends GeneratorCommand
     {
 
         if ($this->alreadyExists($this->getNameInput())) {
-            $this->error($this->type . ' already exists!');
+            $this->error($this->type.' already exists!');
 
             return false;
         }
@@ -33,7 +35,7 @@ class MakeCentralPanelCommand extends GeneratorCommand
 
     protected function getDefaultNamespace($rootNamespace): string // @pest-ignore-type
     {
-        return $rootNamespace . '\Providers\Filament';
+        return $rootNamespace.'\Providers\Filament';
     }
 
     protected function getPath($name): string // @pest-ignore-type
@@ -41,7 +43,7 @@ class MakeCentralPanelCommand extends GeneratorCommand
 
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
 
-        return app_path(str_replace('\\', '/', $name) . '.php');
+        return app_path(str_replace('\\', '/', $name).'.php');
     }
 
     protected function getStub(): string
@@ -55,6 +57,6 @@ class MakeCentralPanelCommand extends GeneratorCommand
 
         return file_exists($basePath)
             ? $basePath
-            : __DIR__ . '/../../' . $stub;
+            : __DIR__.'/../../'.$stub;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TenantForge\Models;
 
 use Carbon\Carbon;
@@ -18,7 +20,7 @@ use TenantForge\Database\Factories\TenantFactory;
  * @property-read Carbon $created_at
  * @property-read Carbon $updated_at
  */
-class Tenant extends Model
+final class Tenant extends Model
 {
     /** @use HasFactory<TenantFactory> */
     use HasFactory;
@@ -43,7 +45,7 @@ class Tenant extends Model
      *
      * @return array<string, string>
      */
-    protected function casts(): array
+    public function casts(): array
     {
         return [
             'data' => 'array',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TenantForge;
 
-class TenantForge {}
+final class TenantForge {}
