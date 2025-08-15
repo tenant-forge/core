@@ -95,11 +95,6 @@ final class TenantForgeServiceProvider extends ServiceProvider
         ]);
     }
 
-    private function getAssetPackageName(): ?string
-    {
-        return 'tenantforge/core';
-    }
-
     private function configureResources(): void
     {
 
