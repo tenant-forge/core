@@ -4,6 +4,7 @@ namespace TenantForge\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
+use Filament\Actions\ActionsServiceProvider;
 use Filament\FilamentServiceProvider;
 use Filament\Forms\FormsServiceProvider;
 use Filament\Support\SupportServiceProvider;
@@ -41,6 +42,7 @@ abstract class TestCase extends Orchestra
             SupportServiceProvider::class,
             FilamentServiceProvider::class,
             LivewireServiceProvider::class,
+            ActionsServiceProvider::class,
             FormsServiceProvider::class,
             BladeIconsServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
