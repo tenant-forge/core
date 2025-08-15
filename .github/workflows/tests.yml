@@ -8,20 +8,7 @@ on:
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ubuntu-latest]
-        php: [8.4]
-        laravel: [12.*]
-        stability: [prefer-lowest, prefer-stable]
-        include:
-          - laravel: 12.*
-            testbench: 10.*
-            carbon: 3.*
-
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -30,7 +17,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: 8.4
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
           coverage: xdebug
           tools: composer:v2
