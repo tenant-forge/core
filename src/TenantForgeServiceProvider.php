@@ -2,14 +2,13 @@
 
 namespace TenantForge;
 
-use Filament\Support\Assets\Css;
-use Filament\Support\Assets\Js;
-use Filament\Support\Facades\FilamentAsset;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 use function config_path;
 use function database_path;
 use function lang_path;
+use function public_path;
 
 class TenantForgeServiceProvider extends ServiceProvider
 {
@@ -25,27 +24,32 @@ class TenantForgeServiceProvider extends ServiceProvider
         $this->configureViews();
         $this->configureCommands();
         $this->configureResources();
+        $this->configureRoutes();
+        $this->configureLivewire();
+
+    }
+
+    protected function configureRoutes(): void
+    {
+
+        Route::middleware(['web'])->group(function () {
+            $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+        });
+
     }
 
     protected function configureResources(): void
     {
-        FilamentAsset::register(
-            assets: $this->getAssets(),
-            package: $this->getAssetPackageName()
-        );
+
+        $this->publishes([
+            __DIR__ . '/../public/' => public_path('vendor/tenantforge/core'),
+        ], ['tenantforge', 'tenantforge-assets']);
+
     }
 
     protected function getAssetPackageName(): ?string
     {
         return 'tenantforge/core';
-    }
-
-    protected function getAssets(): array
-    {
-        return [
-            Css::make('core-styles', __DIR__ . '/../resources/dist/core.css'),
-            Js::make('core-scripts', __DIR__ . '/../resources/dist/core.js'),
-        ];
     }
 
     protected function configureCommands(): void
@@ -111,5 +115,14 @@ class TenantForgeServiceProvider extends ServiceProvider
         }
 
         $this->mergeConfigFrom(__DIR__ . '/../config/tenantforge.php', static::$name);
+    }
+
+    protected function configureLivewire(): void
+    {
+        // Register Livewire components for the package
+        if (class_exists(\Livewire\Livewire::class)) {
+            \Livewire\Livewire::component('tenant-forge.create-post', \TenantForge\Livewire\CreatePost::class);
+            // Add more components as needed
+        }
     }
 }

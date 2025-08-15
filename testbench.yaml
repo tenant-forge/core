@@ -1,0 +1,51 @@
+providers:
+  - Workbench\App\Providers\WorkbenchServiceProvider
+  - TenantForge\TenantForgeServiceProvider
+  - TenantForge\TenantForgeCentralDashboardServiceProvider
+  - Laravel\Sanctum\SanctumServiceProvider
+  - Filament\FilamentServiceProvider
+
+env:
+  - AUTH_MODEL=\Workbench\App\Models\User
+  - TENANT_FORGE_USER_MODEL = \Workbench\App\Models\User
+  - MAIL_MAILER=smtp
+  - MAIL_HOST=127.0.0.1
+  - MAIL_PORT=2525
+  - MAIL_USERNAME=tenantforge
+  - MAIL_PASSWORD=null
+  - MAIL_ENCRYPTION=null
+  - MAIL_FROM_ADDRESS="hello@tenantforge.io"
+  - MAIL_FROM_NAME=TenantForge
+
+migrations:
+  - workbench/database/migrations
+  - database/migrations
+
+seeders:
+  - database/seeders
+
+workbench:
+  start: '/'
+  install: true
+  health: false
+  discovers:
+    config: true
+    web: true
+  build:
+    - asset-publish
+    - filament:assets
+    - create-sqlite-db
+    - storage-link
+    - db-wipe
+    - migrate:refresh:
+        --seed: true
+        --seeder: TenantForge\Database\Seeders\DatabaseSeeder
+  assets:
+    - tenantforge-assets
+  sync:
+    - from: public
+      to: public/vendor/tenantforge/core
+
+purge:
+  directories:
+    - public/vendor

@@ -22,17 +22,19 @@
     "require": {
         "php": "^8.4",
         "filament/filament": "^4.0",
+        "laravel/sanctum": "^4.2",
         "spatie/laravel-package-tools": "^1.92.7",
         "stancl/tenancy": "^3.9"
     },
     "require-dev": {
+        "larastan/larastan": "^3.6",
         "laravel/pint": "^v1.24.0",
         "nunomaduro/collision": "^v8.8.2",
-        "nunomaduro/larastan": "^v3.6.0",
         "orchestra/testbench": "^v10.4.0",
         "pestphp/pest": "^v3.8.2",
         "pestphp/pest-plugin-arch": "^v3.1.1",
-        "pestphp/pest-plugin-laravel": "^v3.2.0",
+        "pestphp/pest-plugin-laravel": "^3.2",
+        "pestphp/pest-plugin-livewire": "^3.0",
         "phpstan/extension-installer": "^1.4.3",
         "phpstan/phpstan-deprecation-rules": "^2.0.3",
         "phpstan/phpstan-phpunit": "^2.0.7"
@@ -40,7 +42,8 @@
     "autoload": {
         "psr-4": {
             "TenantForge\\": "src/",
-            "TenantForge\\Database\\Factories\\": "database/factories/"
+            "TenantForge\\Database\\Factories\\": "database/factories/",
+            "TenantForge\\Database\\Seeders\\": "database/seeders/"
         },
         "files": [
             "src/Functions.php"
@@ -48,15 +51,34 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "TenantForge\\Tests\\": "tests/"
+            "TenantForge\\Tests\\": "tests/",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
         }
     },
     "scripts": {
-        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "post-autoload-dump": [
+            "@clear",
+            "@prepare",
+            "@php ./vendor/bin/testbench package:discover --ansi"
+        ],
         "analyse": "vendor/bin/phpstan analyse",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint"
+        "format": "vendor/bin/pint",
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@build",
+            "@php vendor/bin/testbench serve --ansi"
+        ],
+        "lint": [
+            "@php vendor/bin/pint --ansi",
+            "@php vendor/bin/phpstan analyse --verbose --ansi"
+        ]
     },
     "config": {
         "sort-packages": true,

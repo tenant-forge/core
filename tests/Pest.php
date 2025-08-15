@@ -6,6 +6,6 @@ namespace TenantForge\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-pest()->extends(TestCase::class)
+pest()->extend(TestCase::class)
     ->use(RefreshDatabase::class)
     ->in('Feature');
