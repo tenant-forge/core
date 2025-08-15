@@ -2,6 +2,9 @@
 
 namespace TenantForge;
 
+use Filament\Support\Assets\Css;
+use Filament\Support\Assets\Js;
+use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Support\ServiceProvider;
 
 use function config_path;
@@ -21,6 +24,28 @@ class TenantForgeServiceProvider extends ServiceProvider
         $this->configureTranslations();
         $this->configureViews();
         $this->configureCommands();
+        $this->configureResources();
+    }
+
+    protected function configureResources(): void
+    {
+        FilamentAsset::register(
+            assets: $this->getAssets(),
+            package: $this->getAssetPackageName()
+        );
+    }
+
+    protected function getAssetPackageName(): ?string
+    {
+        return 'tenantforge/core';
+    }
+
+    protected function getAssets(): array
+    {
+        return [
+            Css::make('core-styles', __DIR__ . '/../resources/dist/core.css'),
+            Js::make('core-scripts', __DIR__ . '/../resources/dist/core.js'),
+        ];
     }
 
     protected function configureCommands(): void

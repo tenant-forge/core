@@ -14,9 +14,13 @@ class InstallCommand extends Command
     {
         $this->comment('Installing TenantForge...');
 
-        $this->comment('Installing Tenancy...');
+        $this->comment('Setting Filament');
 
-        $this->call('tenancy:install');
+        $this->call('filament:install', [
+            '--no-interaction' => true,
+        ]);
+
+        $this->call('filament:assets');
 
         return self::SUCCESS;
     }

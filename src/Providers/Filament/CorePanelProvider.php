@@ -17,7 +17,6 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use TenantForge\Filament\Admin\Pages\Hello;
 
 use function TenantForge\source_path;
 
@@ -34,10 +33,9 @@ class CorePanelProvider extends PanelProvider
                 'primary' => Color::Amber,
             ])
             ->discoverResources(in: source_path('Filament/Central/Resources'), for: 'TenantForge\\Filament\\Central\\Resources')
-            ->discoverPages(in: source_path('Filament/Central/Pages'), for: 'TenantForge\\\Filament\\Central\\Pages')
+            ->discoverPages(in: source_path('Filament/Central/Pages'), for: 'TenantForge\\Filament\\Central\\Pages')
             ->pages([
                 Pages\Dashboard::class,
-                Hello::class,
             ])
             ->discoverWidgets(in: source_path('Filament/Central/Widgets'), for: 'App\\Filament\\Central\\Widgets')
             ->widgets([
