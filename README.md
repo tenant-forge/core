@@ -11,7 +11,7 @@ This package provides the core functionality for the Tenant Forge and may be ins
 This package enables your application to be multi-tenant by default with a multi-tenant database setup.
 
 ## Project Status
-TenantForge 1.x is currently in development ans is not ready for production use. We are actively working on the project and will provide updates as they become available.
+TenantForge 1.x is currently in development and is not ready for production use. We are actively working on the project and will provide updates as they become available.
 
 - [ ] Tenant Management
 - [ ] Product Management (Prices, Features, etc.)
