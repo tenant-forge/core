@@ -8,6 +8,7 @@ providers:
 env:
   - AUTH_MODEL=\Workbench\App\Models\User
   - TENANT_FORGE_USER_MODEL=\Workbench\App\Models\User
+  - APP_LOCALE=en
   - MAIL_MAILER=smtp
   - MAIL_HOST=127.0.0.1
   - MAIL_PORT=2525

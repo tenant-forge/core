@@ -40,5 +40,8 @@ jobs:
       - name: Build Assets
         run: npm run build
 
+      - name: Install Playwright Browsers
+        run: npx playwright install
+
       - name: Tests
         run: composer test

@@ -19,6 +19,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use TenantForge\Filament\Central\Widgets\TenantsWidget;
 
 final class TenantForgeCentralDashboardServiceProvider extends PanelProvider
 {
@@ -40,7 +41,8 @@ final class TenantForgeCentralDashboardServiceProvider extends PanelProvider
             ])
             ->discoverWidgets(in: source_path('Filament/Central/Widgets'), for: 'App\\Filament\\Central\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
+                TenantsWidget::class,
+                // Widgets\AccountWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
