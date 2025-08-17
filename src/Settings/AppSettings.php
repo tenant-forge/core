@@ -10,9 +10,9 @@ final class AppSettings extends Settings
 {
     public string $name;
 
-    public ?string $domain;
+    public ?string $domain = null;
 
-    public ?string $about;
+    public ?string $about = null;
 
     public string $timezone;
 

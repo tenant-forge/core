@@ -75,7 +75,7 @@ final class TenantForgeCentralDashboardServiceProvider extends PanelProvider
     {
         Filament::serving(function (ServingFilament $event): void {
             $panel = Filament::getCurrentPanel();
-            if ($panel->getId() === 'admin') {
+            if ($panel?->getId() === 'admin') {
                 FilamentView::registerRenderHook(
                     PanelsRenderHook::SIDEBAR_FOOTER,
                     fn (): string => Blade::render("@livewire('central-dashboard-sidebar-footer')"),

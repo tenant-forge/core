@@ -13,13 +13,13 @@ use function config;
 final class TenantForge extends Component
 {
     public function __construct(
-        private AppSettings $appSettings,
+        private readonly AppSettings $appSettings,
     ) {}
 
     public function render(): View
     {
         return view('tenantforge::components.tenantforge', [
-            'title' => $this->appSettings->name ?: config()->string('tenantforge.title'),
+            'title' => $this->appSettings->name !== '' && $this->appSettings->name !== '0' ? $this->appSettings->name : config()->string('tenantforge.title'),
             'description' => $this->appSettings->about,
         ]);
     }
