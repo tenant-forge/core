@@ -2,7 +2,6 @@ name: Epic issue
 description: Use this template to track epic issues
 title: "[Epic]: "
 labels: ["epic", "workflow"]
-type: epic
 body:
   - type: markdown
     attributes:
