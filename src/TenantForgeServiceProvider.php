@@ -6,6 +6,8 @@ namespace TenantForge;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
+use TenantForge\Livewire\CentralDashboardSidebarFooter;
 
 use function config_path;
 use function database_path;
@@ -27,6 +29,14 @@ final class TenantForgeServiceProvider extends ServiceProvider
         $this->configureCommands();
         $this->configureResources();
         $this->configureRoutes();
+        $this->configureLivewire();
+
+    }
+
+    private function configureLivewire(): void
+    {
+
+        Livewire::component('central-dashboard-sidebar-footer', CentralDashboardSidebarFooter::class);
 
     }
 
@@ -58,6 +68,8 @@ final class TenantForgeServiceProvider extends ServiceProvider
 
         }
 
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/settings');
     }
 
     private function configureTranslations(): void

@@ -2,4 +2,21 @@
 
 
 @source '../../../resources/views/filament/**/*';
+@source '../../../resources/views/livewire/**/*';
 
+
+.tf-settings-section .fi-grid-col {
+    @apply border-b border-zinc-200 dark:border-zinc-800 pb-6 -mx-6 px-6;
+}
+
+.tf-settings-section .fi-grid-col:last-of-type {
+    @apply border-b-0 pb-0;
+}
+
+.tf-settings-section .fi-fo-field-label-ctn {
+    @apply md:flex-col;
+}
+
+.tf-settings-section .fi-fo-field-label-ctn .fi-sc-text {
+    @apply text-xs text-zinc-500;
+}
