@@ -39,7 +39,7 @@ abstract class TestCase extends Orchestra
 
     }
 
-    final public function getEnvironmentSetUp($app): void
+    final public function defineEnvironment($app): void
     {
 
         $app['config']->set([
@@ -49,7 +49,7 @@ abstract class TestCase extends Orchestra
             'session.driver' => 'array',
             'app.locale' => 'en',
             'app.debug' => true,
-            'app.env' => 'testing',
+            'app.env' => 'local',
         ]);
 
     }
