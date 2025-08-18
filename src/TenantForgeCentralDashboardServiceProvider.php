@@ -66,6 +66,7 @@ final class TenantForgeCentralDashboardServiceProvider extends PanelProvider
                 // @codeCoverageIgnoreEnd
                 DispatchServingFilamentEvent::class,
             ])
+            ->authGuard('web_central')
             ->authMiddleware([
                 Authenticate::class,
             ]);

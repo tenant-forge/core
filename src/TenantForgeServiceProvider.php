@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace TenantForge;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
+use TenantForge\Filament\Pages\Auth\Register;
 use TenantForge\Livewire\CentralDashboardSidebarFooter;
 
 use function config_path;
 use function database_path;
 use function lang_path;
+use function Orchestra\Testbench\package_path;
 use function public_path;
 
 final class TenantForgeServiceProvider extends ServiceProvider
@@ -30,6 +33,14 @@ final class TenantForgeServiceProvider extends ServiceProvider
         $this->configureResources();
         $this->configureRoutes();
         $this->configureLivewire();
+        $this->configureBlade();
+
+    }
+
+    private function configureBlade(): void
+    {
+
+        Blade::anonymousComponentPath(package_path('views/components'), 'tenantforge');
 
     }
 
@@ -37,6 +48,7 @@ final class TenantForgeServiceProvider extends ServiceProvider
     {
 
         Livewire::component('central-dashboard-sidebar-footer', CentralDashboardSidebarFooter::class);
+        Livewire::component('tenant-forge.filament.pages.auth.register', Register::class);
 
     }
 

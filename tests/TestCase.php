@@ -9,6 +9,8 @@ use BladeUI\Icons\BladeIconsServiceProvider;
 use Filament\Actions\ActionsServiceProvider;
 use Filament\FilamentServiceProvider;
 use Filament\Forms\FormsServiceProvider;
+use Filament\Notifications\NotificationsServiceProvider;
+use Filament\Schemas\SchemasServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -16,6 +18,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Spatie\LaravelData\LaravelDataServiceProvider;
 use Spatie\LaravelSettings\LaravelSettingsServiceProvider;
 
 use function array_merge;
@@ -44,6 +47,9 @@ abstract class TestCase extends Orchestra
             'database.default' => 'testing',
             'cache.default' => 'array',
             'session.driver' => 'array',
+            'app.locale' => 'en',
+            'app.debug' => true,
+            'app.env' => 'testing',
         ]);
 
     }
@@ -62,7 +68,10 @@ abstract class TestCase extends Orchestra
             BladeIconsServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
             WidgetsServiceProvider::class,
-            LaravelSettingsServiceProvider::class,
+            SchemasServiceProvider::class,
+            NotificationsServiceProvider::class,
+            // LaravelSettingsServiceProvider::class,
+            // LaravelDataServiceProvider::class,
         ]);
     }
 }

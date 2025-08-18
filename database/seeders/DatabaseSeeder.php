@@ -7,6 +7,7 @@ namespace TenantForge\Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 final class DatabaseSeeder extends Seeder
 {
@@ -26,6 +27,7 @@ final class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
             'password' => bcrypt('password'),
             'email_verified_at' => now(),
+            'global_id' => Str::uuid()->toString(),
         ]);
 
     }
