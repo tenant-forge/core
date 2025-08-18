@@ -15,7 +15,7 @@ final class CentraUserData extends Data
         public string $password,
         public ?string $global_id = null
     ) {
-        if (! $global_id) {
+        if ($global_id === null || $global_id === '' || $global_id === '0') {
             $this->global_id = Str::uuid()->toString();
         }
     }

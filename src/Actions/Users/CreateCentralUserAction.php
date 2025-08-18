@@ -16,9 +16,7 @@ final class CreateCentralUserAction
      */
     public function handle(CentraUserData $data): CentralUser
     {
-        return DB::transaction(function () use ($data): CentralUser {
-            return CentralUser::query()
-                ->create($data->toArray());
-        });
+        return DB::transaction(fn (): CentralUser => CentralUser::query()
+            ->create($data->toArray()));
     }
 }

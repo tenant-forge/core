@@ -11,12 +11,11 @@ use Filament\Schemas\Components\Component;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use TenantForge\Actions\Users\CreateCentralUserAction;
-use TenantForge\Models\CentralUser;
+use TenantForge\DataObjects\CentraUserData;
 use TenantForge\Settings\AppSettings;
 use TenantForge\View\Components\TenantForge;
 use Throwable;
@@ -56,7 +55,6 @@ final class Register extends FilamentRegister
                 $this->getNameFormComponent(),
                 $this->getEmailFormComponent(),
                 $this->getPasswordFormComponent(),
-                // $this->getPasswordConfirmationFormComponent(),
             ]);
     }
 
@@ -65,9 +63,9 @@ final class Register extends FilamentRegister
      */
     protected function handleRegistration(array $data): Model
     {
-        $data['global_id'] = Str::uuid()->toString();
+        $data = CentraUserData::from($data);
 
-        return CentralUser::query()->create($data);
+        return $this->createCentralUserAction->handle($data);
     }
 
     /**
@@ -82,8 +80,7 @@ final class Register extends FilamentRegister
             ->required()
             ->rule(Password::default())
             ->showAllValidationMessages()
-            ->dehydrateStateUsing(fn ($state) => Hash::make($state))
-            // ->same('passwordConfirmation')
+            ->dehydrateStateUsing(fn (string $state) => Hash::make($state))
             ->validationAttribute(__('filament-panels::auth/pages/register.form.password.validation_attribute'));
     }
 }
