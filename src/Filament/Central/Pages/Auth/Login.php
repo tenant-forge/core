@@ -13,7 +13,7 @@ use TenantForge\View\Components\TenantForge;
 #[Layout(TenantForge::class)]
 final class Login extends FilamentLogin
 {
-    public ?string $description;
+    public ?string $description = null;
 
     public string $appName;
 

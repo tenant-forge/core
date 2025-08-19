@@ -28,7 +28,7 @@ use function filament;
 #[Title('Sign Up')]
 final class Register extends FilamentRegister
 {
-    public ?string $description;
+    public ?string $description = null;
 
     public string $appName;
 
