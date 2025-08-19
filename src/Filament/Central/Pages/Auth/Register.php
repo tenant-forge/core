@@ -68,7 +68,7 @@ final class Register extends FilamentRegister
         return Action::make('sign-in')
             ->label(__('tenantforge::auth.sign_in'))
             ->extraAttributes([
-                'data-test' => 'sign-in',
+                'data-test' => 'sign-in-link',
             ])
             ->link()
             ->url(route('tenantforge.sign-in'));
