@@ -24,6 +24,7 @@
         "filament/filament": "^4.0",
         "filament/spatie-laravel-settings-plugin": "^4.0",
         "laravel/sanctum": "^4.2",
+        "spatie/laravel-data": "^4.17",
         "spatie/laravel-package-tools": "^1.92.7",
         "stancl/tenancy": "^3.9"
     },
