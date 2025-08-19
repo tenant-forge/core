@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace TenantForge\Filament\Pages\Auth;
+namespace TenantForge\Filament\Central\Pages\Auth;
 
 use Exception;
+use Filament\Actions\Action;
 use Filament\Auth\Pages\Register as FilamentRegister;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Component;
@@ -27,13 +28,11 @@ use function filament;
 #[Title('Sign Up')]
 final class Register extends FilamentRegister
 {
-    public static ?string $title = 'Sign Up';
-
-    public string $description = 'Hello Mundo!';
+    public ?string $description;
 
     public string $appName;
 
-    protected string $view = 'tenantforge::filament.pages.auth.register';
+    protected string $view = 'tenantforge::filament.central.pages.auth.register';
 
     private CreateCentralUserAction $createCentralUserAction;
 
@@ -42,7 +41,13 @@ final class Register extends FilamentRegister
         CreateCentralUserAction $createCentralUserAction,
     ): void {
         $this->appName = $appSettings->name;
+        $this->description = $appSettings->about;
         $this->createCentralUserAction = $createCentralUserAction;
+    }
+
+    public function getTitle(): string
+    {
+        return __('tenantforge::auth.sign_up');
     }
 
     /**
@@ -56,6 +61,17 @@ final class Register extends FilamentRegister
                 $this->getEmailFormComponent(),
                 $this->getPasswordFormComponent(),
             ]);
+    }
+
+    public function alreadyHaveAnAccountAction(): Action
+    {
+        return Action::make('sign-in')
+            ->label(__('tenantforge::auth.sign_in'))
+            ->extraAttributes([
+                'data-test' => 'sign-in',
+            ])
+            ->link()
+            ->url(route('tenantforge.sign-in'));
     }
 
     /**

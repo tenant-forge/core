@@ -4,7 +4,7 @@
     'subheading' => null
 ])
 
-<div class="flex">
+<div class="flex overflow-hidden transition opacity-100 duration-750 starting:opacity-0 starting:translate-y-2">
 
     <div class="w-full md:w-6/12 py-16 px-6 md:min-w-[600px]">
         <div class="flex flex-col items-center max-h-screen overflow-y-auto">

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
-use TenantForge\Filament\Pages\Auth\Register;
+use TenantForge\Filament\Central\Pages\Auth\Register;
 use TenantForge\Livewire\CentralDashboardSidebarFooter;
 
 use function config_path;
@@ -95,7 +95,7 @@ final class TenantForgeServiceProvider extends ServiceProvider
             );
         }
 
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', self::$name);
+        $this->loadTranslationsFrom(__DIR__.'/../lang', self::$name);
 
     }
 
