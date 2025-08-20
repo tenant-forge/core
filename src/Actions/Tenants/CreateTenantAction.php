@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TenantForge\Actions\Tenants;
 
 use Illuminate\Support\Facades\DB;
+use TenantForge\Actions\MakeDomainFromSlugAction;
 use TenantForge\Actions\MakeUniqueSlugAction;
 use TenantForge\DataObjects\CreateTenantData;
 use TenantForge\Models\Tenant;
@@ -16,6 +17,7 @@ final readonly class CreateTenantAction
 {
     public function __construct(
         private MakeUniqueSlugAction $makeUniqueSlugAction,
+        private MakeDomainFromSlugAction $makeDomainFromSlugAction,
     ) {}
 
     /**
@@ -27,6 +29,10 @@ final readonly class CreateTenantAction
         $slug = $this->makeUniqueSlugAction->handle($data->name, Tenant::class);
 
         $data = array_merge($data->toArray(), ['slug' => $slug]);
+
+        if ($data['domain'] === null) {
+            $data['domain'] = $this->makeDomainFromSlugAction->handle($slug);
+        }
 
         return DB::transaction(fn (): Tenant => Tenant::query()->create($data));
     }

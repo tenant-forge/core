@@ -18,8 +18,8 @@ describe('CreateTenantData', function (): void {
 
         expect(array_keys($createTenantData->toArray()))->toBe([
             'name',
-            'domain',
             'email',
+            'domain',
         ]);
 
     });

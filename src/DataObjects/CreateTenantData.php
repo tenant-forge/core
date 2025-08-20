@@ -10,8 +10,8 @@ final class CreateTenantData extends Data
 {
     public function __construct(
         public string $name,
-        public string $domain,
         public string $email,
+        public ?string $domain = null,
     ) {}
 
 }
