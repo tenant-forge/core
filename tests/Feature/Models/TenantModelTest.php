@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Str;
 use TenantForge\Models\Tenant;
 
 test('can create a tenant with all required fields', function () {
 
     $tenant = Tenant::query()
         ->create([
-            'name' => 'Test Company',
+            'name' => $name = 'Test Company',
+            'slug' => Str::slug($name),
             'domain' => 'testcompany.com',
             'email' => 'admin@testcompany.com',
             'stripe_id' => 'cus_test123456789',
@@ -24,6 +26,8 @@ test('can create a tenant with all required fields', function () {
         ->toBeString()
         ->and($tenant->name)
         ->toBe('Test Company')
+        ->and($tenant->slug)
+        ->toBe('test-company')
         ->and($tenant->domain)
         ->toBe('testcompany.com')
         ->and($tenant->email)
@@ -46,7 +50,8 @@ test('can create a tenant with all required fields', function () {
 
 test('tenant id is automatically generated as uuid', function () {
     $tenant = Tenant::create([
-        'name' => 'Test Company',
+        'name' => $name = 'Test Company',
+        'slug' => Str::slug($name),
         'domain' => 'testcompany.com',
         'email' => 'admin@testcompany.com',
     ]);
@@ -58,7 +63,8 @@ test('tenant id is automatically generated as uuid', function () {
 
 test('can create tenant without optional fields', function () {
     $tenant = Tenant::query()->create([
-        'name' => 'Minimal Company',
+        'name' => $name = 'Minimal Company',
+        'slug' => Str::slug($name),
         'domain' => 'minimal.com',
         'email' => 'admin@minimal.com',
     ]);
@@ -75,7 +81,8 @@ test('data field is properly cast to array', function () {
     ];
 
     $tenant = Tenant::create([
-        'name' => 'JSON Test Company',
+        'name' => $name = 'JSON Test Company',
+        'slug' => Str::slug($name),
         'domain' => 'jsontest.com',
         'email' => 'admin@jsontest.com',
         'data' => $data,
@@ -90,36 +97,42 @@ test('data field is properly cast to array', function () {
 });
 
 test('domain field must be unique', function () {
-    Tenant::create([
+    Tenant::query()->create([
         'name' => 'First Company',
+        'slug' => 'first-company',
         'domain' => 'unique.com',
         'email' => 'first@unique.com',
     ]);
 
-    expect(fn () => Tenant::create([
-        'name' => 'Second Company',
+    expect(fn () => Tenant::query()->create([
+        'name' => $slug = 'Second Company',
+        'slug' => Str::slug($slug),
         'domain' => 'unique.com',
         'email' => 'second@unique.com',
-    ]))->toThrow(Exception::class);
+    ]))
+        ->toThrow(Exception::class);
 });
 
 test('email field must be unique', function () {
-    Tenant::create([
-        'name' => 'First Company',
+    Tenant::query()->create([
+        'name' => $name = 'First Company',
+        'slug' => Str::slug($name),
         'domain' => 'first.com',
         'email' => 'admin@unique.com',
     ]);
 
-    expect(fn () => Tenant::create([
-        'name' => 'Second Company',
+    expect(fn () => Tenant::query()->create([
+        'name' => $name = 'Second Company',
+        'slug' => Str::slug($name),
         'domain' => 'second.com',
         'email' => 'admin@unique.com',
     ]))->toThrow(Exception::class);
 });
 
 test('tenant has timestamps', function () {
-    $tenant = Tenant::create([
-        'name' => 'Timestamp Company',
+    $tenant = Tenant::query()->create([
+        'name' => $name = 'Timestamp Company',
+        'slug' => Str::slug($name),
         'domain' => 'timestamp.com',
         'email' => 'admin@timestamp.com',
     ]);

@@ -12,6 +12,7 @@ use Filament\Schemas\Components\Component;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -22,6 +23,7 @@ use TenantForge\View\Components\TenantForge;
 use Throwable;
 
 use function __;
+use function app;
 use function filament;
 
 #[Layout(TenantForge::class)]
@@ -35,6 +37,22 @@ final class Register extends FilamentRegister
     protected string $view = 'tenantforge::filament.central.pages.auth.register';
 
     private CreateCentralUserAction $createCentralUserAction;
+
+    public function mount(): void
+    {
+
+        parent::mount();
+
+        if (app()->isLocal()) {
+            $this->form->fill([
+
+                'name' => 'John Doe',
+                'email' => 'joe+'.Str::random(8).'@example.com',
+                'password' => 'password',
+            ]);
+        }
+
+    }
 
     public function boot(
         AppSettings $appSettings,

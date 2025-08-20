@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use TenantForge\Database\Factories\TenantFactory;
+use TenantForge\Tests\Contracts\Slugable;
 
 /**
  * @property-read string $id
  * @property-read string $name
+ * @property-read string $slug
  * @property-read string $domain
  * @property-read string $email
  * @property-read ?string $stripe_id
@@ -20,7 +22,7 @@ use TenantForge\Database\Factories\TenantFactory;
  * @property-read Carbon $created_at
  * @property-read Carbon $updated_at
  */
-final class Tenant extends Model
+final class Tenant extends Model implements Slugable
 {
     /** @use HasFactory<TenantFactory> */
     use HasFactory;
@@ -34,6 +36,7 @@ final class Tenant extends Model
      */
     protected $fillable = [
         'name',
+        'slug',
         'domain',
         'email',
         'stripe_id',

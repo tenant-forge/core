@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace TenantForge;
 
+use Filament\Auth\Http\Responses\Contracts\RegistrationResponse as FilamentRegistrationResponse;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use TenantForge\Filament\Central\Pages\Auth\Register;
+use TenantForge\Filament\Central\Pages\Onboarding\TenantOnboarding;
+use TenantForge\Http\Responses\RegistrationResponse;
 use TenantForge\Livewire\CentralDashboardSidebarFooter;
 
 use function config_path;
@@ -22,6 +25,15 @@ final class TenantForgeServiceProvider extends ServiceProvider
     public static string $name = 'tenantforge';
 
     public static string $viewNamespace = 'tenantforge';
+
+    public function register(): void
+    {
+        $this->app->bind(
+            FilamentRegistrationResponse::class,
+            RegistrationResponse::class
+
+        );
+    }
 
     public function boot(): void
     {
@@ -47,8 +59,18 @@ final class TenantForgeServiceProvider extends ServiceProvider
     private function configureLivewire(): void
     {
 
-        Livewire::component('central-dashboard-sidebar-footer', CentralDashboardSidebarFooter::class);
-        Livewire::component('tenant-forge.filament.pages.auth.register', Register::class);
+        Livewire::component(
+            name: 'central-dashboard-sidebar-footer',
+            class: CentralDashboardSidebarFooter::class
+        );
+        Livewire::component(
+            name: 'tenant-forge.filament.pages.auth.register',
+            class: Register::class
+        );
+        Livewire::component(
+            name: 'tenant-forge.filament.central.pages.onboarding.tenant-onboarding',
+            class: TenantOnboarding::class
+        );
 
     }
 
