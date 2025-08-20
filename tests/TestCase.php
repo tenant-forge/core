@@ -20,6 +20,7 @@ use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\LaravelData\LaravelDataServiceProvider;
 use Spatie\LaravelSettings\LaravelSettingsServiceProvider;
+use TenantForge\Models\Tenant;
 
 use function array_merge;
 
@@ -50,6 +51,7 @@ abstract class TestCase extends Orchestra
             'app.locale' => 'en',
             'app.debug' => true,
             'app.env' => 'local',
+            'tenancy.tenant_model' => Tenant::class,
         ]);
 
     }

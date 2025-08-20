@@ -1,5 +1,6 @@
 providers:
   - Workbench\App\Providers\WorkbenchServiceProvider
+  - Workbench\App\Providers\TenancyServiceProvider
   - TenantForge\TenantForgeServiceProvider
   - TenantForge\TenantForgeCentralDashboardServiceProvider
   - Spatie\LaravelData\LaravelDataServiceProvider
@@ -33,7 +34,7 @@ workbench:
   health: false
   discovers:
     config: true
-    web: true
+    web: false
   sync:
     - from: public
       to: public/vendor/tenantforge/core

@@ -39,5 +39,7 @@
         Hello
     </div>
 
+    <x-filament-actions::modals />
+
 </div>
 

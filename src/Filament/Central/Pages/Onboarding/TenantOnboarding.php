@@ -8,6 +8,7 @@ use Exception;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Actions;
 use Filament\Schemas\Components\Component;
@@ -19,13 +20,17 @@ use Filament\Schemas\Schema;
 use Filament\View\PanelsRenderHook;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use TenantForge\Actions\Tenants\CreateTenantAction;
+use TenantForge\DataObjects\CreateTenantData;
 use TenantForge\Enums\OrganizationType;
 use TenantForge\Models\CentralUser;
 use TenantForge\Models\Tenant;
 use TenantForge\Settings\AppSettings;
 use TenantForge\View\Components\TenantForge;
+use Throwable;
 
 use function abort;
+use function auth;
 
 /**
  * @property Schema $form
@@ -45,12 +50,14 @@ final class TenantOnboarding extends Page implements HasSchemas
 
     protected string $view = 'tenantforge::filament.central.pages.onboarding.tenant';
 
+    private CreateTenantAction $createTenantAction;
+
     private ?CentralUser $centralUser = null;
 
-    public function boot(AppSettings $appSettings): void
-    {
-        $this->appName = $appSettings->name;
-        $this->description = $appSettings->about;
+    public function boot(
+        AppSettings $appSettings,
+        CreateTenantAction $createTenantAction
+    ): void {
 
         $this->centralUser = auth()
             ->guard('web_central')
@@ -59,6 +66,11 @@ final class TenantOnboarding extends Page implements HasSchemas
         if (! $this->centralUser instanceof CentralUser) {
             abort(403);
         }
+
+        $this->appName = $appSettings->name;
+        $this->description = $appSettings->about;
+
+        $this->createTenantAction = $createTenantAction;
 
     }
 
@@ -111,10 +123,22 @@ final class TenantOnboarding extends Page implements HasSchemas
             ]);
     }
 
+    /**
+     * @throws Throwable
+     */
     public function onboardTenant(): void
     {
 
-        $this->form->getState();
+        $state = $this->form->getState();
+
+        $tenant = $this->createTenantAction->handle(
+            CreateTenantData::from($state),
+        );
+
+        Notification::make('tenant-created')
+            ->success()
+            ->title("Tenant {$tenant->name} has been created.")
+            ->send();
 
     }
 

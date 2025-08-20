@@ -16,6 +16,7 @@ use TenantForge\Livewire\CentralDashboardSidebarFooter;
 
 use function config_path;
 use function database_path;
+use function file_exists;
 use function lang_path;
 use function Orchestra\Testbench\package_path;
 use function public_path;
@@ -153,9 +154,19 @@ final class TenantForgeServiceProvider extends ServiceProvider
     private function configureRoutes(): void
     {
 
-        Route::middleware(['web'])->group(function (): void {
-            $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
-        });
+        if (file_exists(package_path('routes/web.php'))) {
+            Route::middleware(['web'])
+                ->domain('localhost')
+                ->group(function (): void {
+                    $this->loadRoutesFrom(package_path('/routes/web.php'));
+                });
+        }
+
+        if (file_exists(package_path('routes/tenant.php'))) {
+
+            $this->loadRoutesFrom(package_path('routes/tenant.php'));
+
+        }
 
     }
 }

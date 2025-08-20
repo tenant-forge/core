@@ -7,7 +7,10 @@ namespace TenantForge\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Stancl\Tenancy\Contracts\TenantWithDatabase;
+use Stancl\Tenancy\Database\Concerns\HasDatabase;
+use Stancl\Tenancy\Database\Concerns\HasDomains;
+use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 use TenantForge\Database\Factories\TenantFactory;
 use TenantForge\Tests\Contracts\Slugable;
 
@@ -22,8 +25,11 @@ use TenantForge\Tests\Contracts\Slugable;
  * @property-read Carbon $created_at
  * @property-read Carbon $updated_at
  */
-final class Tenant extends Model implements Slugable
+final class Tenant extends BaseTenant implements Slugable, TenantWithDatabase
 {
+    use HasDatabase;
+    use HasDomains;
+
     /** @use HasFactory<TenantFactory> */
     use HasFactory;
 
@@ -35,6 +41,7 @@ final class Tenant extends Model implements Slugable
      * @var list<string>
      */
     protected $fillable = [
+        'id',
         'name',
         'slug',
         'domain',
@@ -42,6 +49,18 @@ final class Tenant extends Model implements Slugable
         'stripe_id',
         'data',
     ];
+
+    public static function getCustomColumns(): array
+    {
+        return [
+            'id',
+            'name',
+            'slug',
+            'domain',
+            'email',
+            'stripe_id',
+        ];
+    }
 
     /**
      * Get the attributes that should be cast.
