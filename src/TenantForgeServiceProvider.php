@@ -115,17 +115,18 @@ final class TenantForgeServiceProvider extends ServiceProvider
     {
 
         if ($this->app->runningInConsole()) {
-            $this->publishesMigrations(
+            $this->publishes(
                 paths: [
                     __DIR__.'/../database/migrations' => database_path('migrations'),
+                    __DIR__.'/../database/settings' => database_path('settings'),
                 ],
-                groups: 'tenantforge-migrations'
+                groups: 'migrations'
             );
 
         }
 
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        $this->loadMigrationsFrom(__DIR__.'/../database/settings');
+        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        // $this->loadMigrationsFrom(__DIR__.'/../database/settings');
     }
 
     private function configureTranslations(): void

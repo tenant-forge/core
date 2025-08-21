@@ -23,6 +23,7 @@ env:
 
 migrations:
   - workbench/database/migrations
+  - database/settings
   - database/migrations
 
 seeders:
