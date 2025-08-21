@@ -2,21 +2,22 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Str;
 use TenantForge\Models\Tenant;
 
 test('can create a tenant with all required fields', function () {
 
-    $tenant = Tenant::query()
-        ->create([
-            'name' => 'Test Company',
+    /** @var Tenant $tenant */
+    $tenant = Tenant::factory()
+        ->createQuietly([
+            'name' => $name = 'Test Company',
+            'slug' => Str::slug($name),
             'domain' => 'testcompany.com',
             'email' => 'admin@testcompany.com',
             'stripe_id' => 'cus_test123456789',
-            'data' => [
-                'settings' => ['theme' => 'dark'],
-                'features' => ['analytics', 'reporting'],
-            ],
-        ]);
+            'settings' => ['theme' => 'dark'],
+            'features' => ['analytics', 'reporting'],
+        ])->fresh();
 
     expect($tenant)
         ->toBeInstanceOf(Tenant::class)
@@ -24,17 +25,16 @@ test('can create a tenant with all required fields', function () {
         ->toBeString()
         ->and($tenant->name)
         ->toBe('Test Company')
+        ->and($tenant->slug)
+        ->toBe('test-company')
         ->and($tenant->domain)
         ->toBe('testcompany.com')
         ->and($tenant->email)
         ->toBe('admin@testcompany.com')
         ->and($tenant->stripe_id)
         ->toBe('cus_test123456789')
-        ->and($tenant->data)
-        ->toBe([
-            'settings' => ['theme' => 'dark'],
-            'features' => ['analytics', 'reporting'],
-        ])
+        ->and($tenant->settings)
+        ->toBe(['theme' => 'dark'])
         ->and(
             Tenant::query()
                 ->where('id', $tenant->id)
@@ -45,8 +45,10 @@ test('can create a tenant with all required fields', function () {
 });
 
 test('tenant id is automatically generated as uuid', function () {
-    $tenant = Tenant::create([
-        'name' => 'Test Company',
+    /** @var Tenant $tenant */
+    $tenant = Tenant::factory()->createQuietly([
+        'name' => $name = 'Test Company',
+        'slug' => Str::slug($name),
         'domain' => 'testcompany.com',
         'email' => 'admin@testcompany.com',
     ]);
@@ -57,14 +59,19 @@ test('tenant id is automatically generated as uuid', function () {
 });
 
 test('can create tenant without optional fields', function () {
-    $tenant = Tenant::query()->create([
-        'name' => 'Minimal Company',
+    /** @var Tenant $tenant */
+    $tenant = Tenant::factory()->createQuietly([
+        'name' => $name = 'Minimal Company',
+        'slug' => Str::slug($name),
         'domain' => 'minimal.com',
         'email' => 'admin@minimal.com',
+        'stripe_id' => null,
     ]);
 
-    expect($tenant->stripe_id)->toBeNull()
-        ->and($tenant->data)->toBeNull();
+    expect($tenant->stripe_id)
+        ->toBeNull()
+        ->and($tenant->data)
+        ->toBeNull();
 });
 
 test('data field is properly cast to array', function () {
@@ -74,52 +81,62 @@ test('data field is properly cast to array', function () {
         'metadata' => ['created_by' => 'admin'],
     ];
 
-    $tenant = Tenant::create([
-        'name' => 'JSON Test Company',
+    /** @var Tenant $tenant */
+    $tenant = Tenant::factory()->createQuietly([
+        'name' => $name = 'JSON Test Company',
+        'slug' => Str::slug($name),
         'domain' => 'jsontest.com',
         'email' => 'admin@jsontest.com',
-        'data' => $data,
+        ...$data,
     ]);
 
-    expect($tenant->data)->toBe($data)
-        ->and($tenant->data)->toBeArray();
+    expect($tenant->settings)
+        ->toBe($data['settings'])
+        ->and($tenant->data)
+        ->toBeNull();
 
-    // Refresh from database to ensure casting works on retrieval
     $tenant->refresh();
-    expect($tenant->data)->toBe($data);
+    expect($tenant->data)
+        ->toBeNull();
 });
 
 test('domain field must be unique', function () {
-    Tenant::create([
+    Tenant::factory()->createQuietly([
         'name' => 'First Company',
+        'slug' => 'first-company',
         'domain' => 'unique.com',
         'email' => 'first@unique.com',
     ]);
 
-    expect(fn () => Tenant::create([
-        'name' => 'Second Company',
+    expect(fn () => Tenant::factory()->createQuietly([
+        'name' => $slug = 'Second Company',
+        'slug' => Str::slug($slug),
         'domain' => 'unique.com',
         'email' => 'second@unique.com',
-    ]))->toThrow(Exception::class);
+    ]))
+        ->toThrow(Exception::class);
 });
 
 test('email field must be unique', function () {
-    Tenant::create([
-        'name' => 'First Company',
+    Tenant::factory()->createQuietly([
+        'name' => $name = 'First Company',
+        'slug' => Str::slug($name),
         'domain' => 'first.com',
         'email' => 'admin@unique.com',
     ]);
 
-    expect(fn () => Tenant::create([
-        'name' => 'Second Company',
+    expect(fn () => Tenant::factory()->createQuietly([
+        'name' => $name = 'Second Company',
+        'slug' => Str::slug($name),
         'domain' => 'second.com',
         'email' => 'admin@unique.com',
     ]))->toThrow(Exception::class);
 });
 
 test('tenant has timestamps', function () {
-    $tenant = Tenant::create([
-        'name' => 'Timestamp Company',
+    $tenant = Tenant::factory()->createQuietly([
+        'name' => $name = 'Timestamp Company',
+        'slug' => Str::slug($name),
         'domain' => 'timestamp.com',
         'email' => 'admin@timestamp.com',
     ]);

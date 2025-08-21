@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace TenantForge;
 
+use Filament\Auth\Http\Responses\Contracts\RegistrationResponse as FilamentRegistrationResponse;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use TenantForge\Filament\Central\Pages\Auth\Register;
+use TenantForge\Filament\Central\Pages\Onboarding\TenantOnboarding;
+use TenantForge\Http\Responses\RegistrationResponse;
 use TenantForge\Livewire\CentralDashboardSidebarFooter;
 
 use function config_path;
 use function database_path;
+use function file_exists;
 use function lang_path;
-use function Orchestra\Testbench\package_path;
 use function public_path;
 
 final class TenantForgeServiceProvider extends ServiceProvider
@@ -22,6 +25,15 @@ final class TenantForgeServiceProvider extends ServiceProvider
     public static string $name = 'tenantforge';
 
     public static string $viewNamespace = 'tenantforge';
+
+    public function register(): void
+    {
+        $this->app->bind(
+            FilamentRegistrationResponse::class,
+            RegistrationResponse::class
+
+        );
+    }
 
     public function boot(): void
     {
@@ -40,15 +52,25 @@ final class TenantForgeServiceProvider extends ServiceProvider
     private function configureBlade(): void
     {
 
-        Blade::anonymousComponentPath(package_path('views/components'), 'tenantforge');
+        Blade::anonymousComponentPath(__DIR__.'/../resources/views/components', 'tenantforge');
 
     }
 
     private function configureLivewire(): void
     {
 
-        Livewire::component('central-dashboard-sidebar-footer', CentralDashboardSidebarFooter::class);
-        Livewire::component('tenant-forge.filament.pages.auth.register', Register::class);
+        Livewire::component(
+            name: 'central-dashboard-sidebar-footer',
+            class: CentralDashboardSidebarFooter::class
+        );
+        Livewire::component(
+            name: 'tenant-forge.filament.pages.auth.register',
+            class: Register::class
+        );
+        Livewire::component(
+            name: 'tenant-forge.filament.central.pages.onboarding.tenant-onboarding',
+            class: TenantOnboarding::class
+        );
 
     }
 
@@ -131,9 +153,18 @@ final class TenantForgeServiceProvider extends ServiceProvider
     private function configureRoutes(): void
     {
 
-        Route::middleware(['web'])->group(function (): void {
-            $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
-        });
+        if (file_exists(__DIR__.'/../routes/web.php')) {
+            Route::middleware(['web'])
+                ->group(function (): void {
+                    $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+                });
+        }
+
+        if (file_exists(__DIR__.'/../routes/tenant.php')) {
+
+            $this->loadRoutesFrom(__DIR__.'/../routes/tenant.php');
+
+        }
 
     }
 }

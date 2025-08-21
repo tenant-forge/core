@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TenantForge\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 use TenantForge\Models\Tenant;
 
 final class TenantFactory extends Factory
@@ -14,7 +15,8 @@ final class TenantFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->company(),
+            'name' => $name = fake()->unique()->company(),
+            'slug' => Str::slug($name),
             'domain' => fake()->unique()->domainName(),
             'email' => fake()->unique()->safeEmail(),
             'stripe_id' => fake()->optional()->regexify('cus_[A-Za-z0-9]{14}'),
