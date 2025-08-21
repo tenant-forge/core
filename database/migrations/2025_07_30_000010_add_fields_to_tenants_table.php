@@ -13,15 +13,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tenants', function (Blueprint $table): void {
-            $table->uuid('id')->primary();
+        Schema::table('tenants', function (Blueprint $table): void {
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('domain')->unique();
             $table->string('email')->unique();
             $table->string('stripe_id')->nullable();
-            $table->jsonb('data')->nullable();
-            $table->timestamps();
 
             $table->index('domain');
             $table->index('slug');

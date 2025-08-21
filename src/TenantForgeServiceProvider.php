@@ -120,13 +120,10 @@ final class TenantForgeServiceProvider extends ServiceProvider
                     __DIR__.'/../database/migrations' => database_path('migrations'),
                     __DIR__.'/../database/settings' => database_path('settings'),
                 ],
-                groups: 'migrations'
+                groups: self::$name.'-migrations'
             );
 
         }
-
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/settings');
     }
 
     private function configureTranslations(): void
