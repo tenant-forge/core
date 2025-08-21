@@ -28,7 +28,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use TenantForge\Enums\AuthGuard;
 use TenantForge\Filament\Central\Widgets\TenantsWidget;
 
-final class TenantForgeCentralDashboardServiceProvider extends PanelProvider
+class TenantForgeCentralDashboardServiceProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {

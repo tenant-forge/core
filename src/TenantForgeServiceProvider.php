@@ -60,6 +60,7 @@ final class TenantForgeServiceProvider extends ServiceProvider
         FilamentColor::register([
             'primary' => Color::generatePalette('rgb(4, 193, 71)'),
         ]);
+
     }
 
     private function configureAuth(): void
