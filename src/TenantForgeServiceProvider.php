@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace TenantForge;
 
 use Filament\Auth\Http\Responses\Contracts\RegistrationResponse as FilamentRegistrationResponse;
+use Filament\Support\Colors\Color;
+use Filament\Support\Facades\FilamentColor;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -50,6 +52,14 @@ final class TenantForgeServiceProvider extends ServiceProvider
         $this->configureLivewire();
         $this->configureBlade();
         $this->configureAuth();
+        $this->configureFilament();
+    }
+
+    private function configureFilament(): void
+    {
+        FilamentColor::register([
+            'primary' => Color::generatePalette('rgb(4, 193, 71)'),
+        ]);
     }
 
     private function configureAuth(): void

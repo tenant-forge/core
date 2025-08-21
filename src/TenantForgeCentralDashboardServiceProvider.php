@@ -38,7 +38,8 @@ final class TenantForgeCentralDashboardServiceProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::generatePalette('rgb(4, 193, 71)'),
+                'gray' => Color::Zinc,
             ])
             ->sidebarWidth('18rem')
             ->maxContentWidth(Width::ScreenTwoExtraLarge)
