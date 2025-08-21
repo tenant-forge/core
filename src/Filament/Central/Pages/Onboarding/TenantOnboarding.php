@@ -55,6 +55,11 @@ final class TenantOnboarding extends Page implements HasSchemas
 
     private ?CentralUser $centralUser = null;
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     public function boot(
         AppSettings $appSettings,
         CreateTenantAction $createTenantAction

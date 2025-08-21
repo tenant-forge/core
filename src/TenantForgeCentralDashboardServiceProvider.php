@@ -43,13 +43,13 @@ final class TenantForgeCentralDashboardServiceProvider extends PanelProvider
             ->sidebarWidth('18rem')
             ->maxContentWidth(Width::ScreenTwoExtraLarge)
             ->viteTheme('resources/css/filament/theme.css', 'vendor/tenantforge/core/build')
-            ->discoverResources(in: source_path('Filament/Central/Resources'), for: 'TenantForge\\Filament\\Central\\Resources')
-            ->discoverPages(in: source_path('Filament/Central/Pages'), for: 'TenantForge\\Filament\\Central\\Pages')
-            ->discoverClusters(source_path('Filament/Central/Clusters'), for: 'TenantForge\\Filament\\Central\\Clusters')
+            ->discoverResources(in: __DIR__.'/Filament/Central/Resources', for: 'TenantForge\\Filament\\Central\\Resources')
+            ->discoverPages(in: __DIR__.'Filament/Central/Pages', for: 'TenantForge\\Filament\\Central\\Pages')
+            ->discoverClusters(__DIR__.'Filament/Central/Clusters', for: 'TenantForge\\Filament\\Central\\Clusters')
             ->pages([
                 Pages\Dashboard::class,
             ])
-            ->discoverWidgets(in: source_path('Filament/Central/Widgets'), for: 'TenantForge\\Filament\\Central\\Widgets')
+            ->discoverWidgets(in: __DIR__.'Filament/Central/Widgets', for: 'TenantForge\\Filament\\Central\\Widgets')
             ->widgets([
                 TenantsWidget::class,
                 // Widgets\AccountWidget::class,
