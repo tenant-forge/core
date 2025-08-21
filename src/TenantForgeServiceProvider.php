@@ -9,11 +9,14 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
+use TenantForge\Enums\AuthGuard;
 use TenantForge\Filament\Central\Pages\Auth\Register;
 use TenantForge\Filament\Central\Pages\Onboarding\TenantOnboarding;
 use TenantForge\Http\Responses\RegistrationResponse;
 use TenantForge\Livewire\CentralDashboardSidebarFooter;
 
+use function array_merge;
+use function config;
 use function config_path;
 use function database_path;
 use function file_exists;
@@ -46,6 +49,25 @@ final class TenantForgeServiceProvider extends ServiceProvider
         $this->configureRoutes();
         $this->configureLivewire();
         $this->configureBlade();
+        $this->configureAuth();
+    }
+
+    private function configureAuth(): void
+    {
+
+        config()->set('auth.guards', array_merge(config()->array('auth.guards'), [
+            AuthGuard::WebCentral->value => [
+                'driver' => 'session',
+                'provider' => 'central_users',
+            ],
+        ]));
+
+        config()->set('auth.providers', array_merge(config()->array('auth.providers'), [
+            'central_users' => [
+                'driver' => 'eloquent',
+                'model' => config()->string('tenantforge.central_user_model'),
+            ],
+        ]));
 
     }
 

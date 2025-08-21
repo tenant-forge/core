@@ -22,6 +22,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use TenantForge\Actions\Tenants\CreateTenantAction;
 use TenantForge\DataObjects\CreateTenantData;
+use TenantForge\Enums\AuthGuard;
 use TenantForge\Enums\OrganizationType;
 use TenantForge\Models\CentralUser;
 use TenantForge\Models\Tenant;
@@ -60,7 +61,7 @@ final class TenantOnboarding extends Page implements HasSchemas
     ): void {
 
         $this->centralUser = auth()
-            ->guard('web_central')
+            ->guard(AuthGuard::WebCentral->value)
             ->user();
 
         if (! $this->centralUser instanceof CentralUser) {

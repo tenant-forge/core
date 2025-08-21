@@ -25,6 +25,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use TenantForge\Enums\AuthGuard;
 use TenantForge\Filament\Central\Widgets\TenantsWidget;
 
 final class TenantForgeCentralDashboardServiceProvider extends PanelProvider
@@ -66,7 +67,7 @@ final class TenantForgeCentralDashboardServiceProvider extends PanelProvider
                 // @codeCoverageIgnoreEnd
                 DispatchServingFilamentEvent::class,
             ])
-            ->authGuard('web_central')
+            ->authGuard(AuthGuard::WebCentral->value)
             ->authMiddleware([
                 Authenticate::class,
             ]);
