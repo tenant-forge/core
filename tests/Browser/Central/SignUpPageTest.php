@@ -18,7 +18,7 @@ describe('sign-up page', function (): void {
 
         visit(route('tenantforge.sign-up'))
             ->assertSee(__('tenantforge::auth.sign_up'))
-            ->click('@sign-in-link')
+            ->click('Sign in')
             ->assertSee(__('tenantforge::auth.sign_in_message'));
 
     });
