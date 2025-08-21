@@ -2,7 +2,15 @@
 
 declare(strict_types=1);
 
+use Filament\Auth\Http\Responses\Contracts\RegistrationResponse;
 use TenantForge\Models\CentralUser;
+
+beforeEach(function (): void {
+    $this->app->bind(
+        RegistrationResponse::class,
+        TenantForge\Http\Responses\RegistrationResponse::class
+    );
+});
 
 describe('sign-up page', function (): void {
 
@@ -23,7 +31,7 @@ describe('sign-up page', function (): void {
             ->type('form.password', 'password')
             ->click('Sign up')
             ->assertNoConsoleLogs()
-            ->assertSee('Dashboard');
+            ->assertSee(__('tenantforge::tenants.create_your_organization'));
 
         expect(
             CentralUser::query()

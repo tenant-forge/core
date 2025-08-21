@@ -52,7 +52,7 @@ abstract class TestCase extends Orchestra
             'session.driver' => 'array',
             'app.locale' => 'en',
             'app.debug' => true,
-            'app.env' => 'local',
+            'app.env' => 'testing',
             'tenancy.tenant_model' => Tenant::class,
         ]);
 
@@ -74,8 +74,8 @@ abstract class TestCase extends Orchestra
             WidgetsServiceProvider::class,
             SchemasServiceProvider::class,
             NotificationsServiceProvider::class,
-            LaravelSettingsServiceProvider::class,
-            LaravelDataServiceProvider::class,
+            // LaravelSettingsServiceProvider::class,
+            // LaravelDataServiceProvider::class,
         ]);
     }
 }
