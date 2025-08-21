@@ -17,6 +17,7 @@ use TenantForge\Filament\Central\Pages\Onboarding\TenantOnboarding;
 use TenantForge\Http\Responses\RegistrationResponse;
 use TenantForge\Livewire\CentralDashboardSidebarFooter;
 
+use function app_path;
 use function array_merge;
 use function config;
 use function config_path;
@@ -178,6 +179,13 @@ final class TenantForgeServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../public/' => public_path('vendor/tenantforge/core'),
         ], ['tenantforge', 'tenantforge-assets']);
+
+        $this->publishes(
+            paths: [
+                __DIR__.'/../assets/CentralDashboardServiceProvider.stub.php' => app_path('Providers/Filament/CentralDashboardServiceProvider.php'),
+            ],
+            groups: 'tenantforge'
+        );
 
     }
 
