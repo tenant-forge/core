@@ -34,6 +34,7 @@ final readonly class CreateTenantAction
             $data['domain'] = $this->makeDomainFromSlugAction->handle($slug);
         }
 
+        /** @var Tenant $tenant */
         $tenant = DB::transaction(fn (): Tenant => Tenant::query()->create($data));
 
         $tenant->domains()->create([

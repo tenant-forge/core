@@ -16,6 +16,7 @@ use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\LivewireServiceProvider;
+use Orchestra\Testbench\Attributes\WithMigration;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\LaravelData\LaravelDataServiceProvider;
@@ -24,6 +25,7 @@ use TenantForge\Models\Tenant;
 
 use function array_merge;
 
+#[WithMigration]
 abstract class TestCase extends Orchestra
 {
     use RefreshDatabase;
@@ -45,7 +47,7 @@ abstract class TestCase extends Orchestra
 
         $app['config']->set([
             'auth.providers.users.model' => 'Workbench\\App\\Models\\User',
-            'database.default' => 'testing',
+            'database.default' => 'sqlite',
             'cache.default' => 'array',
             'session.driver' => 'array',
             'app.locale' => 'en',
@@ -72,8 +74,8 @@ abstract class TestCase extends Orchestra
             WidgetsServiceProvider::class,
             SchemasServiceProvider::class,
             NotificationsServiceProvider::class,
-            // LaravelSettingsServiceProvider::class,
-            // LaravelDataServiceProvider::class,
+            LaravelSettingsServiceProvider::class,
+            LaravelDataServiceProvider::class,
         ]);
     }
 }

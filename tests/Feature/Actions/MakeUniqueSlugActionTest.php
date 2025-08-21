@@ -26,22 +26,22 @@ describe('MakeUniqueSlugAction', function (): void {
 
     test('it makes a unique slug by adding the correct suffix', function (): void {
 
-        $tenant = Tenant::factory()->create([
+        $tenant = Tenant::factory()->createQuietly([
             'name' => 'TenantForge',
             'slug' => 'tenantforge',
             'created_at' => now(),
-        ]);
+        ])->fresh();
 
-        Tenant::factory()->create([
+        Tenant::factory()->createQuietly([
             'name' => 'TenantForge',
             'slug' => 'tenantforge-2',
-            'created_at' => now()->addSeconds(3),
+            'created_at' => now()->addSeconds(15),
         ]);
 
-        Tenant::factory()->create([
+        Tenant::factory()->createQuietly([
             'name' => 'TenantForge',
             'slug' => 'tenantforge-1',
-            'created_at' => now()->subSeconds(2),
+            'created_at' => now()->addSeconds(1),
         ]);
 
         $slug = $this->action->handle($tenant->slug, Tenant::class);
@@ -55,7 +55,7 @@ describe('MakeUniqueSlugAction', function (): void {
 
     test('it makes a unique slug', function (): void {
 
-        $tenant = Tenant::factory()->create([
+        $tenant = Tenant::factory()->createQuietly([
             'name' => 'TenantForge',
             'slug' => 'tenantforge',
         ]);

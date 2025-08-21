@@ -6,7 +6,7 @@ namespace TenantForge\Actions;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use TenantForge\Tests\Contracts\Slugable;
+use TenantForge\Contracts\Slugable;
 
 use function is_string;
 use function sprintf;

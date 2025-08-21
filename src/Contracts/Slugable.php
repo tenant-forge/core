@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TenantForge\Tests\Contracts;
+namespace TenantForge\Contracts;
 
 /**
  * @property string $slug

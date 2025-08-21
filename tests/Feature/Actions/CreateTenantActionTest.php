@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Event;
 use TenantForge\Actions\Tenants\CreateTenantAction;
 use TenantForge\DataObjects\CreateTenantData;
 use TenantForge\Models\Tenant;
@@ -21,6 +22,8 @@ describe('Create Tenant Action', function (): void {
 
     test('it adds a domain to the tenant', function (): void {
 
+        Event::fake();
+
         $data = CreateTenantData::from([
             'name' => 'Test Company',
             'email' => 'admin@testcompany.com',
@@ -34,6 +37,8 @@ describe('Create Tenant Action', function (): void {
     });
 
     test('it adds a slug to the tenant', function (): void {
+
+        Event::fake();
 
         // Arrange
         $data = CreateTenantData::from([
@@ -52,6 +57,8 @@ describe('Create Tenant Action', function (): void {
     });
 
     test('if the slug is already taken, it adds a number to the slug', function (): void {
+
+        Event::fake();
 
         Tenant::factory()->create([
             'name' => 'Test Company',
@@ -72,6 +79,8 @@ describe('Create Tenant Action', function (): void {
     });
 
     test('it creates a new tenant', function (): void {
+
+        Event::fake();
 
         $data = CreateTenantData::from([
             'name' => 'Test Company',

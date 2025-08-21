@@ -18,7 +18,6 @@ use function config_path;
 use function database_path;
 use function file_exists;
 use function lang_path;
-use function Orchestra\Testbench\package_path;
 use function public_path;
 
 final class TenantForgeServiceProvider extends ServiceProvider
@@ -53,7 +52,7 @@ final class TenantForgeServiceProvider extends ServiceProvider
     private function configureBlade(): void
     {
 
-        Blade::anonymousComponentPath(package_path('views/components'), 'tenantforge');
+        Blade::anonymousComponentPath(__DIR__.'/../resources/views/components', 'tenantforge');
 
     }
 
@@ -154,17 +153,16 @@ final class TenantForgeServiceProvider extends ServiceProvider
     private function configureRoutes(): void
     {
 
-        if (file_exists(package_path('routes/web.php'))) {
+        if (file_exists(__DIR__.'/../routes/web.php')) {
             Route::middleware(['web'])
-                ->domain('localhost')
                 ->group(function (): void {
-                    $this->loadRoutesFrom(package_path('/routes/web.php'));
+                    $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
                 });
         }
 
-        if (file_exists(package_path('routes/tenant.php'))) {
+        if (file_exists(__DIR__.'/../routes/tenant.php')) {
 
-            $this->loadRoutesFrom(package_path('routes/tenant.php'));
+            $this->loadRoutesFrom(__DIR__.'/../routes/tenant.php');
 
         }
 
