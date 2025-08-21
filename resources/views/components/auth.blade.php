@@ -35,7 +35,7 @@
 
     </div>
 
-    <div>
+    <div class="hidden md:block md:w-6/12">
         Hello
     </div>
 
