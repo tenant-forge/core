@@ -120,7 +120,7 @@ final class TenantForgeServiceProvider extends ServiceProvider
                     __DIR__.'/../database/migrations' => database_path('migrations'),
                     __DIR__.'/../database/settings' => database_path('settings'),
                 ],
-                groups: self::$name.'-migrations'
+                groups: 'migrations'
             );
 
         }
