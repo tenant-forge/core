@@ -1,0 +1,24 @@
+{
+  "resources/css/filament/theme.css": {
+    "file": "assets/theme-Br5lpne9.css",
+    "src": "resources/css/filament/theme.css",
+    "isEntry": true,
+    "names": [
+      "theme.css"
+    ]
+  },
+  "resources/css/tenantforge.css": {
+    "file": "assets/tenantforge-BAl7PB1Q.css",
+    "src": "resources/css/tenantforge.css",
+    "isEntry": true,
+    "names": [
+      "tenantforge.css"
+    ]
+  },
+  "resources/js/tenantforge.js": {
+    "file": "assets/tenantforge-l0sNRNKZ.js",
+    "name": "tenantforge",
+    "src": "resources/js/tenantforge.js",
+    "isEntry": true
+  }
+}

@@ -4,6 +4,7 @@
 .phpunit.cache
 .vscode
 build
+!public/build
 composer.lock
 coverage
 docs
