@@ -57,10 +57,9 @@ final class TenantForgeServiceProvider extends ServiceProvider
         $this->configureBlade();
         $this->configureAuth();
         $this->configureFilament();
-        $this->configureTenancy();
     }
 
-    private function configureTenancy(): void
+    private function configureRoutes(): void
     {
         /** @var AppSettings $appSettings */
         $appSettings = app(AppSettings::class);
@@ -235,24 +234,6 @@ final class TenantForgeServiceProvider extends ServiceProvider
                 ],
                 groups: 'tenantforge'
             );
-        }
-
-    }
-
-    private function configureRoutes(): void
-    {
-
-        if (file_exists(__DIR__.'/../routes/web.php')) {
-            Route::middleware(['web'])
-                ->group(function (): void {
-                    $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
-                });
-        }
-
-        if (file_exists(__DIR__.'/../routes/tenant.php')) {
-
-            $this->loadRoutesFrom(__DIR__.'/../routes/tenant.php');
-
         }
 
     }
