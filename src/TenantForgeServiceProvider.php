@@ -16,6 +16,7 @@ use TenantForge\Filament\Central\Pages\Auth\Register;
 use TenantForge\Filament\Central\Pages\Onboarding\TenantOnboarding;
 use TenantForge\Http\Responses\RegistrationResponse;
 use TenantForge\Livewire\CentralDashboardSidebarFooter;
+use TenantForge\Settings\AppSettings;
 
 use function app_path;
 use function array_merge;
@@ -55,6 +56,21 @@ final class TenantForgeServiceProvider extends ServiceProvider
         $this->configureBlade();
         $this->configureAuth();
         $this->configureFilament();
+        $this->configuraTenancy();
+    }
+
+    private function configureTenancy(): void
+    {
+        /** @var AppSettings $appSettings */
+        $appSettings = app(AppSettings::class);
+
+        config()->set('tenancy.central_domains', array_merge([
+            config()->array('tenancy.central_domains'),
+            [
+                $appSettings->domain,
+            ],
+        ]));
+
     }
 
     private function configureFilament(): void
