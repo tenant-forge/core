@@ -20,6 +20,7 @@ use TenantForge\Settings\AppSettings;
 
 use function app_path;
 use function array_merge;
+use function base_path;
 use function config;
 use function config_path;
 use function database_path;
@@ -64,12 +65,34 @@ final class TenantForgeServiceProvider extends ServiceProvider
         /** @var AppSettings $appSettings */
         $appSettings = app(AppSettings::class);
 
+        /** @var array<string> $centralDomains */
+        $centralDomains = config()->array('tenancy.central_domains');
+
         config()->set('tenancy.central_domains', array_merge([
-            config()->array('tenancy.central_domains'),
+            ...$centralDomains,
             [
                 $appSettings->domain,
             ],
         ]));
+
+        // Configure Routes
+        if (file_exists(base_path('routes/web.php'))) {
+            foreach ($centralDomains as $domain) {
+                Route::domain($domain)
+                    ->group(function (): void {
+                        $this->loadRoutesFrom(base_path('routes/web.php'));
+                    });
+            }
+        }
+
+        if (file_exists(__DIR__.'/../routes/web.php')) {
+            foreach ($centralDomains as $domain) {
+                Route::domain($domain)
+                    ->group(function (): void {
+                        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+                    });
+            }
+        }
 
     }
 
