@@ -76,7 +76,8 @@ final class TenantForgeServiceProvider extends ServiceProvider
         // Configure Routes
         if (file_exists(base_path('routes/web.php'))) {
             foreach ($centralDomains as $domain) {
-                Route::domain($domain)
+                Route::middleware(['web'])
+                    ->domain($domain)
                     ->group(function (): void {
                         $this->loadRoutesFrom(base_path('routes/web.php'));
                     });
@@ -85,7 +86,8 @@ final class TenantForgeServiceProvider extends ServiceProvider
 
         if (file_exists(__DIR__.'/../routes/web.php')) {
             foreach ($centralDomains as $domain) {
-                Route::domain($domain)
+                Route::middleware(['web'])
+                    ->domain($domain)
                     ->group(function (): void {
                         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
                     });
