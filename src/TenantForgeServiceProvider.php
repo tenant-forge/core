@@ -93,6 +93,12 @@ final class TenantForgeServiceProvider extends ServiceProvider
             }
         }
 
+        if (file_exists(__DIR__.'/../routes/tenant.php')) {
+
+            $this->loadRoutesFrom(__DIR__.'/../routes/tenant.php');
+
+        }
+
     }
 
     private function configureFilament(): void
