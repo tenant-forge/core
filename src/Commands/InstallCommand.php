@@ -33,8 +33,7 @@ final class InstallCommand extends Command
 
         $this->call('vendor:publish', [
             '--provider' => 'TenantForge\\TenantForgeServiceProvider',
-            '--group' => 'tenantforge',
-            '--force' => false,
+            '--tag' => 'tenantforge',
         ]);
 
         $this->comment('Adding CentralDashboardServiceProvider to application providers...');
