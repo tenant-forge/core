@@ -66,14 +66,12 @@ final class TenantForgeServiceProvider extends ServiceProvider
         $appSettings = app(AppSettings::class);
 
         /** @var array<string> $centralDomains */
-        $centralDomains = config()->array('tenancy.central_domains');
+        $centralDomains = [
+            ...config()->array('tenancy.central_domains'),
+            $appSettings->domain,
+        ];
 
-        config()->set('tenancy.central_domains', array_merge([
-            ...$centralDomains,
-            [
-                $appSettings->domain,
-            ],
-        ]));
+        config()->set('tenancy.central_domains', $centralDomains);
 
         // Configure Routes
         if (file_exists(base_path('routes/web.php'))) {
