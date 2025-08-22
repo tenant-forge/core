@@ -31,7 +31,7 @@ final class InstallCommand extends Command
         $this->comment('Publishing TenantForge assets...');
 
         $this->call('vendor:publish', [
-            '--provider' => 'TenantForge\\TenantForgeServiceProvider',
+            '--provider' => \TenantForge\TenantForgeServiceProvider::class,
             '--tag' => 'tenantforge',
         ]);
 
