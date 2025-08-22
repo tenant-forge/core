@@ -56,7 +56,7 @@ final class TenantForgeServiceProvider extends ServiceProvider
         $this->configureBlade();
         $this->configureAuth();
         $this->configureFilament();
-        $this->configuraTenancy();
+        $this->configureTenancy();
     }
 
     private function configureTenancy(): void
