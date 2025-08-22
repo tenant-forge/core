@@ -25,6 +25,7 @@ use function database_path;
 use function file_exists;
 use function lang_path;
 use function public_path;
+use function resource_path;
 
 final class TenantForgeServiceProvider extends ServiceProvider
 {
@@ -127,6 +128,7 @@ final class TenantForgeServiceProvider extends ServiceProvider
     {
 
         if ($this->app->runningInConsole()) {
+
             $this->publishes(
                 paths: [
                     __DIR__.'/../database/migrations' => database_path('migrations'),
@@ -157,12 +159,16 @@ final class TenantForgeServiceProvider extends ServiceProvider
     {
 
         $this->loadViewsFrom(__DIR__.'/../resources/views', self::$viewNamespace);
-        $this->publishes(
-            paths: [
-                __DIR__.'/../resources/views' => resource_path('views/vendor/'.self::$viewNamespace),
-            ],
-            groups: self::$name.'-views'
-        );
+
+        if ($this->app->runningInConsole()) {
+            $this->publishes(
+                paths: [
+                    __DIR__.'/../resources/views' => resource_path('views/vendor/'.self::$viewNamespace),
+                ],
+                groups: self::$name.'-views'
+            );
+        }
+
     }
 
     private function configureCommands(): void
@@ -176,16 +182,21 @@ final class TenantForgeServiceProvider extends ServiceProvider
     private function configureResources(): void
     {
 
-        $this->publishes([
-            __DIR__.'/../public/' => public_path('vendor/tenantforge/core'),
-        ], ['tenantforge', 'tenantforge-assets']);
+        if ($this->app->runningInConsole()) {
+            $this->publishes(
+                paths: [
+                    __DIR__.'/../public/' => public_path('vendor/tenantforge/core'),
+                ],
+                groups: 'tenantforge'
+            );
 
-        $this->publishes(
-            paths: [
-                __DIR__.'/../assets/CentralDashboardServiceProvider.stub.php' => app_path('Providers/Filament/CentralDashboardServiceProvider.php'),
-            ],
-            groups: 'tenantforge'
-        );
+            $this->publishes(
+                paths: [
+                    __DIR__.'/../assets/CentralDashboardServiceProvider.stub.php' => app_path('Providers/Filament/CentralDashboardServiceProvider.php'),
+                ],
+                groups: 'tenantforge'
+            );
+        }
 
     }
 
