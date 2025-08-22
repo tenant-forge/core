@@ -7,6 +7,10 @@ use TenantForge\Filament\Central\Pages\Auth\Login;
 use TenantForge\Filament\Central\Pages\Auth\Register;
 use TenantForge\Filament\Central\Pages\Onboarding\TenantOnboarding;
 
+Route::get('/', function () {
+    return 'Hello Mundo!';
+});
+
 Route::get('/sign-up', Register::class)
     ->name('tenantforge.sign-up');
 
