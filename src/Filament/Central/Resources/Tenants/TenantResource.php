@@ -16,7 +16,7 @@ use TenantForge\Filament\Central\Resources\Tenants\Schemas\TenantForm;
 use TenantForge\Filament\Central\Resources\Tenants\Tables\TenantsTable;
 use TenantForge\Models\Tenant;
 
-final class TenantResource extends Resource
+class TenantResource extends Resource
 {
     protected static ?string $model = Tenant::class;
 
