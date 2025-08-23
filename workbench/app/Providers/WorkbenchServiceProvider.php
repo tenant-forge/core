@@ -6,6 +6,9 @@ namespace Workbench\App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use function config;
+use function env;
+
 final class WorkbenchServiceProvider extends ServiceProvider
 {
     /**
@@ -21,6 +24,9 @@ final class WorkbenchServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        config()->set('app.domain', env('APP_DOMAIN', 'localhost'));
+
         // Fix URL generation for development server port issues
         if (app()->environment(['local', 'testing'])) {
             $appUrl = env('APP_URL', 'http:/localhost:8000');

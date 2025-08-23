@@ -31,6 +31,7 @@ final class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(AppearanceSettingsSeeder::class);
+        $this->call(LanguageSeeder::class);
 
     }
 }

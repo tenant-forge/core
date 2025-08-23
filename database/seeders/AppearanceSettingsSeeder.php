@@ -25,19 +25,23 @@ final class AppearanceSettingsSeeder extends Seeder
 
         $logo = file_get_contents('https://raw.githubusercontent.com/tenant-forge/docs/refs/heads/main/logo/light.svg');
         $darkLogo = file_get_contents('https://raw.githubusercontent.com/tenant-forge/docs/refs/heads/main/logo/dark.svg');
+        $favicon = file_get_contents('https://raw.githubusercontent.com/tenant-forge/docs/refs/heads/main/favicon.svg');
 
-        if (! is_string($logo) && ! is_string($darkLogo)) {
+        if (! is_string($logo) && ! is_string($darkLogo) && ! is_string($favicon)) {
             return;
         }
 
         $logoFilePath = 'logos/'.Str::upper(Str::random(16)).'.svg';
         $darkLogoFilePath = 'logos/'.Str::upper(Str::random(16)).'.svg';
+        $faviconFilePath = 'logos/'.Str::upper(Str::random(16)).'.svg';
 
         Storage::disk('public')->put($logoFilePath, $logo);
         Storage::disk('public')->put($darkLogoFilePath, $darkLogo);
+        Storage::disk('public')->put($faviconFilePath, $favicon);
 
         $appSettings->logo = $logoFilePath;
         $appSettings->dark_logo = $darkLogoFilePath;
+        $appSettings->favicon = $faviconFilePath;
 
         $appSettings->save();
 

@@ -43,10 +43,11 @@ class TenantForgeCentralDashboardServiceProvider extends PanelProvider
                 'primary' => Color::generatePalette('rgb(4, 193, 71)'),
                 'gray' => Color::Zinc,
             ])
-            ->sidebarWidth('18rem')
+            ->sidebarWidth('16rem')
             ->maxContentWidth(Width::ScreenTwoExtraLarge)
             ->brandLogo(fn (AppSettings $settings): string => $settings->logo !== null && $settings->logo !== '' && $settings->logo !== '0' ? Storage::disk('public')->url($settings->logo) : '')
             ->darkModeBrandLogo(fn (AppSettings $settings): string => $settings->dark_logo !== null && $settings->dark_logo !== '' && $settings->dark_logo !== '0' ? Storage::disk('public')->url($settings->dark_logo) : '')
+            ->favicon(fn (AppSettings $settings): string => $settings->favicon !== null && $settings->favicon !== '' && $settings->favicon !== '0' ? Storage::disk('public')->url($settings->favicon) : '')
             ->viteTheme('resources/css/filament/theme.css', 'vendor/tenantforge/core/build')
             ->discoverResources(in: __DIR__.'/Filament/Central/Resources', for: 'TenantForge\\Filament\\Central\\Resources')
             ->discoverPages(in: __DIR__.'/Filament/Central/Pages', for: 'TenantForge\\Filament\\Central\\Pages')

@@ -50,7 +50,7 @@ final class AppearanceSettings extends SettingsPage
         return $schema
             ->columns(1)
             ->components([
-                Section::make('Appearance')
+                Section::make()
                     ->extraAttributes([
                         'class' => 'tf-settings-section',
                     ])
@@ -72,6 +72,17 @@ final class AppearanceSettings extends SettingsPage
                             ->hint(__('The application logo to be shown on the dark mode theme.'))
                             ->extraAttributes([
                                 'data-test' => 'dark-logo',
+                            ])
+                            ->disk('public')
+                            ->directory('logos')
+                            ->visibility('public')
+                            ->previewable()
+                            ->imagePreviewHeight('250')
+                            ->image(),
+                        FileUpload::make('favicon')
+                            ->hint(__('The application favicon.'))
+                            ->extraAttributes([
+                                'data-test' => 'favicon',
                             ])
                             ->disk('public')
                             ->directory('logos')

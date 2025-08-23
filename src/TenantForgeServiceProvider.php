@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace TenantForge;
 
+use Exception;
 use Filament\Auth\Http\Responses\Contracts\RegistrationResponse as FilamentRegistrationResponse;
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
-use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -61,6 +61,7 @@ final class TenantForgeServiceProvider extends ServiceProvider
 
     private function configureRoutes(): void
     {
+
         /** @var AppSettings $appSettings */
         $appSettings = app(AppSettings::class);
 
@@ -68,7 +69,7 @@ final class TenantForgeServiceProvider extends ServiceProvider
         try {
             $appDomain = $appSettings->domain;
             /** @phpstan-ignore-next-line  */
-        } catch (QueryException $exception) {
+        } catch (Exception $exception) {
             info($exception->getMessage());
         }
 
