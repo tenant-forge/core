@@ -21,6 +21,6 @@ final class SettingsCluster extends Cluster
 
     public static function shouldRegisterNavigation(): bool
     {
-        return true;
+        return false;
     }
 }
