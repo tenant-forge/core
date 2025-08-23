@@ -30,5 +30,7 @@ final class DatabaseSeeder extends Seeder
             'global_id' => Str::uuid()->toString(),
         ]);
 
+        $this->call(AppearanceSettingsSeeder::class);
+
     }
 }

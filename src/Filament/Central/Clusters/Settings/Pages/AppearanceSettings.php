@@ -14,8 +14,6 @@ use Filament\Support\Icons\Heroicon;
 use TenantForge\Filament\Central\Clusters\Settings\SettingsCluster;
 use TenantForge\Settings\AppSettings;
 
-use function __;
-
 final class AppearanceSettings extends SettingsPage
 {
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDeviceTablet;
@@ -24,14 +22,11 @@ final class AppearanceSettings extends SettingsPage
 
     protected static ?string $cluster = SettingsCluster::class;
 
+    protected static ?int $navigationSort = 2;
+
     public static function getNavigationLabel(): string
     {
         return __('Appearance Settings');
-    }
-
-    public static function shouldRegisterNavigation(): bool
-    {
-        return true;
     }
 
     public function getTitle(): string
@@ -54,6 +49,7 @@ final class AppearanceSettings extends SettingsPage
                     ->inlineLabel()
                     ->schema([
                         FileUpload::make('logo')
+                            ->hint(__('The application logo to be shown on the light mode theme.'))
                             ->extraAttributes([
                                 'data-test' => 'logo',
                             ])
@@ -65,6 +61,7 @@ final class AppearanceSettings extends SettingsPage
                             ->previewable()
                             ->image(),
                         FileUpload::make('dark_logo')
+                            ->hint(__('The application logo to be shown on the dark mode theme.'))
                             ->extraAttributes([
                                 'data-test' => 'dark-logo',
                             ])

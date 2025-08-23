@@ -1,4 +1,4 @@
-@php use Filament\Support\Icons\Heroicon;use TenantForge\Filament\Central\Clusters\Settings\SettingsCluster; @endphp
+@php use Filament\Support\Icons\Heroicon;use TenantForge\Filament\Central\Clusters\Settings\Pages\AppearanceSettings;use TenantForge\Filament\Central\Clusters\Settings\SettingsCluster; @endphp
 <div class="p-4">
     <ul class="fi-sidebar-group-items">
         <li

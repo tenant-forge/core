@@ -23,7 +23,9 @@ describe('App Settings Page', function (): void {
 
         visit(GeneralSettings::getUrl())
             ->assertSee('General Settings')
-            ->assertSee('Logo');
+            ->assertSee('Name')
+            ->assertSee('Domain')
+            ->assertSee('About');
 
     });
 

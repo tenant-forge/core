@@ -6,7 +6,6 @@ namespace TenantForge\Filament\Central\Clusters\Settings\Pages;
 
 use BackedEnum;
 use Exception;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\SettingsPage;
@@ -57,35 +56,6 @@ final class GeneralSettings extends SettingsPage
                             ->hint(__('The domain of the application.')),
                         MarkdownEditor::make('about')
                             ->hint(__('A short description of the application. This will also be used for the meta description.')),
-                    ]),
-
-                Section::make('Appearance')
-                    ->extraAttributes([
-                        'class' => 'tf-settings-section',
-                    ])
-                    ->inlineLabel()
-                    ->schema([
-                        FileUpload::make('logo')
-                            ->extraAttributes([
-                                'data-test' => 'logo',
-                            ])
-                            ->disk('public')
-                            ->directory('logos')
-                            ->visibility('public')
-                            ->imagePreviewHeight('250')
-                            ->removeUploadedFileButtonPosition('right')
-                            ->previewable()
-                            ->image(),
-                        FileUpload::make('dark_logo')
-                            ->extraAttributes([
-                                'data-test' => 'dark-logo',
-                            ])
-                            ->disk('public')
-                            ->directory('logos')
-                            ->visibility('public')
-                            ->previewable()
-                            ->imagePreviewHeight('250')
-                            ->image(),
                     ]),
 
                 Section::make('Localization')
