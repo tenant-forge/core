@@ -26,12 +26,12 @@ final class AppearanceSettings extends SettingsPage
 
     public static function getNavigationLabel(): string
     {
-        return __('Appearance Settings');
+        return __('Appearance');
     }
 
     public function getTitle(): string
     {
-        return __('Appearance Settings');
+        return __('Appearance');
     }
 
     /**
