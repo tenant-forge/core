@@ -16,7 +16,7 @@ describe('sign-up page', function (): void {
 
     test('user can navigate to sign-in page', function (): void {
 
-        visit(route('tenantforge.sign-up'))
+        visit(route('tenantforge.sign-up', absolute: false))
             ->assertSee(__('tenantforge::auth.sign_up'))
             ->click('Sign in')
             ->assertSee(__('tenantforge::auth.sign_in_message'));
@@ -25,7 +25,7 @@ describe('sign-up page', function (): void {
 
     it('creates a new user', function (): void {
 
-        visit(route('tenantforge.sign-up'))
+        visit(route('tenantforge.sign-up', absolute: false))
             ->type('form.name', 'John Doe')
             ->type('form.email', 'joe@example.com')
             ->type('form.password', 'password')

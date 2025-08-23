@@ -8,7 +8,6 @@ use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Livewire\Livewire;
 use Stancl\JobPipeline\JobPipeline;
 use Stancl\Tenancy\Events;
 use Stancl\Tenancy\Events\BootstrappingTenancy;
@@ -59,9 +58,6 @@ use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 use function app;
-use function config;
-use function in_array;
-use function request;
 
 final class TenancyServiceProvider extends ServiceProvider
 {
@@ -148,16 +144,6 @@ final class TenancyServiceProvider extends ServiceProvider
 
         $this->makeTenancyMiddlewareHighestPriority();
         UserImpersonation::$ttl = 120;
-
-        if (! in_array(request()->getHttpHost(), config()->array('tenancy.central_domains'))) {
-            Livewire::setUpdateRoute(fn (array $handle) => Route::post('/livewire/update', $handle)
-                ->middleware(
-                    InitializeTenancyByDomain::class,
-                    PreventAccessFromCentralDomains::class,
-                    'web',
-                    'universal',
-                ));
-        }
 
     }
 

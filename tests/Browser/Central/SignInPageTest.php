@@ -6,7 +6,7 @@ describe('Sign In Page', function (): void {
 
     test('can be rendered', function (): void {
 
-        visit(route('tenantforge.sign-in'))
+        visit(route('tenantforge.sign-in', absolute: false))
             ->assertSee('Email')
             ->assertSee('Password')
             ->assertSee('Remember Me')

@@ -10,7 +10,6 @@ use Livewire\Livewire;
 use TenantForge\Contracts\HasComponentRegistration;
 
 use function explode;
-use function is_string;
 
 class ConfigureLivewire implements HasComponentRegistration
 {
@@ -29,7 +28,7 @@ class ConfigureLivewire implements HasComponentRegistration
         $namespaceParts = Arr::except($namespaceParts, 0);
 
         foreach ($namespaceParts as $namespacePart) {
-            assert(is_string($namespacePart));
+            /** @var string $namespacePart */
             $namespace .= '.'.Str::snake($namespacePart, '-');
         }
 
