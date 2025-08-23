@@ -36,6 +36,17 @@ final class GeneralSettings extends SettingsPage
     }
 
     /**
+     * @return array<string, string>
+     */
+    public function getBreadcrumbs(): array
+    {
+        return [
+            SettingsCluster::getUrl() => __('Settings'),
+            self::getUrl() => __('General Settings'),
+        ];
+    }
+
+    /**
      * @throws Exception
      */
     public function form(Schema $schema): Schema

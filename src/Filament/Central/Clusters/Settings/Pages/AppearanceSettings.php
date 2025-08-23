@@ -14,6 +14,8 @@ use Filament\Support\Icons\Heroicon;
 use TenantForge\Filament\Central\Clusters\Settings\SettingsCluster;
 use TenantForge\Settings\AppSettings;
 
+use function __;
+
 final class AppearanceSettings extends SettingsPage
 {
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDeviceTablet;
@@ -29,9 +31,15 @@ final class AppearanceSettings extends SettingsPage
         return __('Appearance');
     }
 
-    public function getTitle(): string
+    /**
+     * @return array<string, string>
+     */
+    public function getBreadcrumbs(): array
     {
-        return __('Appearance');
+        return [
+            SettingsCluster::getUrl() => __('Settings'),
+            self::getUrl() => __('Appearance'),
+        ];
     }
 
     /**
