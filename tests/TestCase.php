@@ -16,7 +16,6 @@ use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\LivewireServiceProvider;
-use Orchestra\Testbench\Attributes\WithMigration;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\LaravelData\LaravelDataServiceProvider;
@@ -25,7 +24,6 @@ use TenantForge\Models\Tenant;
 
 use function array_merge;
 
-#[WithMigration]
 abstract class TestCase extends Orchestra
 {
     use RefreshDatabase;

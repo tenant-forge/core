@@ -7,15 +7,13 @@ namespace TenantForge;
 use Filament\Auth\Http\Responses\Contracts\RegistrationResponse as FilamentRegistrationResponse;
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Livewire\Livewire;
+use TenantForge\Configure\ConfigureLivewire;
 use TenantForge\Enums\AuthGuard;
-use TenantForge\Filament\Central\Pages\Auth\Register;
-use TenantForge\Filament\Central\Pages\Onboarding\TenantOnboarding;
 use TenantForge\Http\Responses\RegistrationResponse;
-use TenantForge\Livewire\CentralDashboardSidebarFooter;
 use TenantForge\Settings\AppSettings;
 
 use function app_path;
@@ -25,6 +23,7 @@ use function config;
 use function config_path;
 use function database_path;
 use function file_exists;
+use function info;
 use function lang_path;
 use function public_path;
 use function resource_path;
@@ -64,10 +63,22 @@ final class TenantForgeServiceProvider extends ServiceProvider
         /** @var AppSettings $appSettings */
         $appSettings = app(AppSettings::class);
 
+        $appDomain = null;
+        try {
+            $appDomain = $appSettings->domain;
+            /** @phpstan-ignore-next-line  */
+        } catch (QueryException $exception) {
+            info($exception->getMessage());
+        }
+
+        if (! $appDomain) {
+            $appDomain = config()->string('app.domain', 'localhost');
+        }
+
         /** @var array<string> $centralDomains */
         $centralDomains = [
             ...config()->array('tenancy.central_domains'),
-            $appSettings->domain,
+            $appDomain,
         ];
 
         config()->set('tenancy.central_domains', $centralDomains);
@@ -137,17 +148,19 @@ final class TenantForgeServiceProvider extends ServiceProvider
     private function configureLivewire(): void
     {
 
-        Livewire::component(
-            name: 'central-dashboard-sidebar-footer',
-            class: CentralDashboardSidebarFooter::class
+        ConfigureLivewire::registerComponents(
+            in: __DIR__.'/Livewire',
+            for: 'TenantForge\Livewire'
         );
-        Livewire::component(
-            name: 'tenant-forge.filament.pages.auth.register',
-            class: Register::class
+
+        ConfigureLivewire::registerComponents(
+            in: __DIR__.'/Filament/Central/Pages/Auth',
+            for: 'TenantForge\Filament\Central\Pages\Auth'
         );
-        Livewire::component(
-            name: 'tenant-forge.filament.central.pages.onboarding.tenant-onboarding',
-            class: TenantOnboarding::class
+
+        ConfigureLivewire::registerComponents(
+            in: __DIR__.'/Filament/Central/Pages/Onboarding',
+            for: 'TenantForge\Filament\Central\Pages\Onboarding'
         );
 
     }
