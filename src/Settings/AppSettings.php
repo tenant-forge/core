@@ -12,6 +12,12 @@ final class AppSettings extends Settings
 
     public ?string $domain = null;
 
+    public ?string $logo = null;
+
+    public ?string $dark_logo = null;
+
+    public ?string $favicon = null;
+
     public ?string $about = null;
 
     public string $timezone;

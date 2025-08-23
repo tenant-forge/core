@@ -9,6 +9,8 @@ providers:
   - Filament\FilamentServiceProvider
 
 env:
+  - APP_URL=http://localhost:8000
+  - ASSET_URL=http://localhost:8000
   - AUTH_MODEL=\Workbench\App\Models\User
   - TENANT_FORGE_USER_MODEL=\Workbench\App\Models\User
   - APP_LOCALE=en

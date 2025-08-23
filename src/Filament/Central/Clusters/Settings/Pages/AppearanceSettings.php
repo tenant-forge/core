@@ -7,8 +7,6 @@ namespace TenantForge\Filament\Central\Clusters\Settings\Pages;
 use BackedEnum;
 use Exception;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\MarkdownEditor;
-use Filament\Forms\Components\TextInput;
 use Filament\Pages\SettingsPage;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -18,9 +16,9 @@ use TenantForge\Settings\AppSettings;
 
 use function __;
 
-final class GeneralSettings extends SettingsPage
+final class AppearanceSettings extends SettingsPage
 {
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog6Tooth;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDeviceTablet;
 
     protected static string $settings = AppSettings::class;
 
@@ -28,12 +26,17 @@ final class GeneralSettings extends SettingsPage
 
     public static function getNavigationLabel(): string
     {
-        return __('General Settings');
+        return __('Appearance Settings');
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return true;
     }
 
     public function getTitle(): string
     {
-        return __('General Settings');
+        return __('Appearance Settings');
     }
 
     /**
@@ -44,21 +47,6 @@ final class GeneralSettings extends SettingsPage
         return $schema
             ->columns(1)
             ->components([
-                Section::make('General')
-                    ->extraAttributes([
-                        'class' => 'tf-settings-section',
-                    ])
-                    ->inlineLabel()
-                    ->schema([
-                        TextInput::make('name')
-                            ->hint(__('The name of the application.'))
-                            ->required(),
-                        TextInput::make('domain')
-                            ->hint(__('The domain of the application.')),
-                        MarkdownEditor::make('about')
-                            ->hint(__('A short description of the application. This will also be used for the meta description.')),
-                    ]),
-
                 Section::make('Appearance')
                     ->extraAttributes([
                         'class' => 'tf-settings-section',
@@ -86,20 +74,6 @@ final class GeneralSettings extends SettingsPage
                             ->previewable()
                             ->imagePreviewHeight('250')
                             ->image(),
-                    ]),
-
-                Section::make('Localization')
-                    ->extraAttributes([
-                        'class' => 'tf-settings-section',
-                    ])
-                    ->inlineLabel()
-                    ->schema([
-                        TextInput::make('timezone')
-                            ->hint(__('The timezone of the application.'))
-                            ->required(),
-                        TextInput::make('locale')
-                            ->hint(__('The locale of the application.'))
-                            ->required(),
                     ]),
             ]);
     }

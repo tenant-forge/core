@@ -24,9 +24,11 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use TenantForge\Enums\AuthGuard;
 use TenantForge\Filament\Central\Widgets\TenantsWidget;
+use TenantForge\Settings\AppSettings;
 
 class TenantForgeCentralDashboardServiceProvider extends PanelProvider
 {
@@ -43,6 +45,8 @@ class TenantForgeCentralDashboardServiceProvider extends PanelProvider
             ])
             ->sidebarWidth('18rem')
             ->maxContentWidth(Width::ScreenTwoExtraLarge)
+            ->brandLogo(fn (AppSettings $settings): string => $settings->logo ? Storage::disk('public')->url($settings->logo) : '')
+            ->darkModeBrandLogo(fn (AppSettings $settings): string => $settings->dark_logo ? Storage::disk('public')->url($settings->dark_logo) : '')
             ->viteTheme('resources/css/filament/theme.css', 'vendor/tenantforge/core/build')
             ->discoverResources(in: __DIR__.'/Filament/Central/Resources', for: 'TenantForge\\Filament\\Central\\Resources')
             ->discoverPages(in: __DIR__.'/Filament/Central/Pages', for: 'TenantForge\\Filament\\Central\\Pages')
