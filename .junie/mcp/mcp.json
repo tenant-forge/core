@@ -1,14 +1,14 @@
 {
     "mcpServers": {
         "laravel-boost": {
-            "command": "php",
+            "command": "/Users/franciscobarrento/Library/Application Support/Herd/bin/php84",
             "args": [
-                "./artisan",
+                "/Users/franciscobarrento/Codex/open-source/tenant-forge/core/vendor/orchestra/testbench-core/laravel/artisan",
                 "boost:mcp"
             ]
         },
         "herd": {
-            "command": "php",
+            "command": "/Users/franciscobarrento/Library/Application Support/Herd/bin/php84",
             "args": [
                 "/Applications/Herd.app/Contents/Resources/herd-mcp.phar"
             ],

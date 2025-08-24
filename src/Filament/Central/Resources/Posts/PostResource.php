@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TenantForge\Filament\Central\Resources\Posts;
 
+use Exception;
 use Filament\Panel;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -44,9 +45,13 @@ class PostResource extends Resource
 
     }
 
+    /**
+     * @throws Exception
+     */
     public static function form(Schema $schema): Schema
     {
-        return PostForm::configure($schema);
+
+        return PostForm::configure(schema: $schema);
     }
 
     public static function table(Table $table): Table
@@ -99,7 +104,7 @@ class PostResource extends Resource
         ];
     }
 
-    protected static function getPostType(): PostType
+    public static function getPostType(): PostType
     {
         /** @var ?PostType $postType */
         $postType = PostType::query()
