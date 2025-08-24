@@ -6,10 +6,12 @@ namespace TenantForge\Filament\Central\Resources\Posts\Schemas;
 
 use Exception;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Flex;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use TenantForge\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\HeroBlock;
 
 class PostForm
 {
@@ -27,6 +29,12 @@ class PostForm
                         ->schema([
                             TextInput::make('title'),
                             TextInput::make('slug'),
+                            RichEditor::make('content')
+                                ->customBlocks([
+                                    HeroBlock::class,
+                                ])
+                                ->activePanel('customBlocks')
+                                ->json(),
                         ])
                         ->grow(),
                     Section::make()

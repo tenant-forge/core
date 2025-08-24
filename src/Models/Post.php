@@ -25,6 +25,7 @@ use TenantForge\Enums\ContentStatus;
  * @property-read Carbon $published_at
  * @property-read Carbon $created_at
  * @property-read Carbon $updated_at
+ * @property-read PostType $type
  */
 class Post extends Model
 {
@@ -55,6 +56,7 @@ class Post extends Model
     public function casts(): array
     {
         return [
+            'content' => 'array',
             'status' => ContentStatus::class,
             'published_at' => 'datetime',
         ];
@@ -74,6 +76,14 @@ class Post extends Model
     public function original(): BelongsTo
     {
         return $this->belongsTo(self::class, 'translation_id');
+    }
+
+    /**
+     * @return BelongsTo<PostType, $this>
+     */
+    public function type(): BelongsTo
+    {
+        return $this->belongsTo(PostType::class, 'post_type_id');
     }
 
     /**

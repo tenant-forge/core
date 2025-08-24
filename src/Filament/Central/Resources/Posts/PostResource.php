@@ -54,9 +54,15 @@ class PostResource extends Resource
         return PostForm::configure(schema: $schema);
     }
 
+    /**
+     * @throws Exception
+     */
     public static function table(Table $table): Table
     {
-        return PostsTable::configure($table);
+        return PostsTable::configure(
+            table: $table,
+            postType: static::getPostType()
+        );
     }
 
     public static function getRelations(): array
