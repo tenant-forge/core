@@ -4,10 +4,28 @@ declare(strict_types=1);
 
 namespace TenantForge\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use TenantForge\Database\Factories\PostFactory;
+use TenantForge\Enums\ContentStatus;
 
+/**
+ * @property-read int $id
+ * @property-read int $post_type_id
+ * @property-read int $language_id
+ * @property-read ?int $translation_id
+ * @property-read string $title
+ * @property-read string $slug
+ * @property-read ?string $content
+ * @property-read ?string $featured_image
+ * @property-read ContentStatus $status
+ * @property-read Carbon $published_at
+ * @property-read Carbon $created_at
+ * @property-read Carbon $updated_at
+ */
 class Post extends Model
 {
     /** @use HasFactory<PostFactory> */
@@ -19,5 +37,37 @@ class Post extends Model
     public static function newFactory(): PostFactory
     {
         return PostFactory::new();
+    }
+
+    public function casts(): array
+    {
+        return [
+            'status' => ContentStatus::class,
+            'published_at' => 'datetime',
+        ];
+    }
+
+    /**
+     * @return HasMany<Post, $this>
+     */
+    public function translations(): HasMany
+    {
+        return $this->hasMany(self::class, 'translation_id');
+    }
+
+    /**
+     * @return BelongsTo<Post, $this>
+     */
+    public function original(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'translation_id');
+    }
+
+    /**
+     * @return BelongsTo<Language, $this>
+     */
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(Language::class);
     }
 }

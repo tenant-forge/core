@@ -8,6 +8,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use TenantForge\Models\Language;
+use TenantForge\Models\Post;
 use TenantForge\Models\PostType;
 
 return new class extends Migration
@@ -33,9 +34,12 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(PostType::class)
                 ->constrained();
-            $table->foreignId('parent_id')
+            $table->foreignIdFor(Post::class, 'translation_id')
                 ->nullable()
-                ->constrained('pages');
+                ->constrained('posts');
+            $table->foreignIdFor(Post::class, 'parent_id')
+                ->nullable()
+                ->constrained('posts');
             $table->foreignIdFor(Language::class)
                 ->constrained();
             $table->string('title');
@@ -43,7 +47,16 @@ return new class extends Migration
                 ->unique();
             $table->jsonb('content')
                 ->nullable();
+            $table->string('featured_image')
+                ->nullable();
+            $table->string('status');
+            $table->timestamp('published_at')
+                ->nullable();
             $table->timestamps();
+
+            $table->index(['type', 'translation_id', 'language_id']);
+            $table->index(['type', 'status', 'published_at']);
+            $table->index(['type', 'slug']);
         });
 
         DB::table('post_types')->insert([

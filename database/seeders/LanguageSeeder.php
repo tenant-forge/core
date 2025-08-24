@@ -16,24 +16,11 @@ class LanguageSeeder extends Seeder
     {
 
         Language::query()->create([
-            'locale' => 'es',
-            'name' => 'Spanish',
-            'is_default' => false,
-            'is_active' => true,
-        ]);
-
-        Language::query()->create([
             'locale' => 'pt',
             'name' => 'Portuguese',
             'is_default' => false,
             'is_active' => true,
         ]);
 
-        Language::query()->create([
-            'locale' => 'pt_BR',
-            'name' => 'Portuguese (Brazil)',
-            'is_default' => false,
-            'is_active' => true,
-        ]);
     }
 }
