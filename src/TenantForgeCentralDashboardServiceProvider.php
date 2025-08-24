@@ -10,6 +10,8 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -27,8 +29,12 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use TenantForge\Enums\AuthGuard;
+use TenantForge\Filament\Central\Resources\Posts\PostResource;
 use TenantForge\Filament\Central\Widgets\TenantsWidget;
+use TenantForge\Models\PostType;
 use TenantForge\Settings\AppSettings;
+
+use function Filament\Support\original_request;
 
 class TenantForgeCentralDashboardServiceProvider extends PanelProvider
 {
@@ -88,6 +94,29 @@ class TenantForgeCentralDashboardServiceProvider extends PanelProvider
                     PanelsRenderHook::SIDEBAR_FOOTER,
                     fn (): string => Blade::render("@livewire('tenant-forge.livewire.central-dashboard-sidebar-footer')"),
                 );
+
+                $postTypes = PostType::query()
+                    ->where('is_active', true)
+                    ->orderBy('sort')
+                    ->get();
+
+                /** @var array<int, NavigationItem> $navigationItems */
+                $navigationItems = $postTypes->map(fn (PostType $postType): NavigationItem => NavigationItem::make($postType->slug)
+                    ->label($postType->plural_name)
+                    ->url(fn (): string => PostResource::getUrl(parameters: ['type' => $postType->slug]))
+                    ->group('Content')
+                    ->isActiveWhen(fn (): bool => original_request()->routeIs('filament.admin.resources.content.*') && original_request()->route()?->parameter('type') === $postType->slug)
+                    ->icon($postType->icon))
+                    ->toArray();
+
+                $contentNavigationGroup = NavigationGroup::make('content');
+
+                $panel
+                    ->navigationGroups([
+                        $contentNavigationGroup,
+                    ])
+                    ->navigationItems($navigationItems);
+
             }
         });
     }

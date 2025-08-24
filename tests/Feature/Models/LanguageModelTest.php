@@ -20,8 +20,8 @@ describe('Language Model', function (): void {
                 'id',
                 'locale',
                 'name',
-                'default',
-                'active',
+                'is_default',
+                'is_active',
                 'created_at',
                 'updated_at',
             ]);

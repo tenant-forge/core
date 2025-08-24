@@ -31,8 +31,8 @@ class LanguageFactory extends Factory
         return [
             'locale' => fake()->locale(),
             'name' => fake()->name(),
-            'default' => fake()->boolean(),
-            'active' => fake()->boolean(),
+            'is_default' => fake()->boolean(),
+            'is_active' => fake()->boolean(),
         ];
     }
 
@@ -42,7 +42,7 @@ class LanguageFactory extends Factory
     public function active(): self
     {
         return $this->state(fn (array $attributes): array => [
-            'active' => true,
+            'is_active' => true,
         ]);
     }
 }

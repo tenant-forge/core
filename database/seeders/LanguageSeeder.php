@@ -14,32 +14,26 @@ class LanguageSeeder extends Seeder
      */
     public function run(): void
     {
-        Language::query()->create([
-            'locale' => 'en',
-            'name' => 'English',
-            'default' => true,
-            'active' => true,
-        ]);
 
         Language::query()->create([
             'locale' => 'es',
             'name' => 'Spanish',
-            'default' => false,
-            'active' => true,
+            'is_default' => false,
+            'is_active' => true,
         ]);
 
         Language::query()->create([
             'locale' => 'pt',
             'name' => 'Portuguese',
-            'default' => false,
-            'active' => true,
+            'is_default' => false,
+            'is_active' => true,
         ]);
 
         Language::query()->create([
             'locale' => 'pt_BR',
             'name' => 'Portuguese (Brazil)',
-            'default' => false,
-            'active' => true,
+            'is_default' => false,
+            'is_active' => true,
         ]);
     }
 }

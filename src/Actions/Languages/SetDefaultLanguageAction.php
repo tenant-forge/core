@@ -15,13 +15,13 @@ class SetDefaultLanguageAction
             Language::query()
                 ->where('locale', $locale)
                 ->update([
-                    'default' => true,
+                    'is_default' => true,
                 ]);
 
             Language::query()
                 ->whereNot('locale', $locale)
                 ->update([
-                    'default' => false,
+                    'is_default' => false,
                 ]);
 
         });

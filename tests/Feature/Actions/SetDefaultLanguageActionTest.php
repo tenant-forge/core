@@ -13,13 +13,13 @@ describe('Set default language', function (): void {
         $languages = Language::factory()
             ->count(5)
             ->create([
-                'default' => false,
+                'is_default' => false,
             ]);
 
         /** @var Language $language */
         $language = Language::factory()
             ->create([
-                'default' => true,
+                'is_default' => true,
             ])
             ->fresh();
 
@@ -27,7 +27,7 @@ describe('Set default language', function (): void {
             locale: $languages->first()->locale ?? '',
         );
 
-        expect($language->fresh()?->default)
+        expect($language->fresh()?->is_default)
             ->toBeFalse();
 
     });

@@ -14,8 +14,8 @@ use TenantForge\Database\Factories\LanguageFactory;
  * @property-read int $id
  * @property-read string $locale
  * @property-read string $name
- * @property-read bool $default
- * @property-read bool $active
+ * @property-read bool $is_default
+ * @property-read bool $is_active
  * @property-read Carbon $created_at
  * @property-read Carbon $updated_at
  */
@@ -29,8 +29,8 @@ class Language extends Model
     protected $fillable = [
         'locale',
         'name',
-        'default',
-        'active',
+        'is_default',
+        'is_active',
     ];
 
     /**
@@ -47,8 +47,8 @@ class Language extends Model
     public function casts(): array
     {
         return [
-            'default' => 'bool',
-            'active' => 'bool',
+            'is_default' => 'bool',
+            'is_active' => 'bool',
         ];
     }
 }
