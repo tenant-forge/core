@@ -22,7 +22,8 @@ class PostsTable
     {
         return $table
             ->modifyQueryUsing(function (Builder $query) use ($postType): void {
-                $query->where('post_type_id', $postType->id);
+                $query->where('post_type_id', $postType->id)
+                    ->whereNull('translation_id');
             })
             ->columns([
                 TextColumn::make('title')

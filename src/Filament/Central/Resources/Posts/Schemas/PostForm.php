@@ -33,7 +33,6 @@ class PostForm
                                 ->customBlocks([
                                     HeroBlock::class,
                                 ])
-                                ->activePanel('customBlocks')
                                 ->json(),
                         ])
                         ->grow(),

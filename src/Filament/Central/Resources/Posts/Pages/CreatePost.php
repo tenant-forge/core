@@ -35,6 +35,11 @@ class CreatePost extends CreateRecord
         return parent::getResourceUrl($name, $parameters, $isAbsolute, $panel, $tenant, $shouldGuessMissingParameters);
     }
 
+    public function booted(): void
+    {
+        request()->route()?->setParameter('type', $this->type);
+    }
+
     protected function mutateFormDataBeforeCreate(array $data): array
     {
 

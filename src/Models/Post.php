@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TenantForge\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,6 +27,9 @@ use TenantForge\Enums\ContentStatus;
  * @property-read Carbon $created_at
  * @property-read Carbon $updated_at
  * @property-read PostType $type
+ * @property-read ?Post $original
+ * @property-read Collection<int, Post> $translations
+ * @property-read ?Language $language
  */
 class Post extends Model
 {

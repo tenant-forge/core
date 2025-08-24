@@ -7,6 +7,7 @@ namespace TenantForge\Filament\Forms\Components\RichEditor\RichContentCustomBloc
 use Exception;
 use Filament\Actions\Action;
 use Filament\Forms\Components\RichEditor\RichContentCustomBlock;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 
 class HeroBlock extends RichContentCustomBlock
@@ -26,10 +27,14 @@ class HeroBlock extends RichContentCustomBlock
      */
     public static function configureEditorAction(Action $action): Action
     {
+
         return $action
             ->modalDescription('Hero section')
             ->schema([
-                TextInput::make('title')
+                TextInput::make('heading')
+                    ->required(),
+                Textarea::make('subheading')
+                    ->rows(5)
                     ->required(),
 
             ]);
@@ -37,8 +42,9 @@ class HeroBlock extends RichContentCustomBlock
 
     public static function toPreviewHtml(array $config): string
     {
-        return view('filament.forms.components.rich-editor.rich-content-custom-blocks.hero.preview', [
-            //
+        return view('tenantforge::filament.forms.components.rich-editor.custom-blocks.hero.preview', [
+            'heading' => $config['heading'] ?? 'Hero',
+            'subheading' => $config['subheading'] ?? 'Subheading',
         ])->render();
     }
 

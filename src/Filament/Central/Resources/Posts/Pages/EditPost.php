@@ -7,6 +7,7 @@ namespace TenantForge\Filament\Central\Resources\Posts\Pages;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
+use TenantForge\Filament\Actions\LanguageSelector;
 use TenantForge\Filament\Central\Resources\Posts\PostResource;
 use TenantForge\Models\Post;
 
@@ -29,6 +30,14 @@ class EditPost extends EditRecord
         return parent::getResourceUrl($name, $parameters, $isAbsolute, $panel, $tenant, $shouldGuessMissingParameters);
     }
 
+    public function booted(): void
+    {
+        /** @var Post $post */
+        $post = $this->getRecord();
+
+        request()->route()?->setParameter('type', $post->type->slug);
+    }
+
     protected function getRedirectUrl(): string
     {
 
@@ -43,7 +52,14 @@ class EditPost extends EditRecord
 
     protected function getHeaderActions(): array
     {
+
+        /** @var Post $post */
+        $post = $this->getRecord();
+
         return [
+
+            LanguageSelector::make('language-selector')
+                ->setTranslatableRecord($post),
             DeleteAction::make(),
         ];
     }
