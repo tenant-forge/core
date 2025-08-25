@@ -14,16 +14,18 @@ class HomePageController
     public function index(): View
     {
 
+        /** @var Post $page */
         $page = Post::query()
             ->where('post_type_id', 2)
             ->where('slug', 'home')
             ->first();
 
-        $content = RichContentRenderer::make($page?->content)
+        $content = $page ? RichContentRenderer::make($page->content)
             ->customBlocks([
                 HeroBlock::class,
             ])
-            ->toHtml();
+            ->toHtml()
+        : null;
 
         return view('tenantforge::central.home', [
             'title' => 'Hello Mundo',
