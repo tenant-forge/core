@@ -14,7 +14,7 @@ class HomePageController
     public function index(): View
     {
 
-        /** @var Post $page */
+        /** @var null|Post $page */
         $page = Post::query()
             ->where('post_type_id', 2)
             ->where('slug', 'home')
