@@ -104,7 +104,7 @@ class TenantForgeCentralDashboardServiceProvider extends PanelProvider
                 $navigationItems = $postTypes->map(fn (PostType $postType): NavigationItem => NavigationItem::make($postType->slug)
                     ->label($postType->plural_name)
                     ->url(fn (): string => PostResource::getUrl(parameters: ['type' => $postType->slug]))
-                    ->group('Content')
+                    ->group(__('Content'))
                     ->isActiveWhen(fn (): bool => original_request()->routeIs('filament.admin.resources.content.*') && original_request()->route()?->parameter('type') === $postType->slug)
                     ->icon($postType->icon))
                     ->toArray();

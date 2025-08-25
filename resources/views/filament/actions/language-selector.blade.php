@@ -2,7 +2,7 @@
 <div>
     <x-filament::dropdown>
         <x-slot name="trigger">
-            <x-filament::button icon="heroicon-o-language" outlined color="gray">
+            <x-filament::button icon="heroicon-o-language" outlined color="gray" data-test="language-selector">
                 {{ Str::upper($post->language->locale) }}
                 <x-filament::icon :icon="Heroicon::OutlinedChevronDown" :size="IconSize::ExtraSmall"/>
             </x-filament::button>

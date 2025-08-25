@@ -34,7 +34,7 @@ class PostFactory extends Factory
     {
         return [
             'language_id' => Language::factory(),
-            'title' => $title = Str::title(fake()->unique()->title),
+            'title' => $title = Str::title(fake()->unique()->sentence()),
             'slug' => Str::slug($title),
             'status' => fake()->randomElement(ContentStatus::cases()),
         ];

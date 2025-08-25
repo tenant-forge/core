@@ -1,4 +1,4 @@
-<div class="max-w-7xl mx-auto min-h-[500px] flex items-center justify-center bg-gradient-to-r from-violet-600 to-indigo-600">
+<div class="max-w-7xl mx-auto min-h-[300px] py-24 flex items-center justify-center bg-gradient-to-r from-violet-600 to-indigo-600">
     <div class="flex items-center px-8">
         <div class="w-6/12 flex-1 text-white">
             <h1 class="text-2xl font-bold">

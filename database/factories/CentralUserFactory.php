@@ -9,8 +9,16 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use TenantForge\Models\CentralUser;
 
+/**
+ * @template TModel of CentralUser
+ *
+ * @extends Factory<TModel>
+ */
 final class CentralUserFactory extends Factory
 {
+    /**
+     * @var class-string<TModel>
+     */
     protected $model = CentralUser::class;
 
     public function definition(): array

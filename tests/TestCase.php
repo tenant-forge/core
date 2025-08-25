@@ -12,6 +12,7 @@ use Filament\Forms\FormsServiceProvider;
 use Filament\Notifications\NotificationsServiceProvider;
 use Filament\Schemas\SchemasServiceProvider;
 use Filament\Support\SupportServiceProvider;
+use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -72,6 +73,7 @@ abstract class TestCase extends Orchestra
             WidgetsServiceProvider::class,
             SchemasServiceProvider::class,
             NotificationsServiceProvider::class,
+            TablesServiceProvider::class,
             // LaravelSettingsServiceProvider::class,
             // LaravelDataServiceProvider::class,
         ]);

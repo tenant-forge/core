@@ -53,6 +53,14 @@ final class CentralUser extends User implements Authenticatable, FilamentUser
         'remember_token',
     ];
 
+    /**
+     * @return CentralUserFactory<CentralUser>
+     */
+    public static function newFactory(): CentralUserFactory
+    {
+        return CentralUserFactory::new();
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         return true;

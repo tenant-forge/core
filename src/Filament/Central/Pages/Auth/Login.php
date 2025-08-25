@@ -10,6 +10,8 @@ use Livewire\Attributes\Layout;
 use TenantForge\Settings\AppSettings;
 use TenantForge\View\Components\TenantForge;
 
+use function __;
+
 #[Layout(TenantForge::class)]
 final class Login extends FilamentLogin
 {
@@ -34,5 +36,16 @@ final class Login extends FilamentLogin
             ])
             ->link()
             ->url(route('tenantforge.sign-up'));
+    }
+
+    protected function getAuthenticateFormAction(): Action
+    {
+        $action = parent::getAuthenticateFormAction();
+
+        $action->extraAttributes([
+            'data-test' => 'sign-in',
+        ]);
+
+        return $action;
     }
 }
