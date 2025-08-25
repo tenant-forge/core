@@ -54,6 +54,7 @@ describe('view missing translations', function (): void {
         $firstPost = $posts->first();
 
         visit(PostResource::getUrl(parameters: ['type' => 'posts'], isAbsolute: false))
+            ->wait(1)
             ->assertSee($firstPost->title)
             ->click($firstPost->title)
             ->assertSee('EN')
