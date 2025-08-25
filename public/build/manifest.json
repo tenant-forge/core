@@ -1,6 +1,6 @@
 {
   "resources/css/filament/theme.css": {
-    "file": "assets/theme-5HdLpRF7.css",
+    "file": "assets/theme-k0coNKkW.css",
     "src": "resources/css/filament/theme.css",
     "isEntry": true,
     "names": [
@@ -8,7 +8,7 @@
     ]
   },
   "resources/css/tenantforge.css": {
-    "file": "assets/tenantforge-pF75N289.css",
+    "file": "assets/tenantforge-CbwjezjH.css",
     "src": "resources/css/tenantforge.css",
     "isEntry": true,
     "names": [
@@ -16,7 +16,7 @@
     ]
   },
   "resources/js/tenantforge.js": {
-    "file": "assets/tenantforge-l0sNRNKZ.js",
+    "file": "assets/tenantforge-BNjs78Pi.js",
     "name": "tenantforge",
     "src": "resources/js/tenantforge.js",
     "isEntry": true

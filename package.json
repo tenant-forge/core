@@ -20,6 +20,8 @@
         "vite": "^7.0.4"
     },
     "dependencies": {
+        "@alpinejs/intersect": "^3.14.9",
+        "alpinejs": "^3.14.9",
         "playwright": "^1.54.2"
     }
 }

@@ -1,6 +1,6 @@
-<div class="max-w-7xl mx-auto min-h-[300px] py-24 flex items-center justify-center bg-gradient-to-r from-violet-600 to-indigo-600">
-    <div class="flex items-center px-8">
-        <div class="w-6/12 flex-1 text-white">
+<div class="max-w-7xl mx-auto p-4 flex items-center justify-center">
+    <div class="flex flex-col items-center">
+        <div class="w-full">
             <h1 class="text-2xl font-bold">
                 {{ $heading }}
             </h1>
@@ -8,6 +8,6 @@
                 {{ $subheading }}
             </p>
         </div>
-        <div class="w-6/12"></div>
+        <div class="w-full"></div>
     </div>
 </div>
