@@ -41,8 +41,8 @@ class LanguageSelector extends Action
 
         $this->translatableRecord = $this->originalTranslatableRecord = $post;
 
-        if ($this->translatableRecord->original) {
-            $this->originalTranslatableRecord = $this->translatableRecord->original;
+        if ($this->translatableRecord->originalTranslation) {
+            $this->originalTranslatableRecord = $this->translatableRecord->originalTranslation;
         }
 
         $this->translations = $this->originalTranslatableRecord->translations;
@@ -53,7 +53,7 @@ class LanguageSelector extends Action
             ->whereNotIn('locale', $this->translations->pluck('language.locale')->toArray())
             ->get();
 
-        $this->translations = $this->translations->filter(fn (Post $post): bool => $post->language?->id !== $this->translatableRecord->language?->id);
+        $this->translations = $this->translations->filter(fn (Post $post): bool => $post->language->id !== $this->translatableRecord->language->id);
 
         $this->view('tenantforge::filament.actions.language-selector', [
             'post' => $this->translatableRecord,

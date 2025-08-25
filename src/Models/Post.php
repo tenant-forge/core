@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use TenantForge\Concerns\InteractsWithTranslations;
+use TenantForge\Contracts\Slugable;
+use TenantForge\Contracts\Translatable;
 use TenantForge\Database\Factories\PostFactory;
 use TenantForge\Enums\ContentStatus;
 
@@ -27,14 +29,19 @@ use TenantForge\Enums\ContentStatus;
  * @property-read Carbon $created_at
  * @property-read Carbon $updated_at
  * @property-read PostType $type
- * @property-read ?Post $original
+ * @property-read ?Post $originalTranslation
  * @property-read Collection<int, Post> $translations
- * @property-read ?Language $language
+ * @property-read Language $language
+ *
+ * @implements Translatable<Post, $this, Post, Language>
  */
-class Post extends Model
+class Post extends Model implements Slugable, Translatable
 {
     /** @use HasFactory<PostFactory> */
     use HasFactory;
+
+    /** @use InteractsWithTranslations<Post,$this, Post, Language> */
+    use InteractsWithTranslations;
 
     protected $fillable = [
         'title',
@@ -67,34 +74,10 @@ class Post extends Model
     }
 
     /**
-     * @return HasMany<Post, $this>
-     */
-    public function translations(): HasMany
-    {
-        return $this->hasMany(self::class, 'translation_id');
-    }
-
-    /**
-     * @return BelongsTo<Post, $this>
-     */
-    public function original(): BelongsTo
-    {
-        return $this->belongsTo(self::class, 'translation_id');
-    }
-
-    /**
      * @return BelongsTo<PostType, $this>
      */
     public function type(): BelongsTo
     {
         return $this->belongsTo(PostType::class, 'post_type_id');
-    }
-
-    /**
-     * @return BelongsTo<Language, $this>
-     */
-    public function language(): BelongsTo
-    {
-        return $this->belongsTo(Language::class);
     }
 }

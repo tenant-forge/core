@@ -30,7 +30,7 @@ describe('Post model test', function (): void {
 
         Post::factory()
             ->post()
-            ->for($post, 'original')
+            ->for($post, 'originalTranslation')
             ->for($language, 'language')
             ->createQuietly([
                 'title' => $title = Str::title('Este é o meu artigo traduzido'),

@@ -50,8 +50,9 @@ class HeroBlock extends RichContentCustomBlock
 
     public static function toHtml(array $config, array $data): string
     {
-        return view('filament.forms.components.rich-editor.rich-content-custom-blocks.hero.index', [
-            //
+        return view('tenantforge::filament.forms.components.rich-editor.custom-blocks.hero.index', [
+            'heading' => $config['heading'] ?? 'Hero',
+            'subheading' => $config['subheading'] ?? 'Subheading',
         ])->render();
     }
 }
