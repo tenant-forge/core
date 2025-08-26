@@ -6,6 +6,15 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 [x-cloak] { display: none !important; }
+[x-cloak=''],
+[x-cloak='x-cloak'],
+[x-cloak='1'] {
+    display: none !important;
+}
+
+[x-cloak='inline-flex'] {
+    display: inline-flex !important;
+}
 
 
 @theme {

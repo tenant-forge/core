@@ -8,7 +8,7 @@
     ]
   },
   "resources/css/tenantforge.css": {
-    "file": "assets/tenantforge-CbwjezjH.css",
+    "file": "assets/tenantforge-D1zdj0DL.css",
     "src": "resources/css/tenantforge.css",
     "isEntry": true,
     "names": [
@@ -16,7 +16,7 @@
     ]
   },
   "resources/js/tenantforge.js": {
-    "file": "assets/tenantforge-BNjs78Pi.js",
+    "file": "assets/tenantforge-C9bI3pZV.js",
     "name": "tenantforge",
     "src": "resources/js/tenantforge.js",
     "isEntry": true

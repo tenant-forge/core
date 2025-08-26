@@ -1,5 +1,5 @@
     <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark bg-accent-background text-zinc-700 dark:text-zinc-300">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="bg-accent-background text-zinc-700 dark:text-zinc-300">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -26,6 +26,31 @@
     <meta property="twitter:description" content="Description" />
 
     @vite(['resources/css/tenantforge.css', 'resources/js/tenantforge.js'], 'vendor/tenantforge/core/build')
+
+    <style>
+        [x-cloak=''],
+        [x-cloak='x-cloak'],
+        [x-cloak='1'] {
+            display: none !important;
+        }
+
+        [x-cloak='inline-flex'] {
+            display: inline-flex !important;
+        }
+
+        @media (max-width: 1023px) {
+            [x-cloak='-lg'] {
+                display: none !important;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            [x-cloak='lg'] {
+                display: none !important;
+            }
+        }
+    </style>
+
     @filamentStyles
 
     {{ filament()->getTheme()->getHtml() }}
@@ -40,6 +65,27 @@
             }
         }
     </style>
+
+    <script>
+        const loadDarkMode = () => {
+            window.theme = localStorage.getItem('theme')
+
+            if (
+                window.theme === 'dark' ||
+                (window.theme === 'system' &&
+                    window.matchMedia('(prefers-color-scheme: dark)')
+                        .matches)
+            ) {
+                document.documentElement.classList.add('dark')
+            }
+        }
+
+        loadDarkMode()
+
+        document.addEventListener('livewire:navigated', loadDarkMode)
+    </script>
+
+
 
 </head>
 <body class="flex min-h-screen flex-col items-stretch antialiased" data-theme="simple">
