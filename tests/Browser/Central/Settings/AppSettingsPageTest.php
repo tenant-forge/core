@@ -7,7 +7,7 @@ use TenantForge\Models\CentralUser;
 
 describe('App Settings Page', function (): void {
 
-    test('it has a logo file upload component', function (): void {
+    test('it has the expected general settings', function (): void {
 
         // Arrange
         /** @var CentralUser $user */

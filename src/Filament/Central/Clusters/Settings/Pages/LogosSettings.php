@@ -16,9 +16,9 @@ use TenantForge\Settings\AppSettings;
 
 use function __;
 
-final class AppearanceSettings extends SettingsPage
+final class LogosSettings extends SettingsPage
 {
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDeviceTablet;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPhoto;
 
     protected static string $settings = AppSettings::class;
 
@@ -27,6 +27,11 @@ final class AppearanceSettings extends SettingsPage
     protected static ?int $navigationSort = 2;
 
     public static function getNavigationLabel(): string
+    {
+        return __('Logos');
+    }
+
+    public static function getNavigationGroup(): string
     {
         return __('Appearance');
     }
@@ -39,6 +44,7 @@ final class AppearanceSettings extends SettingsPage
         return [
             SettingsCluster::getUrl() => __('Settings'),
             self::getUrl() => __('Appearance'),
+            self::getUrl() => __('Logos'),
         ];
     }
 
