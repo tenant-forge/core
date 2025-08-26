@@ -21,10 +21,17 @@ use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\LaravelData\LaravelDataServiceProvider;
 use Spatie\LaravelSettings\LaravelSettingsServiceProvider;
+use TenantForge\Models\CentralUser;
+use TenantForge\Models\Language;
 use TenantForge\Models\Tenant;
 
 use function array_merge;
 
+/**
+ * @property CentralUser $centralUser
+ * @property Tenant $tenant
+ * @property Language $language
+ */
 abstract class TestCase extends Orchestra
 {
     use RefreshDatabase;
