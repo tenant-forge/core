@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('sort');
             $table->boolean('is_active');
             $table->boolean('is_system');
+            $table->boolean('has_featured_image');
             $table->timestamps();
 
         });
@@ -68,6 +69,7 @@ return new class extends Migration
             'sort' => 1,
             'is_active' => true,
             'is_system' => true,
+            'has_featured_image' => true,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -81,6 +83,7 @@ return new class extends Migration
             'sort' => 1,
             'is_active' => true,
             'is_system' => true,
+            'has_featured_image' => true,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

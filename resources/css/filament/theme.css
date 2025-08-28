@@ -3,6 +3,7 @@
 
 @source '../../../resources/views/filament/**/*';
 @source '../../../resources/views/livewire/**/*';
+@source '../../../src/Filament/**/*';
 
 
 .tf-settings-section .fi-grid-col {

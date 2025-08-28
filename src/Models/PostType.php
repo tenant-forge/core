@@ -20,6 +20,7 @@ use TenantForge\Database\Factories\PostTypeFactory;
  * @property-read int $sort
  * @property-read bool $is_active
  * @property-read bool $is_system
+ * @property-read bool $has_featured_image
  * @property-read Carbon $created_at
  * @property-read Carbon $updated_at
  */
@@ -27,6 +28,18 @@ class PostType extends Model
 {
     /** @use HasFactory<PostTypeFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'slug',
+        'plural_name',
+        'icon',
+        'description',
+        'sort',
+        'is_active',
+        'is_system',
+        'has_featured_image',
+    ];
 
     /**
      * @return PostTypeFactory<PostType>

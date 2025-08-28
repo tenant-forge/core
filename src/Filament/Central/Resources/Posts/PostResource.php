@@ -51,7 +51,7 @@ class PostResource extends Resource
     public static function form(Schema $schema): Schema
     {
 
-        return PostForm::configure(schema: $schema);
+        return PostForm::configure(schema: $schema, postType: static::getPostType());
     }
 
     /**

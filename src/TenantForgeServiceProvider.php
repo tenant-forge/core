@@ -14,6 +14,7 @@ use Illuminate\Support\ServiceProvider;
 use TenantForge\Configure\ConfigureLivewire;
 use TenantForge\Enums\AuthGuard;
 use TenantForge\Http\Responses\RegistrationResponse;
+use TenantForge\Settings\AppearanceSettings;
 use TenantForge\Settings\AppSettings;
 
 use function app_path;
@@ -115,9 +116,23 @@ final class TenantForgeServiceProvider extends ServiceProvider
 
     private function configureFilament(): void
     {
-        FilamentColor::register([
-            'primary' => Color::generatePalette('rgb(4, 193, 71)'),
-        ]);
+
+        if (! $this->app->runningInConsole()) {
+
+            /** @var AppearanceSettings $appearanceSettings */
+            $appearanceSettings = app(AppearanceSettings::class);
+
+            FilamentColor::register([
+                'danger' => Color::generatePalette($appearanceSettings->danger ?? Color::Red[500]),
+                'gray' => Color::Zinc,
+                'info' => Color::generatePalette($appearanceSettings->info ?? Color::Blue[500]),
+                'primary' => Color::generatePalette($appearanceSettings->primary ?? Color::Emerald[500]),
+                'secondary' => Color::generatePalette($appearanceSettings->secondary ?? Color::Orange[500]),
+                'success' => Color::generatePalette($appearanceSettings->success ?? Color::Zinc[500]),
+                'warning' => Color::generatePalette($appearanceSettings->warning ?? Color::Orange[500]),
+            ]);
+
+        }
 
     }
 

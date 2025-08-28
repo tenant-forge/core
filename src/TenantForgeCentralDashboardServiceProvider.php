@@ -32,7 +32,7 @@ use TenantForge\Enums\AuthGuard;
 use TenantForge\Filament\Central\Resources\Posts\PostResource;
 use TenantForge\Filament\Central\Widgets\TenantsWidget;
 use TenantForge\Models\PostType;
-use TenantForge\Settings\AppSettings;
+use TenantForge\Settings\AppearanceSettings;
 
 use function Filament\Support\original_request;
 
@@ -46,14 +46,13 @@ class TenantForgeCentralDashboardServiceProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::generatePalette('rgb(4, 193, 71)'),
                 'gray' => Color::Zinc,
             ])
             ->sidebarWidth('16rem')
             ->maxContentWidth(Width::ScreenTwoExtraLarge)
-            ->brandLogo(fn (AppSettings $settings): string => $settings->logo !== null && $settings->logo !== '' && $settings->logo !== '0' ? Storage::disk('public')->url($settings->logo) : '')
-            ->darkModeBrandLogo(fn (AppSettings $settings): string => $settings->dark_logo !== null && $settings->dark_logo !== '' && $settings->dark_logo !== '0' ? Storage::disk('public')->url($settings->dark_logo) : '')
-            ->favicon(fn (AppSettings $settings): string => $settings->favicon !== null && $settings->favicon !== '' && $settings->favicon !== '0' ? Storage::disk('public')->url($settings->favicon) : '')
+            ->brandLogo(fn (AppearanceSettings $settings): string => $settings->logo !== null && $settings->logo !== '' && $settings->logo !== '0' ? Storage::disk('public')->url($settings->logo) : '')
+            ->darkModeBrandLogo(fn (AppearanceSettings $settings): string => $settings->dark_logo !== null && $settings->dark_logo !== '' && $settings->dark_logo !== '0' ? Storage::disk('public')->url($settings->dark_logo) : '')
+            ->favicon(fn (AppearanceSettings $settings): string => $settings->favicon !== null && $settings->favicon !== '' && $settings->favicon !== '0' ? Storage::disk('public')->url($settings->favicon) : '')
             ->viteTheme('resources/css/filament/theme.css', 'vendor/tenantforge/core/build')
             ->discoverResources(in: __DIR__.'/Filament/Central/Resources', for: 'TenantForge\\Filament\\Central\\Resources')
             ->discoverPages(in: __DIR__.'/Filament/Central/Pages', for: 'TenantForge\\Filament\\Central\\Pages')

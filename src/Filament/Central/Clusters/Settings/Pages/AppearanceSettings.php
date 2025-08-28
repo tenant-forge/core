@@ -6,32 +6,27 @@ namespace TenantForge\Filament\Central\Clusters\Settings\Pages;
 
 use BackedEnum;
 use Exception;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Pages\SettingsPage;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use TenantForge\Filament\Central\Clusters\Settings\SettingsCluster;
-use TenantForge\Settings\AppSettings;
 
 use function __;
 
-final class LogosSettings extends SettingsPage
+final class AppearanceSettings extends SettingsPage
 {
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPhoto;
 
-    protected static string $settings = AppSettings::class;
+    protected static string $settings = \TenantForge\Settings\AppearanceSettings::class;
 
     protected static ?string $cluster = SettingsCluster::class;
 
     protected static ?int $navigationSort = 2;
 
     public static function getNavigationLabel(): string
-    {
-        return __('Logos');
-    }
-
-    public static function getNavigationGroup(): string
     {
         return __('Appearance');
     }
@@ -43,7 +38,6 @@ final class LogosSettings extends SettingsPage
     {
         return [
             SettingsCluster::getUrl() => __('Settings'),
-            self::getUrl() => __('Appearance'),
             self::getUrl() => __('Logos'),
         ];
     }
@@ -56,7 +50,35 @@ final class LogosSettings extends SettingsPage
         return $schema
             ->columns(1)
             ->components([
-                Section::make()
+                Section::make(__('Colors'))
+                    ->extraAttributes([
+                        'class' => 'tf-settings-section',
+                    ])
+                    ->inlineLabel()
+                    ->schema([
+                        ColorPicker::make('danger')
+                            ->label(__('Danger'))
+                            ->regex('/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})\b$/'),
+                        ColorPicker::make('gray')
+                            ->label(__('Gray'))
+                            ->regex('/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})\b$/'),
+                        ColorPicker::make('info')
+                            ->label(__('Info'))
+                            ->regex('/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})\b$/'),
+                        ColorPicker::make('primary')
+                            ->label(__('Primary'))
+                            ->regex('/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})\b$/'),
+                        ColorPicker::make('secondary')
+                            ->label(__('Secondary'))
+                            ->regex('/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})\b$/'),
+                        ColorPicker::make('success')
+                            ->label(__('Success'))
+                            ->regex('/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})\b$/'),
+                        ColorPicker::make('warning')
+                            ->label(__('Warning'))
+                            ->regex('/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})\b$/'),
+                    ]),
+                Section::make(__('Logos and Favicon'))
                     ->extraAttributes([
                         'class' => 'tf-settings-section',
                     ])

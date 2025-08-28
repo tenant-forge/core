@@ -26,7 +26,7 @@
             <li>
                 Blog
             </li>
-            <li>
+            <li class="text-secondary-600 font-medium">
                 Roadmap
             </li>
         </ul>

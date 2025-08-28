@@ -9,12 +9,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpFoundation\Response;
+use TenantForge\Settings\AppearanceSettings;
 use TenantForge\Settings\AppSettings;
 
-class HandleBladeRequests
+readonly class HandleBladeRequests
 {
     public function __construct(
-        private readonly AppSettings $appSettings
+        private AppSettings $appSettings,
+        private AppearanceSettings $appearanceSettings,
     ) {}
 
     /**
@@ -28,8 +30,9 @@ class HandleBladeRequests
         View::share([
             'title' => $this->appSettings->name,
             'description' => $this->appSettings->about,
-            'logo' => Storage::disk('public')->url($this->appSettings->logo ?? ''),
-            'darkLogo' => Storage::disk('public')->url($this->appSettings->dark_logo ?? ''),
+            'logo' => Storage::disk('public')->url($this->appearanceSettings->logo ?? ''),
+            'darkLogo' => Storage::disk('public')->url($this->appearanceSettings->dark_logo ?? ''),
+            'favicon' => Storage::disk('public')->url($this->appearanceSettings->favicon ?? ''),
         ]);
 
         return $next($request);

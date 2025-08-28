@@ -7,7 +7,7 @@ namespace TenantForge\Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use TenantForge\Settings\AppSettings;
+use TenantForge\Settings\AppearanceSettings;
 
 use function file_get_contents;
 use function is_string;
@@ -20,8 +20,7 @@ final class AppearanceSettingsSeeder extends Seeder
     public function run(): void
     {
 
-        /** @var AppSettings $appSettings */
-        $appSettings = app(AppSettings::class);
+        $settings = app(AppearanceSettings::class);
 
         $logo = file_get_contents('https://raw.githubusercontent.com/tenant-forge/docs/refs/heads/main/logo/light.svg');
         $darkLogo = file_get_contents('https://raw.githubusercontent.com/tenant-forge/docs/refs/heads/main/logo/dark.svg');
@@ -39,11 +38,11 @@ final class AppearanceSettingsSeeder extends Seeder
         Storage::disk('public')->put($darkLogoFilePath, $darkLogo);
         Storage::disk('public')->put($faviconFilePath, $favicon);
 
-        $appSettings->logo = $logoFilePath;
-        $appSettings->dark_logo = $darkLogoFilePath;
-        $appSettings->favicon = $faviconFilePath;
+        $settings->logo = $logoFilePath;
+        $settings->dark_logo = $darkLogoFilePath;
+        $settings->favicon = $faviconFilePath;
 
-        $appSettings->save();
+        $settings->save();
 
     }
 }

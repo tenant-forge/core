@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use TenantForge\Enums\AuthGuard;
-use TenantForge\Filament\Central\Clusters\Settings\Pages\LogosSettings;
+use TenantForge\Filament\Central\Clusters\Settings\Pages\AppearanceSettings;
 use TenantForge\Models\CentralUser;
 
 use function Pest\Laravel\actingAs;
@@ -19,9 +19,8 @@ describe('appearance settings', function (): void {
     test('user must see the appearance navigation items on settings cluster', function () {
 
         actingAs($this->centralUser, AuthGuard::WebCentral->value)
-            ->visit(LogosSettings::getUrl(isAbsolute: false))
-            ->assertSee('Appearance')
-            ->assertSee('Logos');
+            ->visit(AppearanceSettings::getUrl(isAbsolute: false))
+            ->assertSee('Appearance');
 
     });
 
