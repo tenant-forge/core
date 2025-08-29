@@ -29,11 +29,13 @@ beforeEach(function () {
     Language::factory()->create([
         'name' => 'Portuguese',
         'locale' => 'pt',
+        'is_active' => true,
     ]);
 
     Language::factory()->create([
         'name' => 'French',
         'locale' => 'fr',
+        'is_active' => true,
     ]);
 
     Post::factory()

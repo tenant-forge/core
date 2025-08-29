@@ -29,18 +29,16 @@ use TenantForge\Enums\ContentStatus;
  * @property-read Carbon $created_at
  * @property-read Carbon $updated_at
  * @property-read PostType $type
- * @property-read ?Post $originalTranslation
+ * @property-read Post $originalTranslation
  * @property-read Collection<int, Post> $translations
  * @property-read Language $language
- *
- * @implements Translatable<Post, $this, Post, Language>
  */
 class Post extends Model implements Slugable, Translatable
 {
     /** @use HasFactory<PostFactory> */
     use HasFactory;
 
-    /** @use InteractsWithTranslations<Post,$this, Post, Language> */
+    /** @use InteractsWithTranslations<Post, $this> */
     use InteractsWithTranslations;
 
     protected $fillable = [

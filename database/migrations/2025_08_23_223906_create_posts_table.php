@@ -44,8 +44,7 @@ return new class extends Migration
             $table->foreignIdFor(Language::class)
                 ->constrained();
             $table->string('title');
-            $table->string('slug')
-                ->unique();
+            $table->string('slug');
             $table->jsonb('content')
                 ->nullable();
             $table->string('featured_image')
@@ -58,6 +57,7 @@ return new class extends Migration
             $table->index(['type', 'translation_id', 'language_id']);
             $table->index(['type', 'status', 'published_at']);
             $table->index(['type', 'slug']);
+            $table->unique(['type', 'slug', 'language_id']);
         });
 
         DB::table('post_types')->insert([

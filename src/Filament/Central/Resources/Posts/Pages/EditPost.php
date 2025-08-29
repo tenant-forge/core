@@ -59,7 +59,7 @@ class EditPost extends EditRecord
         return [
 
             LanguageSelector::make('language-selector')
-                ->setTranslatableRecord($post),
+                ->setView($post),
             DeleteAction::make(),
         ];
     }

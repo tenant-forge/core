@@ -5,11 +5,41 @@ declare(strict_types=1);
 use Illuminate\Support\Str;
 use TenantForge\Models\Language;
 use TenantForge\Models\Post;
+use TenantForge\Models\PostType;
+
+beforeEach(function (): void {
+
+    $this->language = Language::query()
+        ->where('locale', 'en')
+        ->first();
+
+});
 
 describe('Post model test', function (): void {
 
     test('one post can only have one translation for each language', function (): void {})->todo();
 
+    test('posts have a post type relation', function (): void {
+
+        // Arrange
+        /** @var PostType $postType */
+        $postType = PostType::query()
+            ->where('slug', 'posts')
+            ->first();
+
+        /** @var Post $post */
+        $post = Post::factory()
+            ->for($this->language)
+            ->for($postType, 'type')
+            ->create()
+            ->fresh();
+
+        expect($post->type)
+            ->toBeInstanceOf(PostType::class)
+            ->and($post->type->slug)
+            ->toBe('posts');
+
+    });
     test('can have a translation in portuguese', function (): void {
 
         // Arrange

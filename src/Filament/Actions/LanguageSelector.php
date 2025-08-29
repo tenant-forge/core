@@ -4,26 +4,24 @@ declare(strict_types=1);
 
 namespace TenantForge\Filament\Actions;
 
+use Exception;
 use Filament\Actions\Action;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
+use Livewire\Features\SupportRedirects\Redirector;
+use TenantForge\Actions\Content\CreateContentTranslationAction;
+use TenantForge\Contracts\Translatable;
+use TenantForge\Filament\Central\Resources\Posts\Pages\EditPost;
 use TenantForge\Models\Language;
 use TenantForge\Models\Post;
+use Throwable;
+
+use function redirect;
 
 class LanguageSelector extends Action
 {
-    private ?Post $translatableRecord = null;
+    private ?Translatable $translatableRecord = null;
 
-    private ?Post $originalTranslatableRecord = null;
-
-    /**
-     * @var null|Collection<int, Post>
-     */
-    private ?Collection $translations = null;
-
-    /**
-     * @var Collection<int, Language>|null
-     */
-    private ?Collection $missingTranslations = null;
+    private Translatable $originalTranslatableRecord;
 
     public function setUp(): void
     {
@@ -32,36 +30,54 @@ class LanguageSelector extends Action
         if ($this->translatableRecord instanceof Post) {
             $this->view('tenantforge::filament.actions.language-selector', [
                 'post' => $this->translatableRecord,
+                'name' => $this->name,
             ]);
         }
+
+        $this->action(function (array $arguments = []): void {
+            if (isset($arguments['languageId'])) {
+                /** @var ?Language $language */
+                $language = Language::query()
+                    ->where('id', $arguments['languageId'])
+                    ->first();
+                if ($language) {
+                    $this->createTranslation($language);
+                }
+            }
+        });
     }
 
-    public function setTranslatableRecord(Post $post): static
+    /**
+     * @return $this
+     */
+    public function setView(Translatable $record): static
     {
 
-        $this->translatableRecord = $this->originalTranslatableRecord = $post;
-
-        if ($this->translatableRecord->originalTranslation) {
-            $this->originalTranslatableRecord = $this->translatableRecord->originalTranslation;
-        }
-
-        $this->translations = $this->originalTranslatableRecord->translations;
-
-        $this->translations->push($this->originalTranslatableRecord);
-
-        $this->missingTranslations = Language::query()
-            ->whereNotIn('locale', $this->translations->pluck('language.locale')->toArray())
-            ->get();
-
-        $this->translations = $this->translations->filter(fn (Post $post): bool => $post->language->id !== $this->translatableRecord->language->id);
-
         $this->view('tenantforge::filament.actions.language-selector', [
-            'post' => $this->translatableRecord,
-            'originalPost' => $this->originalTranslatableRecord,
-            'translations' => $this->translations,
-            'missingTranslations' => $this->missingTranslations,
+            'post' => $this->translatableRecord = $record,
+            'originalPost' => $this->originalTranslatableRecord = $record->isTranslation() ? $record->getOriginalTranslation() : $record,
+            'translations' => $this->translatableRecord->getTranslations(),
+            'missingTranslations' => $this->translatableRecord->getMissingTranslations(),
+            'name' => $this->name,
         ]);
 
         return $this;
+    }
+
+    /**
+     * @throws Exception
+     * @throws Throwable
+     */
+    public function createTranslation(Language $language): Redirector|RedirectResponse
+    {
+        /** @var Post $post */
+        $post = app(CreateContentTranslationAction::class)
+            ->handle($this->originalTranslatableRecord, $language);
+
+        return redirect()->intended(EditPost::getUrl([
+            'record' => $post->id,
+            'type' => $post->type->slug,
+        ]));
+
     }
 }

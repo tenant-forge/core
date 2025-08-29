@@ -4,36 +4,19 @@ declare(strict_types=1);
 
 namespace TenantForge\Contracts;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use TenantForge\Models\Language;
 
-/**
- * @template TModel of Model
- * @template TRelationModel of Model
- * @template TRelatedModel of Model
- * @template TLanguageModel of Model
- */
 interface Translatable
 {
-    /**
-     * @return HasMany<TRelatedModel, TRelationModel>
-     */
-    public function translations(): HasMany;
+    public function getTranslations(): mixed;
 
-    /**
-     * @return BelongsTo<TRelatedModel, TRelationModel>
-     */
-    public function originalTranslation(): BelongsTo;
+    public function getOriginalTranslation(): self;
 
-    /**
-     * @return BelongsTo<TLanguageModel, TRelationModel>
-     */
-    public function language(): BelongsTo;
+    public function isTranslation(): bool;
 
-    /**
-     * @return TModel|Model
-     */
-    public function makeTranslation(Language $language): mixed;
+    public function isTranslatable(): bool;
+
+    public function getMissingTranslations(): mixed;
+
+    public function makeTranslation(Language $language): self;
 }

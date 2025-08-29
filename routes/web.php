@@ -23,7 +23,11 @@ Route::middleware(['web', HandleBladeRequests::class])->group(function () {
     Route::redirect('/login', '/sign-in')
         ->name('login');
 
-    Route::middleware(['auth:web_central'])->get('/onboarding/tenant', TenantOnboarding::class)
-        ->name('tenantforge.onboarding.tenant');
+    Route::middleware(['auth:web_central'])->group(function () {
+
+        Route::get('/onboarding/tenant', TenantOnboarding::class)
+            ->name('tenantforge.onboarding.tenant');
+
+    });
 
 });
