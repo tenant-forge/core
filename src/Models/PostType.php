@@ -39,6 +39,7 @@ class PostType extends Model
         'is_active',
         'is_system',
         'has_featured_image',
+        'custom_fields',
     ];
 
     /**
@@ -57,6 +58,7 @@ class PostType extends Model
         return [
             'is_active' => 'bool',
             'icon' => Heroicon::class,
+            'custom_fields' => 'array',
         ];
     }
 }

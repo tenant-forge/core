@@ -27,6 +27,8 @@ return new class extends Migration
             $table->boolean('is_active');
             $table->boolean('is_system');
             $table->boolean('has_featured_image');
+            $table->jsonb('custom_fields')
+                ->nullable();
             $table->timestamps();
 
         });
@@ -84,6 +86,7 @@ return new class extends Migration
             'is_active' => true,
             'is_system' => true,
             'has_featured_image' => true,
+            'custom_fields' => '[]',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

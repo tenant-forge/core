@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use TenantForge\Configure\ConfigureLivewire;
 use TenantForge\Enums\AuthGuard;
+use TenantForge\Filament\Forms\Components\Builder\BuilderRegistry;
 use TenantForge\Http\Responses\RegistrationResponse;
 use TenantForge\Settings\AppearanceSettings;
 use TenantForge\Settings\AppSettings;
@@ -42,6 +43,12 @@ final class TenantForgeServiceProvider extends ServiceProvider
             RegistrationResponse::class
 
         );
+
+        $this->app->singleton(
+            BuilderRegistry::class,
+            fn (): BuilderRegistry => new BuilderRegistry()
+        );
+
     }
 
     public function boot(): void

@@ -21,6 +21,7 @@ use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\LaravelData\LaravelDataServiceProvider;
 use Spatie\LaravelSettings\LaravelSettingsServiceProvider;
+use TenantForge\Filament\Forms\Components\Builder\BuilderRegistry;
 use TenantForge\Models\CentralUser;
 use TenantForge\Models\Language;
 use TenantForge\Models\Tenant;
@@ -31,6 +32,7 @@ use function array_merge;
  * @property CentralUser $centralUser
  * @property Tenant $tenant
  * @property Language $language
+ * @property BuilderRegistry $builderRegistry
  */
 abstract class TestCase extends Orchestra
 {
