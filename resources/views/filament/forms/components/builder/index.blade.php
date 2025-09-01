@@ -10,15 +10,17 @@ $deleteAction = $getAction($getDeleteActionName());
         <div class="flex flex-col gap-4">
 
             <div class="flex flex-col gap-4 mb-4">
-                @foreach($field->getState() as $key => $component)
-                    <div
-                        class="border border-dashed border-zinc-200 dark:border-zinc-700 p-4 rounded flex items-center justify-between">
-                        <span class="font-semibold">{{ Str::title($component['name']) }}</span>
-                        <div>
-                            {{ $deleteAction(['item' => $key]) }}
+                @if($field->getState())
+                    @foreach($field->getState() as $key => $component)
+                        <div
+                            class="border border-dashed border-zinc-200 dark:border-zinc-700 p-4 rounded flex items-center justify-between">
+                            <span class="font-semibold">{{ Str::title($component['name']) }}</span>
+                            <div>
+                                {{ $deleteAction(['item' => $key]) }}
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endif
             </div>
 
         </div>

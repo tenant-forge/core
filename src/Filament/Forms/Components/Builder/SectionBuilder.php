@@ -17,15 +17,26 @@ class SectionBuilder implements BuilderComponent
 {
     public static string $type = 'section';
 
+    /**
+     * @param  array{component: string, name: string, schemaPath: string, configuration: array<string, mixed>}|null  $state
+     */
     public function __construct(
         public Field $field,
+        public ?string $name = null,
+        public ?array $state = null,
+        public ?BuilderComponent $parentComponent = null,
     ) {}
 
-    public static function make(
-        Field $field,
-    ): self {
+    /**
+     * @param  array{component: string, name: string, schemaPath: string, configuration: array<string, mixed>}|null  $state
+     */
+    public static function make(Field $field, ?string $name = null, ?string $schemaPath = null, ?array $state = null, ?BuilderComponent $parentComponent = null): self
+    {
         return new self(
             field: $field,
+            name: $name,
+            state: $state,
+            parentComponent: $parentComponent,
         );
 
     }
@@ -58,7 +69,7 @@ class SectionBuilder implements BuilderComponent
     /**
      * @throws Exception
      */
-    public function addSectionAction(Builder $component, ?Action $action = null): Action
+    public function addSectionAction(Builder $component, ?BuilderComponent $parentComponent = null): Action
     {
 
         return Action::make($this->getAddSectionActionName())
@@ -72,7 +83,7 @@ class SectionBuilder implements BuilderComponent
             ->action(function (array $data, Action $action) use ($component): void {
 
                 /** @var array<string, mixed> $state */
-                $state = $component->getState();
+                $state = $component->getState() ?? [];
 
                 $component->state([
                     ...$state,

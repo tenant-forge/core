@@ -80,7 +80,7 @@ class TextInputBuilder implements BuilderComponent
             ->action(function (array $data, Action $action) use ($component): void {
 
                 /** @var array<string, mixed> $state */
-                $state = $component->getState();
+                $state = $component->getState() ?? [];
 
                 $component->state([
                     ...$state,
