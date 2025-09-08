@@ -13,6 +13,7 @@ use Filament\Schemas\Components\Contracts\HasExtraItemActions;
 use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\View\View;
 
 use function collect;
 use function view;
@@ -57,12 +58,23 @@ class Builder extends Field implements HasExtraItemActions
         $this->fieldTypes = $actions;
 
         $this->registerActions([
-            ...$actions,
             fn (Builder $component): Action => $component->newComponentAction(),
             fn (Builder $component): Action => $component->deleteComponentAction(),
 
         ]);
+        $this->registerActions($actions);
 
+    }
+
+    /**
+     * @param  array{component: string, name: string, schemaPath: string, configuration: array<string, mixed>}|null  $state
+     *                                                                                                                       /
+     * @throws BindingResolutionException
+     */
+    public function renderComponent(string $type, ?array $state): View
+    {
+        return $this->builderRegistry->getBuilderComponent($this, $type, $state)
+            ->render();
     }
 
     public function getDeleteActionName(): string
@@ -102,19 +114,29 @@ class Builder extends Field implements HasExtraItemActions
     /**
      * @throws Exception
      */
-    public function newComponentAction(): Action
+    public function newComponentAction(?string $hello = null): Action
     {
-        return Action::make('add-component')
+
+        return Action::make($this->getNewComponentActionName())
             ->label('Add custom field')
             ->icon(Heroicon::PlusCircle)
             ->color('gray')
             ->slideOver()
             ->modalHeading('Field types')
             ->modalWidth(Width::Medium)
-            ->modalContent(view('tenantforge::filament.forms.components.builder.add-component', [
-                'fieldTypes' => $this->fieldTypes,
-                'component' => $this,
-            ]))
+            ->modalContent(function (array $arguments): View {
+
+                dd($arguments);
+
+                $data = [
+                    'fieldTypes' => $this->fieldTypes,
+                    'component' => $this,
+                    'hello' => $arguments['hello'],
+                ];
+
+                return view('tenantforge::filament.forms.components.builder.add-component', $data);
+
+            })
             ->modalCancelAction(false)
             ->modalSubmitAction(false);
     }

@@ -7,7 +7,6 @@ namespace TenantForge\Filament\Forms\Components\Builder;
 use Closure;
 use Exception;
 use Filament\Actions\Action;
-use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -15,22 +14,11 @@ use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-class TextInputBuilder implements BuilderComponent
+class TextInputBuilder extends Component implements BuilderComponent
 {
     public static string $type = 'text-input';
 
-    public function __construct(
-        public Field $field,
-    ) {}
-
-    public static function make(
-        Field $field,
-    ): self {
-        return new self(
-            field: $field,
-        );
-
-    }
+    public static bool $hasChildren = false;
 
     /**
      * @throws Exception

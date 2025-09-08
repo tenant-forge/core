@@ -15,8 +15,6 @@ $fields = [
 
 
 @endphp
-
-
 <div>
 
     <div class="flex flex-col space-y-4">
@@ -25,8 +23,6 @@ $fields = [
             @php
                 $name = $type($component)->getName();
                 $action = $component->getAction($name);
-
-
             @endphp
             {{ $action([$component]) }}
         @endforeach

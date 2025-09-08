@@ -11,9 +11,11 @@ use InvalidArgumentException;
 class BuilderRegistry
 {
     /**
+     * @param  array{component: string, name: string, schemaPath: string, configuration: array<string, mixed>}|null  $state
+     *                                                                                                                       /
      * @throws BindingResolutionException
      */
-    public static function getBuilderComponent(Field $field, string $type): BuilderComponent
+    public static function getBuilderComponent(Field $field, string $type, ?array $state = null): BuilderComponent
     {
 
         $components = static::components();
@@ -24,6 +26,7 @@ class BuilderRegistry
         /** @var BuilderComponent $component */
         $component = app()->make(static::components()[$type], [
             'field' => $field,
+            'state' => $state,
         ]);
 
         return $component;

@@ -11,7 +11,14 @@ $deleteAction = $getAction($getDeleteActionName());
 
             <div class="flex flex-col gap-4 mb-4">
                 @if($field->getState())
+
                     @foreach($field->getState() as $key => $component)
+                        {{ $renderComponent($component['component'], [
+                                'name' => $component['name'],
+                                'schemaPath' => 'somePath',
+                                'configuration' => $component['configuration'],
+                            ])
+                        }}
                         <div
                             class="border border-dashed border-zinc-200 dark:border-zinc-700 p-4 rounded flex items-center justify-between">
                             <span class="font-semibold">{{ Str::title($component['name']) }}</span>
@@ -24,9 +31,6 @@ $deleteAction = $getAction($getDeleteActionName());
             </div>
 
         </div>
-
-        {{ $getAction('add-component') }}
-
 
     </x-filament::section>
 </x-dynamic-component>
