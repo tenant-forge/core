@@ -14,6 +14,7 @@ $fields = [
 ];
 
 
+
 @endphp
 <div>
 
@@ -24,7 +25,7 @@ $fields = [
                 $name = $type($component)->getName();
                 $action = $component->getAction($name);
             @endphp
-            {{ $action([$component]) }}
+            {{ $action([$component]) }} {{ $parent }}
         @endforeach
 
         @foreach($fields as $field)

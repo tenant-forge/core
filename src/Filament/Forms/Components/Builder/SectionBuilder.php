@@ -59,7 +59,8 @@ class SectionBuilder extends Component implements BuilderComponent
             ->color('gray')
             ->slideOver()
             ->schema([
-                TextInput::make('name'),
+                TextInput::make('name')
+                    ->formatStateUsing(fn () => dd($this->state)),
             ])
             ->action(function (array $data, Action $action) use ($component): void {
 

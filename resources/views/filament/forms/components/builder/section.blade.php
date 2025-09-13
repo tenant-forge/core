@@ -9,6 +9,7 @@
     @if($hasChildren)
         <div class="mt-2">
             {{ $openComponentsDialogAction([
+                'parent' => $schemaPath,
                 'name' => $name,
                 'schemaPath' => $schemaPath,
                 'configuration' => $configuration,

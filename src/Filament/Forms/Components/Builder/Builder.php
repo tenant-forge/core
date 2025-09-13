@@ -126,12 +126,10 @@ class Builder extends Field implements HasExtraItemActions
             ->modalWidth(Width::Medium)
             ->modalContent(function (array $arguments): View {
 
-                dd($arguments);
-
                 $data = [
                     'fieldTypes' => $this->fieldTypes,
                     'component' => $this,
-                    'hello' => $arguments['hello'],
+                    'parent' => $arguments['parent'],
                 ];
 
                 return view('tenantforge::filament.forms.components.builder.add-component', $data);

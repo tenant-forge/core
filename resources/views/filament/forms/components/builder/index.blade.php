@@ -1,6 +1,7 @@
 @php use Illuminate\Database\Eloquent\Builder;use Illuminate\Support\Str;use TenantForge\Filament\Forms\Components\Builder\BuilderRegistry;
 
 $deleteAction = $getAction($getDeleteActionName());
+$addComponentAction = $getAction($getAddSectionActionName());
 
 @endphp
 <x-dynamic-component
@@ -31,6 +32,7 @@ $deleteAction = $getAction($getDeleteActionName());
             </div>
 
         </div>
+        {{ $addComponentAction([]) }}
 
     </x-filament::section>
 </x-dynamic-component>
